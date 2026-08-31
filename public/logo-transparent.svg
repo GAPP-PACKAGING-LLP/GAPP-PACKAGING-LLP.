@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 520" width="100%" height="100%">
+  <defs>
+    <style>
+      .blue-fill { fill: #008CE8; }
+      .dark-fill { fill: #262D38; }
+      .teal-fill { fill: #0E525B; }
+      .brand-title {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        font-weight: 800;
+      }
+      .brand-tagline {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        font-weight: 600;
+      }
+    </style>
+  </defs>
+
+  <!-- Interlocking Icon -->
+  <g id="logo-mark" transform="translate(250, 180)">
+    <!-- 1. Dark Shape -->
+    <g transform="translate(48, -10) rotate(45)">
+      <path class="dark-fill" d="
+        M -65 -65
+        L 65 -65
+        L 65 65
+        L -65 65
+        L -65 25
+        L -25 25
+        L -25 -25
+        L -65 -25
+        Z
+      "/>
+    </g>
+
+    <!-- 2. Blue Shape -->
+    <g transform="translate(-48, 10) rotate(45)">
+      <path class="blue-fill" d="
+        M -65 -65
+        L 65 -65
+        L 65 -25
+        L 25 -25
+        L 25 25
+        L 65 25
+        L 65 65
+        L -65 65
+        Z
+      "/>
+    </g>
+
+    <!-- 3. Overlap -->
+    <g transform="translate(48, -10) rotate(45)">
+      <path class="dark-fill" d="
+        M -65 -65
+        L 65 -65
+        L 65 -25
+        L -65 -25
+        Z
+      "/>
+    </g>
+  </g>
+
+  <!-- Typography -->
+  <g transform="translate(250, 400)" text-anchor="middle">
+    <text class="brand-title" font-size="44" letter-spacing="1">
+      <tspan class="blue-fill">GAPP </tspan>
+      <tspan class="dark-fill">PACKAGING</tspan>
+    </text>
+  </g>
+
+  <g transform="translate(250, 455)" text-anchor="middle">
+    <text class="brand-tagline teal-fill" font-size="28" letter-spacing="0.5">
+      Focus On Quality
+    </text>
+  </g>
+</svg>

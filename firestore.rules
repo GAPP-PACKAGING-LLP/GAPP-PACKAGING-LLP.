@@ -1,0 +1,64 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // User profile and role verification
+    match /users/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+    }
+
+    // Directors / Management collection (Public can read, Admin can manage)
+    match /directors/{directorId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Customer Inquiries collection (Public can create, Super Admin can read/manage)
+    match /inquiries/{inquiryId} {
+      allow create: if request.resource.data.name is string 
+                    && request.resource.data.email is string;
+      allow read, update, delete: if request.auth != null;
+    }
+
+    // Public readable collections for site display, managed by authenticated Admin
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /machinery/{machineryId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /testingEquipment/{equipmentId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /clients/{clientId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /gallery/{imageId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /brochures/{brochureId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /pages/{pageId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+  }
+}

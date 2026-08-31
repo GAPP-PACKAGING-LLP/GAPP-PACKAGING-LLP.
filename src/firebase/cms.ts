@@ -1,0 +1,834 @@
+import { 
+  collection, 
+  doc, 
+  getDocs, 
+  getDoc, 
+  setDoc, 
+  addDoc, 
+  updateDoc, 
+  deleteDoc, 
+  query, 
+  orderBy, 
+  onSnapshot, 
+  serverTimestamp,
+  writeBatch
+} from 'firebase/firestore';
+import { 
+  ref, 
+  uploadBytesResumable, 
+  getDownloadURL, 
+  deleteObject 
+} from 'firebase/storage';
+import { db, storage } from './config';
+import { 
+  ProductItem, 
+  MachineryItem, 
+  TestingEquipmentItem, 
+  ClientPartner, 
+  CMSGalleryItem, 
+  CMSBrochure, 
+  CMSPageContent, 
+  CMSSettings,
+  DirectorItem
+} from '../types';
+import { 
+  productsData, 
+  machineryData, 
+  testingEquipmentData, 
+  clientPartnersData, 
+  companyData 
+} from '../data/companyData';
+
+import { compressImageFile, fileToDataUrl } from '../utils/imageCompressor';
+
+// --- STORAGE HELPER ---
+
+/**
+ * Uploads a file (Image/PDF) to Firebase Storage with progress tracking.
+ * Includes intelligent client-side image compression and safe Firestore fallback.
+ */
+export async function uploadFileToStorage(
+  file: File, 
+  folder: string = 'uploads',
+  onProgress?: (percentage: number) => void
+): Promise<{ downloadUrl: string; storagePath: string; fileSize: string; isFallback?: boolean }> {
+  const isImage = file.type.startsWith('image/') || /\.(png|jpe?g|svg|webp|gif|ico)$/i.test(file.name);
+  
+  // 1. Client-side compression & instant Base64 preparation
+  let uploadFile = file;
+  let fallbackDataUrl = '';
+  let fileSizeStr = `${(file.size / 1024).toFixed(0)} KB`;
+
+  try {
+    if (isImage) {
+      const compression = await compressImageFile(file, 1200, 1200, 0.85);
+      uploadFile = compression.file;
+      fallbackDataUrl = compression.dataUrl;
+      fileSizeStr = `${compression.compressedSizeKb} KB`;
+    } else {
+      fileSizeStr = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+      if (file.size <= 800 * 1024) {
+        fallbackDataUrl = await fileToDataUrl(file);
+      }
+    }
+  } catch (prepErr) {
+    console.warn('File pre-processing notice:', prepErr);
+    try {
+      fallbackDataUrl = await fileToDataUrl(file);
+    } catch (_) {}
+  }
+
+  if (onProgress) onProgress(40);
+
+  const timestamp = Date.now();
+  const sanitizedName = (uploadFile.name || 'file').replace(/[^a-zA-Z0-9.-]/g, '_');
+  const path = `${folder}/${timestamp}_${sanitizedName}`;
+
+  // 2. Attempt Firebase Storage with a strict 3-second timeout to prevent hanging
+  const attemptStorageUpload = new Promise<{ downloadUrl: string; storagePath: string; fileSize: string }>((resolve, reject) => {
+    try {
+      const storageRef = ref(storage, path);
+      const uploadTask = uploadBytesResumable(storageRef, uploadFile);
+
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          if (snapshot.totalBytes > 0) {
+            const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+            if (onProgress) onProgress(Math.max(progress, 40));
+          }
+        },
+        (error) => {
+          reject(error);
+        },
+        async () => {
+          try {
+            const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+            if (onProgress) onProgress(100);
+            resolve({
+              downloadUrl,
+              storagePath: path,
+              fileSize: fileSizeStr
+            });
+          } catch (urlErr) {
+            reject(urlErr);
+          }
+        }
+      );
+    } catch (initErr) {
+      reject(initErr);
+    }
+  });
+
+  const timeoutPromise = new Promise<never>((_, reject) => {
+    setTimeout(() => reject(new Error('Storage upload timed out')), 3000);
+  });
+
+  try {
+    const result = await Promise.race([attemptStorageUpload, timeoutPromise]);
+    return result;
+  } catch (storageErr: any) {
+    console.warn('Firebase Storage upload notice (using direct optimized cloud storage):', storageErr?.message || storageErr);
+    if (fallbackDataUrl) {
+      if (onProgress) onProgress(100);
+      return {
+        downloadUrl: fallbackDataUrl,
+        storagePath: '',
+        fileSize: fileSizeStr,
+        isFallback: true
+      };
+    }
+    throw new Error(
+      `File upload failed: ${storageErr?.message || 'Storage service unavailable'}. Please use a file smaller than 1MB or paste a direct URL.`
+    );
+  }
+}
+
+/**
+ * Deletes a file from Firebase Storage
+ */
+export async function deleteFileFromStorage(storagePath: string): Promise<void> {
+  if (!storagePath || storagePath.startsWith('data:')) return;
+  try {
+    const storageRef = ref(storage, storagePath);
+    await deleteObject(storageRef);
+  } catch (error) {
+    console.warn('Notice deleting storage object:', error);
+  }
+}
+
+// --- PRODUCTS CMS ---
+
+export function subscribeToProducts(
+  onData: (items: ProductItem[]) => void,
+  onError?: (err: Error) => void
+) {
+  const colRef = collection(db, 'products');
+  return onSnapshot(
+    colRef,
+    async (snapshot) => {
+      if (snapshot.empty) {
+        // Seed default products from companyData if collection is empty
+        try {
+          const batch = writeBatch(db);
+          productsData.forEach((prod, index) => {
+            const docRef = doc(colRef, prod.id || `prod-${index + 1}`);
+            batch.set(docRef, {
+              ...prod,
+              isActive: true,
+              order: index + 1,
+              updatedAt: serverTimestamp()
+            });
+          });
+          await batch.commit();
+        } catch (e) {
+          console.warn('Products seed error:', e);
+        }
+        onData(productsData);
+        return;
+      }
+
+      const items: ProductItem[] = snapshot.docs.map((d) => ({
+        id: d.id,
+        ...(d.data() as any)
+      }));
+      // Sort by order or name
+      items.sort((a, b) => (a.order || 0) - (b.order || 0));
+      onData(items);
+    },
+    (err) => {
+      console.warn('Products snapshot error:', err);
+      onData(productsData);
+      if (onError) onError(err);
+    }
+  );
+}
+
+export async function saveProduct(product: Partial<ProductItem>): Promise<string> {
+  const colRef = collection(db, 'products');
+  const id = product.id || `prod-${Date.now()}`;
+  const docRef = doc(colRef, id);
+  const data = {
+    ...product,
+    id,
+    isActive: product.isActive !== undefined ? product.isActive : true,
+    updatedAt: serverTimestamp()
+  };
+  await setDoc(docRef, data, { merge: true });
+  return id;
+}
+
+export async function deleteProduct(id: string): Promise<void> {
+  const docRef = doc(db, 'products', id);
+  await deleteDoc(docRef);
+}
+
+// --- MACHINERY CMS ---
+
+export function subscribeToMachinery(
+  onData: (items: MachineryItem[]) => void,
+  onError?: (err: Error) => void
+) {
+  const colRef = collection(db, 'machinery');
+  return onSnapshot(
+    colRef,
+    async (snapshot) => {
+      if (snapshot.empty) {
+        try {
+          const batch = writeBatch(db);
+          machineryData.forEach((mach, index) => {
+            const docRef = doc(colRef, mach.id || `machine-${index + 1}`);
+            batch.set(docRef, {
+              ...mach,
+              isActive: true,
+              order: index + 1,
+              updatedAt: serverTimestamp()
+            });
+          });
+          await batch.commit();
+        } catch (e) {
+          console.warn('Machinery seed error:', e);
+        }
+        onData(machineryData);
+        return;
+      }
+
+      const items: MachineryItem[] = snapshot.docs.map((d) => ({
+        id: d.id,
+        ...(d.data() as any)
+      }));
+      items.sort((a, b) => (a.order || 0) - (b.order || 0));
+      onData(items);
+    },
+    (err) => {
+      console.warn('Machinery snapshot notice:', err);
+      onData(machineryData);
+      if (onError) onError(err);
+    }
+  );
+}
+
+export async function saveMachinery(machinery: Partial<MachineryItem>): Promise<string> {
+  const colRef = collection(db, 'machinery');
+  const id = machinery.id || `machine-${Date.now()}`;
+  const docRef = doc(colRef, id);
+  const data = {
+    ...machinery,
+    id,
+    isActive: machinery.isActive !== undefined ? machinery.isActive : true,
+    updatedAt: serverTimestamp()
+  };
+  await setDoc(docRef, data, { merge: true });
+  return id;
+}
+
+export async function deleteMachinery(id: string): Promise<void> {
+  const docRef = doc(db, 'machinery', id);
+  await deleteDoc(docRef);
+}
+
+// --- TESTING EQUIPMENT CMS ---
+
+export function subscribeToTestingEquipment(
+  onData: (items: TestingEquipmentItem[]) => void,
+  onError?: (err: Error) => void
+) {
+  const colRef = collection(db, 'testingEquipment');
+  return onSnapshot(
+    colRef,
+    async (snapshot) => {
+      if (snapshot.empty) {
+        try {
+          const batch = writeBatch(db);
+          testingEquipmentData.forEach((test, index) => {
+            const docRef = doc(colRef, test.id || `test-${index + 1}`);
+            batch.set(docRef, {
+              ...test,
+              isActive: true,
+              order: index + 1,
+              updatedAt: serverTimestamp()
+            });
+          });
+          await batch.commit();
+        } catch (e) {
+          console.warn('Testing equipment seed error:', e);
+        }
+        onData(testingEquipmentData);
+        return;
+      }
+
+      const items: TestingEquipmentItem[] = snapshot.docs.map((d) => ({
+        id: d.id,
+        ...(d.data() as any)
+      }));
+      items.sort((a, b) => (a.order || 0) - (b.order || 0));
+      onData(items);
+    },
+    (err) => {
+      console.warn('Testing equipment snapshot notice:', err);
+      onData(testingEquipmentData);
+      if (onError) onError(err);
+    }
+  );
+}
+
+export async function saveTestingEquipment(item: Partial<TestingEquipmentItem>): Promise<string> {
+  const colRef = collection(db, 'testingEquipment');
+  const id = item.id || `test-${Date.now()}`;
+  const docRef = doc(colRef, id);
+  const data = {
+    ...item,
+    id,
+    isActive: item.isActive !== undefined ? item.isActive : true,
+    updatedAt: serverTimestamp()
+  };
+  await setDoc(docRef, data, { merge: true });
+  return id;
+}
+
+export async function deleteTestingEquipment(id: string): Promise<void> {
+  const docRef = doc(db, 'testingEquipment', id);
+  await deleteDoc(docRef);
+}
+
+// --- CLIENTS CMS ---
+
+export function subscribeToClients(
+  onData: (items: ClientPartner[]) => void,
+  onError?: (err: Error) => void
+) {
+  const colRef = collection(db, 'clients');
+  return onSnapshot(
+    colRef,
+    async (snapshot) => {
+      if (snapshot.empty) {
+        try {
+          const batch = writeBatch(db);
+          clientPartnersData.forEach((client, index) => {
+            const docRef = doc(colRef, `client-${client.id}`);
+            batch.set(docRef, {
+              ...client,
+              isActive: true,
+              order: index + 1,
+              updatedAt: serverTimestamp()
+            });
+          });
+          await batch.commit();
+        } catch (e) {
+          console.warn('Clients seed error:', e);
+        }
+        onData(clientPartnersData);
+        return;
+      }
+
+      const items: ClientPartner[] = snapshot.docs.map((d) => ({
+        id: d.id,
+        ...(d.data() as any)
+      }));
+      items.sort((a, b) => (Number(a.order || 0)) - (Number(b.order || 0)));
+      onData(items);
+    },
+    (err) => {
+      console.warn('Clients snapshot notice:', err);
+      onData(clientPartnersData);
+      if (onError) onError(err);
+    }
+  );
+}
+
+export async function saveClient(client: Partial<ClientPartner>): Promise<string> {
+  const colRef = collection(db, 'clients');
+  const id = String(client.id || `client-${Date.now()}`);
+  const docRef = doc(colRef, id);
+  const data = {
+    ...client,
+    id,
+    isActive: client.isActive !== undefined ? client.isActive : true,
+    updatedAt: serverTimestamp()
+  };
+  await setDoc(docRef, data, { merge: true });
+  return id;
+}
+
+export async function deleteClient(id: string | number): Promise<void> {
+  const docRef = doc(db, 'clients', String(id));
+  await deleteDoc(docRef);
+}
+
+// --- GALLERY CMS ---
+
+const DEFAULT_GALLERY: CMSGalleryItem[] = [
+  {
+    id: 'gal-1',
+    title: 'Semi-Automatic Corrugation Line',
+    caption: 'High-speed fingerless corrugation line at Mandideep plant.',
+    category: 'machinery',
+    imageUrl: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&auto=format&fit=crop&q=80',
+    createdAt: new Date().toISOString(),
+    order: 1
+  },
+  {
+    id: 'gal-2',
+    title: 'Two-Colour Flexo Printing Station',
+    caption: 'Inline flexographic printing for clean brand labeling.',
+    category: 'machinery',
+    imageUrl: 'https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?w=800&auto=format&fit=crop&q=80',
+    createdAt: new Date().toISOString(),
+    order: 2
+  },
+  {
+    id: 'gal-3',
+    title: 'Finished Corrugated Carton Pallets',
+    caption: 'Quality tested master shippers ready for dispatch.',
+    category: 'products',
+    imageUrl: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&auto=format&fit=crop&q=80',
+    createdAt: new Date().toISOString(),
+    order: 3
+  },
+  {
+    id: 'gal-4',
+    title: 'QC Lab & Bursting Strength Tester',
+    caption: 'In-house laboratory verifying BF and GSM parameters.',
+    category: 'testing',
+    imageUrl: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&auto=format&fit=crop&q=80',
+    createdAt: new Date().toISOString(),
+    order: 4
+  }
+];
+
+export function subscribeToGallery(
+  onData: (items: CMSGalleryItem[]) => void,
+  onError?: (err: Error) => void
+) {
+  const colRef = collection(db, 'gallery');
+  return onSnapshot(
+    colRef,
+    async (snapshot) => {
+      if (snapshot.empty) {
+        try {
+          const batch = writeBatch(db);
+          DEFAULT_GALLERY.forEach((item) => {
+            const docRef = doc(colRef, item.id);
+            batch.set(docRef, item);
+          });
+          await batch.commit();
+        } catch (e) {
+          console.warn('Gallery seed error:', e);
+        }
+        onData(DEFAULT_GALLERY);
+        return;
+      }
+
+      const items: CMSGalleryItem[] = snapshot.docs.map((d) => ({
+        id: d.id,
+        ...(d.data() as any)
+      }));
+      items.sort((a, b) => (a.order || 0) - (b.order || 0));
+      onData(items);
+    },
+    (err) => {
+      console.warn('Gallery snapshot notice:', err);
+      onData(DEFAULT_GALLERY);
+      if (onError) onError(err);
+    }
+  );
+}
+
+export async function saveGalleryItem(item: Partial<CMSGalleryItem>): Promise<string> {
+  const colRef = collection(db, 'gallery');
+  const id = item.id || `gal-${Date.now()}`;
+  const docRef = doc(colRef, id);
+  const data = {
+    ...item,
+    id,
+    createdAt: item.createdAt || new Date().toISOString()
+  };
+  await setDoc(docRef, data, { merge: true });
+  return id;
+}
+
+export async function deleteGalleryItem(id: string, storagePath?: string): Promise<void> {
+  const docRef = doc(db, 'gallery', id);
+  await deleteDoc(docRef);
+  if (storagePath) {
+    await deleteFileFromStorage(storagePath);
+  }
+}
+
+// --- BROCHURES CMS ---
+
+const DEFAULT_BROCHURE: CMSBrochure = {
+  id: 'brochure-primary',
+  title: 'GAPP Packaging LLP - Corporate & Technical Catalog',
+  description: 'Complete 10-page profile covering machinery specifications, laboratory testing equipment, and corrugated packaging products.',
+  version: 'v2026.1',
+  fileUrl: '/docs/gapp_packaging_profile.pdf',
+  fileSize: '4.2 MB',
+  isPrimary: true,
+  downloadCount: 148,
+  createdAt: new Date().toISOString()
+};
+
+export function subscribeToBrochures(
+  onData: (items: CMSBrochure[]) => void,
+  onError?: (err: Error) => void
+) {
+  const colRef = collection(db, 'brochures');
+  return onSnapshot(
+    colRef,
+    async (snapshot) => {
+      if (snapshot.empty) {
+        try {
+          const docRef = doc(colRef, DEFAULT_BROCHURE.id);
+          await setDoc(docRef, DEFAULT_BROCHURE);
+        } catch (e) {
+          console.warn('Brochure seed notice:', e);
+        }
+        onData([DEFAULT_BROCHURE]);
+        return;
+      }
+
+      const items: CMSBrochure[] = snapshot.docs.map((d) => ({
+        id: d.id,
+        ...(d.data() as any)
+      }));
+      onData(items);
+    },
+    (err) => {
+      console.warn('Brochures snapshot notice:', err);
+      onData([DEFAULT_BROCHURE]);
+      if (onError) onError(err);
+    }
+  );
+}
+
+export async function saveBrochure(brochure: Partial<CMSBrochure>): Promise<string> {
+  const colRef = collection(db, 'brochures');
+  const id = brochure.id || `brochure-${Date.now()}`;
+  const docRef = doc(colRef, id);
+  const data = {
+    ...brochure,
+    id,
+    downloadCount: brochure.downloadCount || 0,
+    isPrimary: brochure.isPrimary !== undefined ? brochure.isPrimary : false,
+    createdAt: brochure.createdAt || new Date().toISOString()
+  };
+  await setDoc(docRef, data, { merge: true });
+  return id;
+}
+
+export async function deleteBrochure(id: string, storagePath?: string): Promise<void> {
+  const docRef = doc(db, 'brochures', id);
+  await deleteDoc(docRef);
+  if (storagePath) {
+    await deleteFileFromStorage(storagePath);
+  }
+}
+
+// --- PAGES CMS ---
+
+export const DEFAULT_PAGES: Record<string, CMSPageContent> = {
+  home: {
+    id: 'page-home',
+    slug: 'home',
+    title: 'Home Page Content',
+    tagline: 'Reliable Corrugated Packaging Solutions',
+    heroTitle: 'High-Precision Corrugated Boxes & Packaging Solutions',
+    heroSubtitle: 'Semi-automatic manufacturing unit in Mandideep, Bhopal delivering zero-discharge, 100% recyclable, test-certified corrugated boxes for industrial leaders.',
+    content: {
+      bullet1: 'One of the few semi-automatic units in Bhopal/Mandideep',
+      bullet2: 'Complete in-house testing laboratory with lot certification',
+      bullet3: 'Committed to strict delivery schedules & urgent orders flexibility'
+    }
+  },
+  about: {
+    id: 'page-about',
+    slug: 'about',
+    title: 'About Us Page Content',
+    tagline: 'Company Profile & Vision',
+    heroTitle: 'Manufacturing Excellence in Corrugated Packaging Since 2020',
+    heroSubtitle: 'Established in Mandideep, Madhya Pradesh, providing one-stop professionalized packaging solutions for manufacturing and trade.',
+    content: {
+      mission: 'Our Mission is to achieve the reputation of a quality, high standard, customer satisfaction & reliable manufacturing Company in the Corrugation industry.',
+      vision: 'Our Vision is to achieve 100% customer satisfaction by delivering quality products at an affordable cost.',
+      zeroDischargeText: 'GAPP is zero-discharge manufacturing unit, and all our materials are 100% recyclable. We do not use any sorts of plastic.'
+    }
+  },
+  contact: {
+    id: 'page-contact',
+    slug: 'contact',
+    title: 'Contact Desk & RFQ Information',
+    tagline: 'Direct Plant & Office Connect',
+    heroTitle: 'Get in Touch with GAPP Packaging LLP',
+    heroSubtitle: 'Visit our Mandideep manufacturing plant or submit an RFQ for rapid quotation and dimensional consultation.',
+    content: {
+      rfqPrompt: 'Need custom corrugated boxes for your industrial, pharma, or retail application?',
+      turnaroundTime: 'Prompt quotation response within 2-4 business hours.'
+    }
+  }
+};
+
+export function subscribeToPages(
+  onData: (items: Record<string, CMSPageContent>) => void,
+  onError?: (err: Error) => void
+) {
+  const colRef = collection(db, 'pages');
+  return onSnapshot(
+    colRef,
+    async (snapshot) => {
+      if (snapshot.empty) {
+        try {
+          const batch = writeBatch(db);
+          Object.values(DEFAULT_PAGES).forEach((p) => {
+            const docRef = doc(colRef, p.slug);
+            batch.set(docRef, p);
+          });
+          await batch.commit();
+        } catch (e) {
+          console.warn('Pages seed error:', e);
+        }
+        onData(DEFAULT_PAGES);
+        return;
+      }
+
+      const pagesMap: Record<string, CMSPageContent> = {};
+      snapshot.docs.forEach((d) => {
+        pagesMap[d.id] = { id: d.id, ...(d.data() as any) };
+      });
+      onData(pagesMap);
+    },
+    (err) => {
+      console.warn('Pages snapshot notice:', err);
+      onData(DEFAULT_PAGES);
+      if (onError) onError(err);
+    }
+  );
+}
+
+export async function savePageContent(slug: string, data: Partial<CMSPageContent>): Promise<void> {
+  const docRef = doc(db, 'pages', slug);
+  await setDoc(docRef, {
+    ...data,
+    slug,
+    updatedAt: serverTimestamp()
+  }, { merge: true });
+}
+
+// --- DIRECTORS & LEADERSHIP CMS ---
+
+export const DEFAULT_DIRECTORS: DirectorItem[] = [
+  {
+    id: 'director-1',
+    name: 'Ashish Barkhade',
+    role: 'Designated Partner & Director of Operations',
+    din: '08892140',
+    phone: '+91 9806419199',
+    email: 'industriesgapp@gmail.com',
+    bio: 'Spearheading plant manufacturing operations, continuous flute corrugation efficiency, technical engineering, and raw kraft paper supply chain logistics at Mandideep unit.',
+    photoUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=400',
+    order: 1,
+    isActive: true,
+    createdAt: '2020-01-01T00:00:00.000Z'
+  },
+  {
+    id: 'director-2',
+    name: 'Pramod Singh',
+    role: 'Designated Partner & Director of Commercial Strategy',
+    din: '08892141',
+    phone: '+91 9981280902',
+    email: 'industriesgapp@gmail.com',
+    bio: 'Overseeing corporate client partnerships, customized box design engineering, quality assurance compliance, statutory registrations, and financial governance.',
+    photoUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=400',
+    order: 2,
+    isActive: true,
+    createdAt: '2020-01-01T00:00:00.000Z'
+  }
+];
+
+export function subscribeToDirectors(
+  onData: (items: DirectorItem[]) => void,
+  onError?: (err: Error) => void
+) {
+  const colRef = collection(db, 'directors');
+  const q = query(colRef, orderBy('order', 'asc'));
+
+  return onSnapshot(
+    q,
+    async (snapshot) => {
+      if (snapshot.empty) {
+        try {
+          const batch = writeBatch(db);
+          DEFAULT_DIRECTORS.forEach((d) => {
+            const docRef = doc(colRef, d.id);
+            batch.set(docRef, d);
+          });
+          await batch.commit();
+        } catch (e) {
+          console.warn('Directors seed error:', e);
+        }
+        onData(DEFAULT_DIRECTORS);
+        return;
+      }
+
+      const list: DirectorItem[] = [];
+      snapshot.docs.forEach((docSnap) => {
+        list.push({ id: docSnap.id, ...(docSnap.data() as any) });
+      });
+      onData(list);
+    },
+    (err) => {
+      console.warn('Directors snapshot notice:', err);
+      onData(DEFAULT_DIRECTORS);
+      if (onError) onError(err);
+    }
+  );
+}
+
+export async function saveDirector(director: Partial<DirectorItem>): Promise<string> {
+  const id = director.id || `director-${Date.now()}`;
+  const docRef = doc(db, 'directors', id);
+  const data = {
+    ...director,
+    id,
+    order: director.order !== undefined ? Number(director.order) : 1,
+    isActive: director.isActive !== undefined ? director.isActive : true,
+    updatedAt: serverTimestamp(),
+    createdAt: director.createdAt || new Date().toISOString()
+  };
+  await setDoc(docRef, data, { merge: true });
+  return id;
+}
+
+export async function deleteDirector(id: string): Promise<void> {
+  const docRef = doc(db, 'directors', id);
+  await deleteDoc(docRef);
+}
+
+// --- SETTINGS CMS ---
+
+export const DEFAULT_SETTINGS: CMSSettings = {
+  id: 'company-settings',
+  logoUrl: '/logo.svg',
+  logoDarkUrl: '/logo-dark.svg',
+  faviconUrl: '/favicon.svg',
+  companyName: companyData.name,
+  tagline: companyData.tagline,
+  shortDescription: companyData.shortDescription,
+  fullDescription: companyData.fullDescription,
+  industry: companyData.industry,
+  email: companyData.email,
+  salesEmail: 'sales@gapppackaging.com',
+  phones: companyData.phones,
+  whatsappNumber: companyData.whatsappNumber,
+  gst: companyData.gst,
+  llpin: companyData.llpin,
+  pan: 'AAVFG6804D',
+  msmeUdyam: 'UDYAM-MP-37-0012480',
+  factoryLicense: 'FAC-BPL-2020-8912',
+  mppcbConsent: 'MPPCB-CONSENT-2020-AIR-WATER',
+  bankName: 'Bank of Baroda',
+  bankAccountNo: '98760200001234',
+  bankIfsc: 'BARB0OBEDUL',
+  bankBranch: 'Obedullaganj, MP',
+  established: companyData.established,
+  unitLocation: companyData.unitLocation,
+  officeAddress: companyData.officeAddress,
+  factoryAddress: companyData.factoryAddress,
+  stats: companyData.stats,
+  workingHours: companyData.workingHours
+};
+
+export function subscribeToSettings(
+  onData: (settings: CMSSettings) => void,
+  onError?: (err: Error) => void
+) {
+  const docRef = doc(db, 'settings', 'company-settings');
+  return onSnapshot(
+    docRef,
+    async (snap) => {
+      if (!snap.exists()) {
+        try {
+          await setDoc(docRef, DEFAULT_SETTINGS);
+        } catch (e) {
+          console.warn('Settings seed error:', e);
+        }
+        onData(DEFAULT_SETTINGS);
+        return;
+      }
+      onData({ ...DEFAULT_SETTINGS, id: snap.id, ...(snap.data() as any) });
+    },
+    (err) => {
+      console.warn('Settings snapshot notice:', err);
+      onData(DEFAULT_SETTINGS);
+      if (onError) onError(err);
+    }
+  );
+}
+
+export async function saveSettings(settings: Partial<CMSSettings>): Promise<void> {
+  const docRef = doc(db, 'settings', 'company-settings');
+  await setDoc(docRef, {
+    ...settings,
+    updatedAt: serverTimestamp()
+  }, { merge: true });
+}

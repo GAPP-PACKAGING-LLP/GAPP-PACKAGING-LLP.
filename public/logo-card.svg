@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 660" width="100%" height="100%">
+  <defs>
+    <style>
+      .blue-color { fill: #008CE8; }
+      .dark-color { fill: #262D38; }
+      .tagline-color { fill: #0E525B; }
+      .font-title {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        font-weight: 800;
+      }
+      .font-sub {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        font-weight: 600;
+      }
+    </style>
+  </defs>
+
+  <rect width="100%" height="100%" fill="#FFFFFF"/>
+
+  <!-- Interlocking Icon -->
+  <g id="brand-symbol" transform="translate(300, 230)">
+    <!-- 1. Dark Shape (Upper Right) -->
+    <g transform="translate(56, -16) rotate(45)">
+      <path fill="#262D38" d="
+        M -75 -75
+        L 75 -75
+        L 75 75
+        L -75 75
+        L -75 28
+        L -28 28
+        L -28 -28
+        L -75 -28
+        Z
+      "/>
+    </g>
+
+    <!-- 2. Blue Shape (Lower Left) -->
+    <g transform="translate(-56, 16) rotate(45)">
+      <path fill="#008CE8" d="
+        M -75 -75
+        L 75 -75
+        L 75 -28
+        L 28 -28
+        L 28 28
+        L 75 28
+        L 75 75
+        L -75 75
+        Z
+      "/>
+    </g>
+
+    <!-- 3. Interlocking Weave: Dark Top Arm in front of Blue Top Arm -->
+    <g transform="translate(56, -16) rotate(45)">
+      <path fill="#262D38" d="
+        M -75 -75
+        L 75 -75
+        L 75 -28
+        L -75 -28
+        Z
+      "/>
+    </g>
+  </g>
+
+  <!-- Typography Line 1: GAPP PACKAGING -->
+  <g transform="translate(300, 500)" text-anchor="middle">
+    <text class="font-title" font-size="52" letter-spacing="1.2">
+      <tspan class="blue-color">GAPP </tspan>
+      <tspan class="dark-color">PACKAGING</tspan>
+    </text>
+  </g>
+
+  <!-- Typography Line 2: Focus On Quality -->
+  <g transform="translate(300, 568)" text-anchor="middle">
+    <text class="font-sub tagline-color" font-size="34" letter-spacing="0.5">
+      Focus On Quality
+    </text>
+  </g>
+</svg>

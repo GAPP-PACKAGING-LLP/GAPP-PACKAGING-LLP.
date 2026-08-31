@@ -1,0 +1,10 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Allow public read for plant catalog, brochures, gallery photos, machinery images
+    match /{allPaths=**} {
+      allow read: if true;
+      allow write: if true; // Or restrict to: if request.auth != null;
+    }
+  }
+}

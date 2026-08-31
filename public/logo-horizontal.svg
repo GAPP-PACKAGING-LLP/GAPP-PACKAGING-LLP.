@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 160" width="540" height="160">
+  <defs>
+    <style>
+      .blue-color { fill: #008CE8; }
+      .dark-color { fill: #232B39; }
+      .tagline-color { fill: #0A4D5C; }
+      .font-brand {
+        font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        font-weight: 800;
+      }
+      .font-tagline {
+        font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        font-weight: 700;
+      }
+    </style>
+  </defs>
+
+  <!-- Interlocking Mark (Scale & Position for Horizontal Layout) -->
+  <g transform="translate(10, 10) scale(0.42)">
+    <path class="blue-color" fill-rule="evenodd" d="
+      M 160 20 L 300 160 L 160 300 L 20 160 Z 
+      M 160 85 L 85 160 L 160 235 L 235 160 Z
+    " />
+    <path class="dark-color" fill-rule="evenodd" d="
+      M 320 20 L 460 160 L 320 300 L 180 160 Z 
+      M 320 85 L 245 160 L 320 235 L 395 160 Z
+    " />
+    <polygon points="160,235 235,160 280,160 160,280" class="blue-color" />
+    <polygon points="160,300 300,160 250,160 160,250" class="blue-color" />
+  </g>
+
+  <!-- Typography -->
+  <g transform="translate(230, 80)">
+    <text class="font-brand" font-size="44" letter-spacing="0.5">
+      <tspan class="blue-color">GAPP </tspan>
+      <tspan class="dark-color">PACKAGING</tspan>
+    </text>
+  </g>
+  <g transform="translate(232, 125)">
+    <text class="font-tagline tagline-color" font-size="28" letter-spacing="0.2">
+      Focus On Quality
+    </text>
+  </g>
+</svg>

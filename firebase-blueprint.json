@@ -1,0 +1,238 @@
+{
+  "entities": {
+    "users": {
+      "title": "Users",
+      "description": "Admin user documents with role control for GAPP Packaging CMS",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "description": "Admin email address" },
+        "name": { "type": "string", "description": "Admin user full name" },
+        "role": { "type": "string", "description": "User role: super_admin", "enum": ["super_admin"] },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Account registration timestamp" }
+      },
+      "required": ["email", "role", "name", "createdAt"]
+    },
+    "inquiries": {
+      "title": "Inquiries",
+      "description": "Customer packaging inquiries and quotation requests",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Full name of the contact person" },
+        "company": { "type": "string", "description": "Company or business name" },
+        "phone": { "type": "string", "description": "Contact phone or mobile number" },
+        "email": { "type": "string", "description": "Email address" },
+        "message": { "type": "string", "description": "Order details, box specifications, or message" },
+        "status": { "type": "string", "description": "Status of inquiry: new, contacted, in_progress, completed, archived" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["name", "phone", "email", "status", "createdAt"]
+    },
+    "products": {
+      "title": "Products",
+      "description": "Packaging products, corrugated boxes, and customized corrugated offerings",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "slug": { "type": "string" },
+        "category": { "type": "string" },
+        "description": { "type": "string" },
+        "plyCount": { "type": "string" },
+        "fluteType": { "type": "string" },
+        "gsmRange": { "type": "string" },
+        "features": { "type": "array", "items": { "type": "string" } },
+        "imageUrl": { "type": "string" },
+        "order": { "type": "number" },
+        "isActive": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "description", "isActive"]
+    },
+    "machinery": {
+      "title": "Machinery",
+      "description": "Manufacturing plant machinery, corrugators, slotters, and gluers",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "model": { "type": "string" },
+        "capacity": { "type": "string" },
+        "speed": { "type": "string" },
+        "description": { "type": "string" },
+        "features": { "type": "array", "items": { "type": "string" } },
+        "imageUrl": { "type": "string" },
+        "isActive": { "type": "boolean" },
+        "order": { "type": "number" }
+      },
+      "required": ["name", "capacity", "isActive"]
+    },
+    "testingEquipment": {
+      "title": "Testing Equipment",
+      "description": "Quality control and laboratory testing equipment",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "testParameter": { "type": "string" },
+        "standard": { "type": "string" },
+        "unit": { "type": "string" },
+        "accuracy": { "type": "string" },
+        "description": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "isActive": { "type": "boolean" },
+        "order": { "type": "number" }
+      },
+      "required": ["name", "testParameter", "isActive"]
+    },
+    "clients": {
+      "title": "Clients",
+      "description": "Major corporate and industrial packaging clients",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "sector": { "type": "string" },
+        "location": { "type": "string" },
+        "supplyType": { "type": "string" },
+        "logoUrl": { "type": "string" },
+        "order": { "type": "number" },
+        "isActive": { "type": "boolean" }
+      },
+      "required": ["name", "sector", "isActive"]
+    },
+    "gallery": {
+      "title": "Gallery",
+      "description": "Plant, machinery, and warehouse photo gallery entries",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "caption": { "type": "string" },
+        "category": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "storagePath": { "type": "string" },
+        "fileSize": { "type": "number" },
+        "dimensions": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "order": { "type": "number" }
+      },
+      "required": ["title", "imageUrl", "createdAt"]
+    },
+    "brochures": {
+      "title": "Brochures",
+      "description": "Downloadable PDF brochures and technical specification catalogs",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "version": { "type": "string" },
+        "fileUrl": { "type": "string" },
+        "storagePath": { "type": "string" },
+        "fileSize": { "type": "string" },
+        "downloadCount": { "type": "number" },
+        "isPrimary": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "fileUrl", "createdAt"]
+    },
+    "pages": {
+      "title": "Pages",
+      "description": "Dynamic web page content and section copy",
+      "type": "object",
+      "properties": {
+        "slug": { "type": "string" },
+        "title": { "type": "string" },
+        "tagline": { "type": "string" },
+        "heroTitle": { "type": "string" },
+        "heroSubtitle": { "type": "string" },
+        "content": { "type": "object" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["slug", "title"]
+    },
+    "directors": {
+      "title": "Directors",
+      "description": "Company Directors, Designated Partners, and Key Leadership Team",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "din": { "type": "string" },
+        "photoUrl": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "bio": { "type": "string" },
+        "order": { "type": "number" },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "role", "isActive"]
+    },
+    "settings": {
+      "title": "Settings",
+      "description": "Company corporate identity, branding, logo, plant contact, and statutory details",
+      "type": "object",
+      "properties": {
+        "logoUrl": { "type": "string" },
+        "logoDarkUrl": { "type": "string" },
+        "faviconUrl": { "type": "string" },
+        "companyName": { "type": "string" },
+        "tagline": { "type": "string" },
+        "officeAddress": { "type": "string" },
+        "factoryAddress": { "type": "string" },
+        "primaryPhone": { "type": "string" },
+        "secondaryPhone": { "type": "string" },
+        "primaryEmail": { "type": "string" },
+        "salesEmail": { "type": "string" },
+        "whatsAppNumber": { "type": "string" },
+        "gst": { "type": "string" },
+        "llpin": { "type": "string" },
+        "operatingHours": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["companyName", "primaryEmail", "primaryPhone", "gst", "llpin"]
+    }
+  },
+  "firestore": {
+    "/users/{uid}": {
+      "schema": "users",
+      "description": "Admin user authorization document"
+    },
+    "/directors/{directorId}": {
+      "schema": "directors",
+      "description": "Company Directors and Designated Partners profile documents"
+    },
+    "/inquiries/{inquiryId}": {
+      "schema": "inquiries",
+      "description": "Customer packaging quotation inquiries"
+    },
+    "/products/{productId}": {
+      "schema": "products",
+      "description": "Packaging offerings"
+    },
+    "/machinery/{machineryId}": {
+      "schema": "machinery",
+      "description": "Plant machinery specifications"
+    },
+    "/testingEquipment/{equipmentId}": {
+      "schema": "testingEquipment",
+      "description": "Laboratory testing equipment"
+    },
+    "/clients/{clientId}": {
+      "schema": "clients",
+      "description": "Corporate client references"
+    },
+    "/gallery/{imageId}": {
+      "schema": "gallery",
+      "description": "Plant photo gallery"
+    },
+    "/brochures/{brochureId}": {
+      "schema": "brochures",
+      "description": "PDF brochures catalog"
+    },
+    "/pages/{pageId}": {
+      "schema": "pages",
+      "description": "Website page content sections"
+    },
+    "/settings/{settingId}": {
+      "schema": "settings",
+      "description": "Company and plant statutory configuration"
+    }
+  }
+}
