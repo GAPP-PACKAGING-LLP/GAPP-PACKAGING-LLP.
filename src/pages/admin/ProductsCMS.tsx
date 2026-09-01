@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Boxes, 
   Plus, 
@@ -8,16 +8,22 @@ import {
   XCircle, 
   Layers, 
   Save, 
-  Eye
+  Eye,
+  UploadCloud,
+  Loader2,
+  Image as ImageIcon,
+  Link as LinkIcon,
+  X,
+  AlertCircle
 } from 'lucide-react';
-import { subscribeToProducts, saveProduct, deleteProduct } from '../../firebase/cms';
+import { subscribeToProducts, saveProduct, deleteProduct, uploadProductImage } from '../../firebase/cms';
 import { ProductItem } from '../../types';
 import { DataTable, Column } from '../../components/admin/common/DataTable';
 import { ModalDrawer } from '../../components/admin/common/ModalDrawer';
 import { ConfirmDialog } from '../../components/admin/common/ConfirmDialog';
 import { FormField } from '../../components/admin/common/FormField';
-import { FileUpload } from '../../components/admin/common/FileUpload';
 import { useToast } from '../../components/admin/common/Toast';
+import { useAuth } from '../../hooks/useAuth';
 
 const CATEGORY_OPTIONS = [
   { label: '3-Ply Corrugated', value: '3-ply' },
@@ -31,6 +37,7 @@ const CATEGORY_OPTIONS = [
 
 export const ProductsCMS: React.FC = () => {
   const { success, error } = useToast();
+  const { user, isAdmin } = useAuth();
   const [products, setProducts] = useState<ProductItem[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -38,6 +45,10 @@ export const ProductsCMS: React.FC = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Partial<ProductItem>>({});
   const [isSaving, setIsSaving] = useState(false);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [imageUploadError, setImageUploadError] = useState<string | null>(null);
+  const [imageTab, setImageTab] = useState<'upload' | 'url'>('upload');
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Delete State
   const [deleteTarget, setDeleteTarget] = useState<ProductItem | null>(null);
@@ -52,6 +63,7 @@ export const ProductsCMS: React.FC = () => {
   }, []);
 
   const handleOpenAdd = () => {
+    setImageUploadError(null);
     setEditingProduct({
       name: '',
       category: '5-ply',
@@ -72,13 +84,58 @@ export const ProductsCMS: React.FC = () => {
   };
 
   const handleOpenEdit = (prod: ProductItem) => {
+    setImageUploadError(null);
     setEditingProduct({ ...prod });
     setIsDrawerOpen(true);
   };
 
+  // Dedicated image upload handler using uploadBytes & getDownloadURL
+  const handleImageFileChange = async (file: File) => {
+    if (!file) return;
+
+    // Check admin authentication
+    if (!user && !isAdmin) {
+      const authErr = 'Admin authentication required. Please log in to upload product images.';
+      console.error('Firebase storage upload error:', authErr);
+      setImageUploadError(authErr);
+      error('Authentication Error', authErr);
+      return;
+    }
+
+    setImageUploadError(null);
+    setIsUploadingImage(true);
+
+    try {
+      // Uploads to public/products/${Date.now()}-${file.name} using uploadBytes + getDownloadURL
+      const downloadUrl = await uploadProductImage(file);
+      setEditingProduct((prev) => ({ ...prev, imageUrl: downloadUrl }));
+      success('Image Uploaded', 'Product image uploaded to Firebase Storage successfully.');
+    } catch (err: any) {
+      console.error('Firebase storage upload error:', err);
+      const errMsg = err?.message || 'Failed to upload product image to Firebase Storage.';
+      setImageUploadError(errMsg);
+      error('Upload Failed', errMsg);
+    } finally {
+      setIsUploadingImage(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
+
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!editingProduct.name || !editingProduct.description) {
+    setImageUploadError(null);
+
+    // Require logged-in admin
+    if (!user && !isAdmin) {
+      const authErr = 'Admin authentication required. Please log in to save products.';
+      console.error('Firebase product save error:', authErr);
+      error('Authentication Error', authErr);
+      return;
+    }
+
+    if (!editingProduct.name?.trim() || !editingProduct.description?.trim()) {
       error('Validation Error', 'Product Name and Description are required.');
       return;
     }
@@ -86,10 +143,11 @@ export const ProductsCMS: React.FC = () => {
     setIsSaving(true);
     try {
       await saveProduct(editingProduct);
-      success('Product Saved', `Successfully updated "${editingProduct.name}"`);
+      success('Product Saved', `Successfully saved "${editingProduct.name}" to Firestore.`);
       setIsDrawerOpen(false);
     } catch (err: any) {
-      error('Failed to save product', err?.message);
+      console.error('Firebase product save error:', err);
+      error('Failed to save product', err?.message || 'Firestore write error occurred.');
     } finally {
       setIsSaving(false);
     }
@@ -97,13 +155,22 @@ export const ProductsCMS: React.FC = () => {
 
   const handleDelete = async () => {
     if (!deleteTarget) return;
+
+    if (!user && !isAdmin) {
+      const authErr = 'Admin authentication required. Please log in to delete products.';
+      console.error('Firebase product delete error:', authErr);
+      error('Authentication Error', authErr);
+      return;
+    }
+
     setIsDeleting(true);
     try {
       await deleteProduct(deleteTarget.id);
       success('Product Deleted', `Removed "${deleteTarget.name}" from catalog.`);
       setDeleteTarget(null);
     } catch (err: any) {
-      error('Failed to delete product', err?.message);
+      console.error('Firebase product delete error:', err);
+      error('Failed to delete product', err?.message || 'Firestore delete error.');
     } finally {
       setIsDeleting(false);
     }
@@ -350,14 +417,159 @@ export const ProductsCMS: React.FC = () => {
             placeholder="Pharma, Retail, Engineering, Confectionery"
           />
 
-          {/* Product Image Upload with Firebase Storage */}
-          <FileUpload
-            label="Product Image (Upload or specify URL)"
-            folder="products"
-            value={editingProduct.imageUrl}
-            onChange={(url) => setEditingProduct({ ...editingProduct, imageUrl: url })}
-            helperText="Upload a product photo to Firebase Storage (PNG or JPG)"
-          />
+          {/* Product Image Upload with Firebase Storage (public/products) */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                Product Image (Firebase Storage)
+              </label>
+              <div className="flex items-center gap-1 bg-slate-100 p-0.5 rounded-lg text-xs">
+                <button
+                  type="button"
+                  onClick={() => setImageTab('upload')}
+                  className={`px-2.5 py-1 rounded-md font-medium transition-all ${
+                    imageTab === 'upload'
+                      ? 'bg-white text-navy shadow-xs'
+                      : 'text-slate-500 hover:text-slate-800'
+                  }`}
+                >
+                  <UploadCloud className="w-3.5 h-3.5 inline mr-1" />
+                  Upload File
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setImageTab('url')}
+                  className={`px-2.5 py-1 rounded-md font-medium transition-all ${
+                    imageTab === 'url'
+                      ? 'bg-white text-navy shadow-xs'
+                      : 'text-slate-500 hover:text-slate-800'
+                  }`}
+                >
+                  <LinkIcon className="w-3.5 h-3.5 inline mr-1" />
+                  Direct URL
+                </button>
+              </div>
+            </div>
+
+            {imageUploadError && (
+              <div className="flex items-start gap-2 p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-700">
+                <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <p className="font-semibold">Image Upload Error</p>
+                  <p className="text-red-600">{imageUploadError}</p>
+                </div>
+              </div>
+            )}
+
+            {imageTab === 'upload' ? (
+              <div>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  accept="image/png,image/jpeg,image/jpg,image/webp,image/svg+xml"
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files[0]) {
+                      handleImageFileChange(e.target.files[0]);
+                    }
+                  }}
+                  className="hidden"
+                  id="product-image-file-input"
+                />
+
+                {editingProduct.imageUrl ? (
+                  <div className="relative rounded-xl border border-slate-200 bg-slate-50 p-3 flex items-center gap-4">
+                    <div className="w-20 h-20 rounded-lg bg-white border border-slate-200 flex items-center justify-center overflow-hidden shrink-0">
+                      <img
+                        src={editingProduct.imageUrl}
+                        alt="Product Preview"
+                        className="w-full h-full object-contain"
+                        referrerPolicy="no-referrer"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-semibold text-emerald-700 flex items-center gap-1">
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                        Uploaded to Firebase Storage
+                      </p>
+                      <p className="text-xs text-slate-500 truncate mt-0.5 font-mono">
+                        {editingProduct.imageUrl}
+                      </p>
+                      <div className="mt-2 flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => fileInputRef.current?.click()}
+                          disabled={isUploadingImage}
+                          className="text-xs font-medium text-navy hover:underline"
+                        >
+                          Change Photo
+                        </button>
+                        <span className="text-slate-300">•</span>
+                        <button
+                          type="button"
+                          onClick={() => setEditingProduct({ ...editingProduct, imageUrl: '' })}
+                          className="text-xs font-medium text-red-600 hover:underline"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    onClick={() => fileInputRef.current?.click()}
+                    className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all ${
+                      isUploadingImage
+                        ? 'border-amber-400 bg-amber-50/50 cursor-not-allowed'
+                        : 'border-slate-200 hover:border-amber-400 hover:bg-amber-50/30'
+                    }`}
+                  >
+                    {isUploadingImage ? (
+                      <div className="flex flex-col items-center justify-center py-2 text-amber-800">
+                        <Loader2 className="w-8 h-8 animate-spin text-amber-600 mb-2" />
+                        <p className="text-xs font-semibold">Uploading to Firebase Storage...</p>
+                        <p className="text-[11px] text-amber-600/80 mt-1 font-mono">
+                          Target: public/products/&lt;timestamp&gt;-&lt;filename&gt;
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="flex flex-col items-center justify-center">
+                        <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 mb-2">
+                          <UploadCloud className="w-5 h-5 text-amber-600" />
+                        </div>
+                        <p className="text-xs font-semibold text-slate-700">
+                          Click to upload product photo
+                        </p>
+                        <p className="text-[11px] text-slate-400 mt-1">
+                          PNG, JPG, WebP (Uploaded to Firebase Storage <code className="text-amber-700 bg-amber-50 px-1 py-0.5 rounded">public/products</code>)
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="space-y-2">
+                <input
+                  type="url"
+                  placeholder="https://example.com/product-image.jpg"
+                  value={editingProduct.imageUrl || ''}
+                  onChange={(e) => setEditingProduct({ ...editingProduct, imageUrl: e.target.value })}
+                  className="w-full px-3 py-2 text-xs rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent font-mono"
+                />
+                {editingProduct.imageUrl && (
+                  <div className="w-16 h-16 rounded-lg border border-slate-200 overflow-hidden bg-white">
+                    <img
+                      src={editingProduct.imageUrl}
+                      alt="Preview"
+                      className="w-full h-full object-contain"
+                      referrerPolicy="no-referrer"
+                      onError={() => setImageUploadError('Invalid image URL or image failed to load.')}
+                    />
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
 
           <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
             <FormField

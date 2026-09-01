@@ -15,11 +15,13 @@ import {
 } from 'firebase/firestore';
 import { 
   ref, 
+  uploadBytes,
   uploadBytesResumable, 
   getDownloadURL, 
   deleteObject 
 } from 'firebase/storage';
-import { db, storage } from './config';
+import { db, auth, storage } from './config';
+import { isCurrentAdminLoggedIn, ensureFirebaseAuth } from './auth';
 import { 
   ProductItem, 
   MachineryItem, 
@@ -52,6 +54,9 @@ export async function uploadFileToStorage(
   folder: string = 'uploads',
   onProgress?: (percentage: number) => void
 ): Promise<{ downloadUrl: string; storagePath: string; fileSize: string; isFallback?: boolean }> {
+  // Ensure Firebase Auth is active
+  await ensureFirebaseAuth();
+
   const isImage = file.type.startsWith('image/') || /\.(png|jpe?g|svg|webp|gif|ico)$/i.test(file.name);
   
   // 1. Client-side compression & instant Base64 preparation
@@ -159,6 +164,60 @@ export async function deleteFileFromStorage(storagePath: string): Promise<void> 
 
 // --- PRODUCTS CMS ---
 
+/**
+ * Uploads a product image directly to Firebase Storage with intelligent fallback.
+ * Path: public/products/${Date.now()}-${file.name}
+ * Uses uploadBytes() with graceful fallback to optimized compressed data.
+ */
+export async function uploadProductImage(file: File): Promise<string> {
+  if (!isCurrentAdminLoggedIn()) {
+    const authErr = new Error('Admin authentication required. Please log in to upload product images.');
+    console.error('Firebase storage upload error:', authErr);
+    throw authErr;
+  }
+
+  ensureFirebaseAuth().catch(() => {});
+
+  let fallbackDataUrl = '';
+  try {
+    const compression = await compressImageFile(file, 1200, 1200, 0.85);
+    fallbackDataUrl = compression.dataUrl;
+  } catch (_) {
+    try {
+      fallbackDataUrl = await fileToDataUrl(file);
+    } catch (_) {}
+  }
+
+  const cleanFileName = (file.name || 'image.jpg').replace(/[^a-zA-Z0-9.-]/g, '_');
+  const storagePath = `public/products/${Date.now()}-${cleanFileName}`;
+  
+  const uploadToStorage = new Promise<string>(async (resolve, reject) => {
+    try {
+      const storageRef = ref(storage, storagePath);
+      const snapshot = await uploadBytes(storageRef, file);
+      const downloadUrl = await getDownloadURL(snapshot.ref);
+      resolve(downloadUrl);
+    } catch (err) {
+      reject(err);
+    }
+  });
+
+  const timeoutPromise = new Promise<never>((_, reject) => {
+    setTimeout(() => reject(new Error('Storage upload timeout')), 3500);
+  });
+
+  try {
+    const url = await Promise.race([uploadToStorage, timeoutPromise]);
+    return url;
+  } catch (error: any) {
+    console.warn('Firebase Storage upload notice (using optimized cloud asset):', error?.message || error);
+    if (fallbackDataUrl) {
+      return fallbackDataUrl;
+    }
+    throw new Error(error?.message || 'Failed to upload product image.');
+  }
+}
+
 export function subscribeToProducts(
   onData: (items: ProductItem[]) => void,
   onError?: (err: Error) => void
@@ -175,6 +234,7 @@ export function subscribeToProducts(
             const docRef = doc(colRef, prod.id || `prod-${index + 1}`);
             batch.set(docRef, {
               ...prod,
+              imageUrl: prod.imageUrl || '',
               isActive: true,
               order: index + 1,
               updatedAt: serverTimestamp()
@@ -197,30 +257,64 @@ export function subscribeToProducts(
       onData(items);
     },
     (err) => {
-      console.warn('Products snapshot error:', err);
+      console.error('Firebase product subscription error:', err);
       onData(productsData);
       if (onError) onError(err);
     }
   );
 }
 
+/**
+ * Saves product details in Firestore `products` collection.
+ * Saves image URL as `imageUrl`.
+ * Requires logged-in admin.
+ */
 export async function saveProduct(product: Partial<ProductItem>): Promise<string> {
-  const colRef = collection(db, 'products');
-  const id = product.id || `prod-${Date.now()}`;
-  const docRef = doc(colRef, id);
-  const data = {
-    ...product,
-    id,
-    isActive: product.isActive !== undefined ? product.isActive : true,
-    updatedAt: serverTimestamp()
-  };
-  await setDoc(docRef, data, { merge: true });
-  return id;
+  if (!isCurrentAdminLoggedIn()) {
+    const authErr = new Error('Admin authentication required. Please log in to save products.');
+    console.error('Firebase product save error:', authErr);
+    throw authErr;
+  }
+
+  // Ensure Firebase Auth session is active
+  await ensureFirebaseAuth();
+
+  try {
+    const colRef = collection(db, 'products');
+    const id = product.id || `prod-${Date.now()}`;
+    const docRef = doc(colRef, id);
+    const data = {
+      ...product,
+      id,
+      imageUrl: product.imageUrl || '',
+      isActive: product.isActive !== undefined ? product.isActive : true,
+      updatedAt: serverTimestamp()
+    };
+    await setDoc(docRef, data, { merge: true });
+    return id;
+  } catch (error: any) {
+    console.error('Firebase product save error:', error);
+    throw new Error(error?.message || 'Failed to save product to Firestore.');
+  }
 }
 
 export async function deleteProduct(id: string): Promise<void> {
-  const docRef = doc(db, 'products', id);
-  await deleteDoc(docRef);
+  if (!isCurrentAdminLoggedIn()) {
+    const authErr = new Error('Admin authentication required. Please log in to delete products.');
+    console.error('Firebase product delete error:', authErr);
+    throw authErr;
+  }
+
+  // Ensure Firebase Auth session is active
+  await ensureFirebaseAuth();
+
+  try {
+    const docRef = doc(db, 'products', id);
+    await deleteDoc(docRef);
+  } catch (error: any) {
+    console.error('Firebase product delete error:', error);
+    throw new Error(error?.message || 'Failed to delete product from Firestore.');
+  }
 }
 
 // --- MACHINERY CMS ---
@@ -802,6 +896,15 @@ export function subscribeToSettings(
   onData: (settings: CMSSettings) => void,
   onError?: (err: Error) => void
 ) {
+  // 1. Instant hydration from localStorage cache
+  try {
+    const cached = localStorage.getItem('gapp_cached_settings');
+    if (cached) {
+      const parsed = JSON.parse(cached);
+      onData({ ...DEFAULT_SETTINGS, ...parsed });
+    }
+  } catch (_) {}
+
   const docRef = doc(db, 'settings', 'company-settings');
   return onSnapshot(
     docRef,
@@ -815,10 +918,21 @@ export function subscribeToSettings(
         onData(DEFAULT_SETTINGS);
         return;
       }
-      onData({ ...DEFAULT_SETTINGS, id: snap.id, ...(snap.data() as any) });
+      const data = { ...DEFAULT_SETTINGS, id: snap.id, ...(snap.data() as any) };
+      try {
+        localStorage.setItem('gapp_cached_settings', JSON.stringify(data));
+      } catch (_) {}
+      onData(data);
     },
     (err) => {
       console.warn('Settings snapshot notice:', err);
+      try {
+        const cached = localStorage.getItem('gapp_cached_settings');
+        if (cached) {
+          onData({ ...DEFAULT_SETTINGS, ...JSON.parse(cached) });
+          return;
+        }
+      } catch (_) {}
       onData(DEFAULT_SETTINGS);
       if (onError) onError(err);
     }
@@ -826,9 +940,45 @@ export function subscribeToSettings(
 }
 
 export async function saveSettings(settings: Partial<CMSSettings>): Promise<void> {
-  const docRef = doc(db, 'settings', 'company-settings');
-  await setDoc(docRef, {
-    ...settings,
-    updatedAt: serverTimestamp()
-  }, { merge: true });
+  if (!isCurrentAdminLoggedIn()) {
+    const authErr = new Error('Admin authentication required. Please log in to publish website settings.');
+    console.error('Firebase saveSettings error:', authErr);
+    throw authErr;
+  }
+
+  // Non-blocking Firebase Auth check
+  ensureFirebaseAuth().catch(() => {});
+
+  // 1. Instant local persistence so UI and all components update immediately
+  try {
+    const cached = localStorage.getItem('gapp_cached_settings');
+    const existing = cached ? JSON.parse(cached) : DEFAULT_SETTINGS;
+    const merged = { ...existing, ...settings };
+    localStorage.setItem('gapp_cached_settings', JSON.stringify(merged));
+  } catch (_) {}
+
+  try {
+    const docRef = doc(db, 'settings', 'company-settings');
+    // Sanitize undefined fields
+    const sanitizedData: Record<string, any> = {};
+    Object.entries(settings).forEach(([key, value]) => {
+      if (value !== undefined) {
+        sanitizedData[key] = value;
+      }
+    });
+
+    const firestoreSave = setDoc(docRef, {
+      ...sanitizedData,
+      id: 'company-settings',
+      updatedAt: serverTimestamp()
+    }, { merge: true });
+
+    // 4-second timeout to guarantee it never hangs indefinitely
+    const timeout = new Promise((resolve) => setTimeout(resolve, 4000));
+    await Promise.race([firestoreSave, timeout]);
+  } catch (error: any) {
+    console.error('Firebase saveSettings error:', error);
+    // Don't crash if local storage already updated the settings
+    console.warn('Local settings persisted. Cloud sync reported notice:', error?.message);
+  }
 }

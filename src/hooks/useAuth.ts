@@ -10,7 +10,8 @@ import {
   getStoredAdminSession,
   setStoredAdminSession,
   getSecondaryAdminProfiles,
-  saveSecondaryAdminProfiles
+  saveSecondaryAdminProfiles,
+  ensureFirebaseAuth
 } from '../firebase/auth';
 import { AdminUser, SecondaryAdminProfile } from '../types';
 
@@ -59,6 +60,7 @@ export function useAuth(): UseAuthReturn {
         setUser(currentStored.user);
         setAdminUser(currentStored.adminData);
         setLoading(false);
+        ensureFirebaseAuth().catch(() => {});
         return;
       }
 

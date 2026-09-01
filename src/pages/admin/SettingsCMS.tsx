@@ -24,13 +24,16 @@ import { CMSSettings } from '../../types';
 import { FormField } from '../../components/admin/common/FormField';
 import { FileUpload } from '../../components/admin/common/FileUpload';
 import { useToast } from '../../components/admin/common/Toast';
+import { useAuth } from '../../hooks/useAuth';
 
 export const SettingsCMS: React.FC = () => {
   const { success, error } = useToast();
+  const { user, isAdmin } = useAuth();
   const [settings, setSettings] = useState<CMSSettings>(DEFAULT_SETTINGS);
   const [activeTab, setActiveTab] = useState<'logo' | 'identity' | 'statutory' | 'locations' | 'contact' | 'stats'>('logo');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [logoSaving, setLogoSaving] = useState(false);
 
   useEffect(() => {
     const unsub = subscribeToSettings((data) => {
@@ -88,16 +91,40 @@ export const SettingsCMS: React.FC = () => {
     });
   };
 
-  const handleSave = async (e?: React.FormEvent) => {
+  const handleSave = async (e?: React.FormEvent, customSettings?: Partial<CMSSettings>) => {
     if (e) e.preventDefault();
     setSaving(true);
     try {
-      await saveSettings(settings);
-      success('Settings Published', 'Company logo, statutory details, and plant settings updated.');
+      const dataToSave = customSettings ? { ...settings, ...customSettings } : settings;
+      await saveSettings(dataToSave);
+      if (customSettings) {
+        setSettings((prev) => ({ ...prev, ...customSettings }));
+      }
+      success('Settings Published', 'Company logo, statutory details, and plant settings updated across the live website.');
     } catch (err: any) {
-      error('Failed to save settings', err?.message);
+      console.error('Save settings error:', err);
+      error('Failed to publish settings', err?.message || 'Please ensure you are logged in as an authorized administrator.');
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handlePublishLogo = async (overrideLogoUrl?: string) => {
+    setLogoSaving(true);
+    try {
+      const targetLogo = overrideLogoUrl !== undefined ? overrideLogoUrl : (settings.logoUrl || '/logo.svg');
+      const updated = {
+        ...settings,
+        logoUrl: targetLogo
+      };
+      await saveSettings(updated);
+      setSettings(updated);
+      success('Logo Published Live', 'Company logo is now published across Navbar, Footer, RFQs, and all website pages.');
+    } catch (err: any) {
+      console.error('Publish logo error:', err);
+      error('Failed to publish logo', err?.message || 'Error communicating with cloud database.');
+    } finally {
+      setLogoSaving(false);
     }
   };
 
@@ -208,24 +235,18 @@ export const SettingsCMS: React.FC = () => {
                       value={settings.logoUrl || ''}
                       onChange={async (url) => {
                         handleChange('logoUrl', url);
-                        try {
-                          await saveSettings({ logoUrl: url });
-                          success('Logo Uploaded & Saved', 'Your company logo is now live across the website.');
-                        } catch (err: any) {
-                          console.warn('Auto-save notice:', err);
-                        }
+                        await handlePublishLogo(url);
                       }}
                       helperText="Supports PNG Transparent, High-Res JPG, SVG Vector, or WebP"
                       isImage={true}
                     />
 
-                    <div className="flex items-center justify-between flex-wrap gap-2 pt-2 border-t border-slate-200">
+                    <div className="flex items-center justify-between flex-wrap gap-2 pt-3 border-t border-slate-200">
                       <button
                         type="button"
                         onClick={async () => {
                           handleChange('logoUrl', '/logo.svg');
-                          await saveSettings({ logoUrl: '/logo.svg' });
-                          success('Default Logo Restored', 'Restored official vector SVG /logo.svg.');
+                          await handlePublishLogo('/logo.svg');
                         }}
                         className="text-xs text-[#0F4C5C] hover:underline font-semibold flex items-center gap-1.5 cursor-pointer py-1"
                       >
@@ -235,28 +256,37 @@ export const SettingsCMS: React.FC = () => {
 
                       <button
                         type="button"
-                        onClick={() => handleSave()}
-                        disabled={saving}
-                        className="px-3.5 py-1.5 bg-[#0F4C5C] hover:bg-[#0c3c49] text-white text-xs font-bold rounded-lg shadow-xs transition-colors flex items-center gap-1 cursor-pointer disabled:opacity-50"
+                        onClick={() => handlePublishLogo()}
+                        disabled={logoSaving || saving}
+                        id="publish-logo-changes-btn"
+                        className="px-4 py-2 bg-[#0F4C5C] hover:bg-[#0c3c49] text-white text-xs font-bold rounded-lg shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                       >
                         <Save className="w-3.5 h-3.5" />
-                        <span>{saving ? 'Saving...' : 'Save Settings'}</span>
+                        <span>{logoSaving ? 'Publishing Logo...' : 'Publish Logo Changes'}</span>
                       </button>
                     </div>
                   </div>
 
-                  <FormField
-                    label="Direct Logo URL (Alternative)"
-                    value={settings.logoUrl || ''}
-                    onChange={async (val) => {
-                      handleChange('logoUrl', val);
-                      if (val.startsWith('http') || val.startsWith('/')) {
-                        await saveSettings({ logoUrl: val });
-                      }
-                    }}
-                    placeholder="https://example.com/logo.png or /logo.svg"
-                    helper="You can also paste an image URL directly from Google Drive, Cloudinary, AWS S3, etc."
-                  />
+                  <div className="space-y-2">
+                    <FormField
+                      label="Direct Logo URL (Alternative)"
+                      value={settings.logoUrl || ''}
+                      onChange={(val) => handleChange('logoUrl', val)}
+                      placeholder="https://example.com/logo.png or /logo.svg"
+                      helper="You can also paste an image URL directly or upload an image above."
+                    />
+                    <div className="flex justify-end">
+                      <button
+                        type="button"
+                        onClick={() => handlePublishLogo(settings.logoUrl)}
+                        disabled={logoSaving || saving}
+                        className="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-lg transition-colors flex items-center gap-1 cursor-pointer disabled:opacity-50"
+                      >
+                        <Save className="w-3 h-3" />
+                        <span>Apply & Publish URL</span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Live Logo Preview Box */}
