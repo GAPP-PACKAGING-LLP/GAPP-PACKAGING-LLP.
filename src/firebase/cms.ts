@@ -957,28 +957,39 @@ export async function saveSettings(settings: Partial<CMSSettings>): Promise<void
     localStorage.setItem('gapp_cached_settings', JSON.stringify(merged));
   } catch (_) {}
 
+  // 2. Sanitize undefined fields
+  const sanitizedData: Record<string, any> = {};
+  Object.entries(settings).forEach(([key, value]) => {
+    if (value !== undefined) {
+      sanitizedData[key] = value;
+    }
+  });
+
   try {
     const docRef = doc(db, 'settings', 'company-settings');
-    // Sanitize undefined fields
-    const sanitizedData: Record<string, any> = {};
-    Object.entries(settings).forEach(([key, value]) => {
-      if (value !== undefined) {
-        sanitizedData[key] = value;
-      }
-    });
+    const backupDocRef = doc(db, 'settings', 'company');
 
-    const firestoreSave = setDoc(docRef, {
-      ...sanitizedData,
-      id: 'company-settings',
-      updatedAt: serverTimestamp()
-    }, { merge: true });
+    const firestoreSave = Promise.all([
+      setDoc(docRef, {
+        ...sanitizedData,
+        id: 'company-settings',
+        updatedAt: serverTimestamp()
+      }, { merge: true }),
+      setDoc(backupDocRef, {
+        ...sanitizedData,
+        id: 'company',
+        updatedAt: serverTimestamp()
+      }, { merge: true })
+    ]);
 
-    // 4-second timeout to guarantee it never hangs indefinitely
-    const timeout = new Promise((resolve) => setTimeout(resolve, 4000));
-    await Promise.race([firestoreSave, timeout]);
+    // 5-second timeout protection for network resilience
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Firestore write request timed out')), 5000)
+    );
+
+    await Promise.race([firestoreSave, timeoutPromise]);
   } catch (error: any) {
-    console.error('Firebase saveSettings error:', error);
-    // Don't crash if local storage already updated the settings
-    console.warn('Local settings persisted. Cloud sync reported notice:', error?.message);
+    console.warn('Firebase saveSettings notice:', error?.message || error);
+    // If cloud timed out, local cache is already saved
   }
 }

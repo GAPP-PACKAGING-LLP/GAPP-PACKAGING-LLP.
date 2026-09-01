@@ -17,7 +17,8 @@ import {
   AlertCircle,
   Eye,
   RefreshCw,
-  ExternalLink
+  ExternalLink,
+  Download
 } from 'lucide-react';
 import { subscribeToSettings, saveSettings, DEFAULT_SETTINGS } from '../../firebase/cms';
 import { CMSSettings } from '../../types';
@@ -403,6 +404,32 @@ export const SettingsCMS: React.FC = () => {
                     <span>Use Default Interlocking Icon (/favicon.svg)</span>
                   </button>
                 </div>
+              </div>
+
+              {/* Cloud Sync & Git Deployment Info Banner */}
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <h4 className="text-xs font-bold text-slate-800">Cloud Database & Live Sync Information</h4>
+                  </div>
+                  <p className="text-xs text-slate-600 max-w-2xl leading-relaxed">
+                    CMS me logo upload/publish karne par yeh Firebase Firestore me store hota hai aur sabhi live users ko bina code re-build ke dikhta hai. Agar aap chahte hain ki Git repository ka default source file bhi permanent yahi rahe, toh aap is logo ko download karke apne local codebase ke <code className="bg-slate-200 px-1 py-0.5 rounded text-[11px] font-mono">/public/logo.svg</code> me commit kar sakte hain.
+                  </p>
+                </div>
+
+                {settings.logoUrl && settings.logoUrl !== '/logo.svg' && (
+                  <a
+                    href={settings.logoUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    download="gapp-logo"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-lg text-xs font-bold shadow-2xs transition-colors shrink-0"
+                  >
+                    <Download className="w-3.5 h-3.5 text-[#0F4C5C]" />
+                    <span>Download Active Logo</span>
+                  </a>
+                )}
               </div>
             </div>
           </div>
