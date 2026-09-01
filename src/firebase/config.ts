@@ -1,7 +1,6 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { initializeFirestore, getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import { getStorage } from 'firebase/storage';
 import configJson from '../../firebase-applet-config.json';
 
 // Safe environment variable accessor for Vite
@@ -40,9 +39,6 @@ export const db = dbInstance;
 
 // Initialize Firebase Authentication
 export const auth = getAuth(app);
-
-// Initialize Firebase Storage
-export const storage = getStorage(app);
 
 export { firebaseConfig, firestoreDatabaseId };
 export default app;

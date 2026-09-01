@@ -14,7 +14,7 @@ import {
   ExternalLink,
   Layers
 } from 'lucide-react';
-import { uploadFileToStorage } from '../../../firebase/cms';
+import { compressImageFile } from '../../../utils/imageCompressor';
 
 export interface PresetMachineImage {
   id: string;
@@ -141,27 +141,25 @@ export const MachineryImageAttachment: React.FC<MachineryImageAttachmentProps> =
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const galleryInputRef = React.useRef<HTMLInputElement>(null);
 
-  // Handle local file upload
+  // Handle local file upload with instant compression
   const handleFileUpload = async (file: File, isGalleryItem = false) => {
     if (!file) return;
     setIsUploading(true);
-    setUploadProgress(15);
+    setUploadProgress(50);
 
     try {
-      const res = await uploadFileToStorage(file, 'machinery_photos', (progress) => {
-        setUploadProgress(progress);
-      });
+      const res = await compressImageFile(file, 1200, 1200, 0.85);
+      setUploadProgress(100);
 
       if (isGalleryItem) {
         if (onGalleryImagesChange) {
-          onGalleryImagesChange([...galleryImages, res.downloadUrl]);
+          onGalleryImagesChange([...galleryImages, res.dataUrl]);
         }
       } else {
-        onPrimaryImageChange(res.downloadUrl, res.storagePath, res.fileSize);
+        onPrimaryImageChange(res.dataUrl, '', `${res.compressedSizeKb} KB`);
       }
     } catch (err: any) {
-      console.error('Machinery photo upload failed:', err);
-      // Fallback to base64 if network is unavailable
+      console.error('Machinery photo processing failed:', err);
       const reader = new FileReader();
       reader.onload = (e) => {
         const base64 = e.target?.result as string;

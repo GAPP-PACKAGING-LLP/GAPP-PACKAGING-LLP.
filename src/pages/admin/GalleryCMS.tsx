@@ -83,7 +83,7 @@ export const GalleryCMS: React.FC = () => {
     if (!deleteTarget) return;
     setIsDeleting(true);
     try {
-      await deleteGalleryItem(deleteTarget.id, deleteTarget.storagePath);
+      await deleteGalleryItem(deleteTarget.id);
       success('Image Deleted', `Removed "${deleteTarget.title}".`);
       setDeleteTarget(null);
     } catch (err: any) {

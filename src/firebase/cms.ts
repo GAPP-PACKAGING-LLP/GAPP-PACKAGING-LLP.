@@ -13,14 +13,7 @@ import {
   serverTimestamp,
   writeBatch
 } from 'firebase/firestore';
-import { 
-  ref, 
-  uploadBytes,
-  uploadBytesResumable, 
-  getDownloadURL, 
-  deleteObject 
-} from 'firebase/storage';
-import { db, auth, storage } from './config';
+import { db, auth } from './config';
 import { isCurrentAdminLoggedIn, ensureFirebaseAuth } from './auth';
 import { 
   ProductItem, 
@@ -41,182 +34,7 @@ import {
   companyData 
 } from '../data/companyData';
 
-import { compressImageFile, fileToDataUrl } from '../utils/imageCompressor';
-
-// --- STORAGE HELPER ---
-
-/**
- * Uploads a file (Image/PDF) to Firebase Storage with progress tracking.
- * Includes intelligent client-side image compression and safe Firestore fallback.
- */
-export async function uploadFileToStorage(
-  file: File, 
-  folder: string = 'uploads',
-  onProgress?: (percentage: number) => void
-): Promise<{ downloadUrl: string; storagePath: string; fileSize: string; isFallback?: boolean }> {
-  // Ensure Firebase Auth is active
-  await ensureFirebaseAuth();
-
-  const isImage = file.type.startsWith('image/') || /\.(png|jpe?g|svg|webp|gif|ico)$/i.test(file.name);
-  
-  // 1. Client-side compression & instant Base64 preparation
-  let uploadFile = file;
-  let fallbackDataUrl = '';
-  let fileSizeStr = `${(file.size / 1024).toFixed(0)} KB`;
-
-  try {
-    if (isImage) {
-      const compression = await compressImageFile(file, 1200, 1200, 0.85);
-      uploadFile = compression.file;
-      fallbackDataUrl = compression.dataUrl;
-      fileSizeStr = `${compression.compressedSizeKb} KB`;
-    } else {
-      fileSizeStr = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
-      if (file.size <= 800 * 1024) {
-        fallbackDataUrl = await fileToDataUrl(file);
-      }
-    }
-  } catch (prepErr) {
-    console.warn('File pre-processing notice:', prepErr);
-    try {
-      fallbackDataUrl = await fileToDataUrl(file);
-    } catch (_) {}
-  }
-
-  if (onProgress) onProgress(40);
-
-  const timestamp = Date.now();
-  const sanitizedName = (uploadFile.name || 'file').replace(/[^a-zA-Z0-9.-]/g, '_');
-  const path = `${folder}/${timestamp}_${sanitizedName}`;
-
-  // 2. Attempt Firebase Storage with a strict 3-second timeout to prevent hanging
-  const attemptStorageUpload = new Promise<{ downloadUrl: string; storagePath: string; fileSize: string }>((resolve, reject) => {
-    try {
-      const storageRef = ref(storage, path);
-      const uploadTask = uploadBytesResumable(storageRef, uploadFile);
-
-      uploadTask.on(
-        'state_changed',
-        (snapshot) => {
-          if (snapshot.totalBytes > 0) {
-            const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-            if (onProgress) onProgress(Math.max(progress, 40));
-          }
-        },
-        (error) => {
-          reject(error);
-        },
-        async () => {
-          try {
-            const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
-            if (onProgress) onProgress(100);
-            resolve({
-              downloadUrl,
-              storagePath: path,
-              fileSize: fileSizeStr
-            });
-          } catch (urlErr) {
-            reject(urlErr);
-          }
-        }
-      );
-    } catch (initErr) {
-      reject(initErr);
-    }
-  });
-
-  const timeoutPromise = new Promise<never>((_, reject) => {
-    setTimeout(() => reject(new Error('Storage upload timed out')), 3000);
-  });
-
-  try {
-    const result = await Promise.race([attemptStorageUpload, timeoutPromise]);
-    return result;
-  } catch (storageErr: any) {
-    console.warn('Firebase Storage upload notice (using direct optimized cloud storage):', storageErr?.message || storageErr);
-    if (fallbackDataUrl) {
-      if (onProgress) onProgress(100);
-      return {
-        downloadUrl: fallbackDataUrl,
-        storagePath: '',
-        fileSize: fileSizeStr,
-        isFallback: true
-      };
-    }
-    throw new Error(
-      `File upload failed: ${storageErr?.message || 'Storage service unavailable'}. Please use a file smaller than 1MB or paste a direct URL.`
-    );
-  }
-}
-
-/**
- * Deletes a file from Firebase Storage
- */
-export async function deleteFileFromStorage(storagePath: string): Promise<void> {
-  if (!storagePath || storagePath.startsWith('data:')) return;
-  try {
-    const storageRef = ref(storage, storagePath);
-    await deleteObject(storageRef);
-  } catch (error) {
-    console.warn('Notice deleting storage object:', error);
-  }
-}
-
 // --- PRODUCTS CMS ---
-
-/**
- * Uploads a product image directly to Firebase Storage with intelligent fallback.
- * Path: public/products/${Date.now()}-${file.name}
- * Uses uploadBytes() with graceful fallback to optimized compressed data.
- */
-export async function uploadProductImage(file: File): Promise<string> {
-  if (!isCurrentAdminLoggedIn()) {
-    const authErr = new Error('Admin authentication required. Please log in to upload product images.');
-    console.error('Firebase storage upload error:', authErr);
-    throw authErr;
-  }
-
-  ensureFirebaseAuth().catch(() => {});
-
-  let fallbackDataUrl = '';
-  try {
-    const compression = await compressImageFile(file, 1200, 1200, 0.85);
-    fallbackDataUrl = compression.dataUrl;
-  } catch (_) {
-    try {
-      fallbackDataUrl = await fileToDataUrl(file);
-    } catch (_) {}
-  }
-
-  const cleanFileName = (file.name || 'image.jpg').replace(/[^a-zA-Z0-9.-]/g, '_');
-  const storagePath = `public/products/${Date.now()}-${cleanFileName}`;
-  
-  const uploadToStorage = new Promise<string>(async (resolve, reject) => {
-    try {
-      const storageRef = ref(storage, storagePath);
-      const snapshot = await uploadBytes(storageRef, file);
-      const downloadUrl = await getDownloadURL(snapshot.ref);
-      resolve(downloadUrl);
-    } catch (err) {
-      reject(err);
-    }
-  });
-
-  const timeoutPromise = new Promise<never>((_, reject) => {
-    setTimeout(() => reject(new Error('Storage upload timeout')), 3500);
-  });
-
-  try {
-    const url = await Promise.race([uploadToStorage, timeoutPromise]);
-    return url;
-  } catch (error: any) {
-    console.warn('Firebase Storage upload notice (using optimized cloud asset):', error?.message || error);
-    if (fallbackDataUrl) {
-      return fallbackDataUrl;
-    }
-    throw new Error(error?.message || 'Failed to upload product image.');
-  }
-}
 
 export function subscribeToProducts(
   onData: (items: ProductItem[]) => void,
@@ -601,12 +419,9 @@ export async function saveGalleryItem(item: Partial<CMSGalleryItem>): Promise<st
   return id;
 }
 
-export async function deleteGalleryItem(id: string, storagePath?: string): Promise<void> {
+export async function deleteGalleryItem(id: string): Promise<void> {
   const docRef = doc(db, 'gallery', id);
   await deleteDoc(docRef);
-  if (storagePath) {
-    await deleteFileFromStorage(storagePath);
-  }
 }
 
 // --- BROCHURES CMS ---
@@ -671,12 +486,9 @@ export async function saveBrochure(brochure: Partial<CMSBrochure>): Promise<stri
   return id;
 }
 
-export async function deleteBrochure(id: string, storagePath?: string): Promise<void> {
+export async function deleteBrochure(id: string): Promise<void> {
   const docRef = doc(db, 'brochures', id);
   await deleteDoc(docRef);
-  if (storagePath) {
-    await deleteFileFromStorage(storagePath);
-  }
 }
 
 // --- PAGES CMS ---

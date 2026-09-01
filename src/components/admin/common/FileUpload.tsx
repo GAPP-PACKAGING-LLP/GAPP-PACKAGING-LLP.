@@ -12,7 +12,7 @@ import {
   Sparkles,
   FolderOpen
 } from 'lucide-react';
-import { uploadFileToStorage } from '../../../firebase/cms';
+import { compressImageFile, fileToDataUrl } from '../../../utils/imageCompressor';
 
 interface FileUploadProps {
   label: string;
@@ -47,21 +47,23 @@ export const FileUpload: React.FC<FileUploadProps> = ({
     setError(null);
     setNotice(null);
     setIsUploading(true);
-    setUploadProgress(15);
+    setUploadProgress(40);
 
     try {
-      const res = await uploadFileToStorage(file, folder, (progress) => {
-        setUploadProgress(progress);
-      });
-
-      if (res.isFallback) {
-        setNotice('File optimized & saved directly to cloud database.');
+      if (file.type.startsWith('image/')) {
+        const res = await compressImageFile(file, 1200, 1200, 0.85);
+        setUploadProgress(100);
+        setNotice(`Optimized image (${res.compressedSizeKb} KB).`);
+        onChange(res.dataUrl, '', `${res.compressedSizeKb} KB`);
+      } else {
+        const dataUrl = await fileToDataUrl(file);
+        setUploadProgress(100);
+        const sizeStr = `${(file.size / (1024 * 1024)).toFixed(2)} MB`;
+        onChange(dataUrl, '', sizeStr);
       }
-
-      onChange(res.downloadUrl, res.storagePath, res.fileSize);
     } catch (err: any) {
-      console.error('File upload failure:', err);
-      setError(err?.message || 'Failed to upload file. You can also use the Direct URL tab.');
+      console.error('File processing failure:', err);
+      setError(err?.message || 'Failed to process file. You can also use the Direct URL tab.');
     } finally {
       setIsUploading(false);
       setUploadProgress(0);

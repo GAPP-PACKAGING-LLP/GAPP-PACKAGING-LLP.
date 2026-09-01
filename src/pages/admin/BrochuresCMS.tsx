@@ -79,7 +79,7 @@ export const BrochuresCMS: React.FC = () => {
     if (!deleteTarget) return;
     setIsDeleting(true);
     try {
-      await deleteBrochure(deleteTarget.id, deleteTarget.storagePath);
+      await deleteBrochure(deleteTarget.id);
       success('Brochure Deleted', `Removed "${deleteTarget.title}".`);
       setDeleteTarget(null);
     } catch (err: any) {
