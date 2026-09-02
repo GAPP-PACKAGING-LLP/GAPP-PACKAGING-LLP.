@@ -23,6 +23,7 @@ import { DataTable, Column } from '../../components/admin/common/DataTable';
 import { ModalDrawer } from '../../components/admin/common/ModalDrawer';
 import { ConfirmDialog } from '../../components/admin/common/ConfirmDialog';
 import { FormField } from '../../components/admin/common/FormField';
+import { FileUpload } from '../../components/admin/common/FileUpload';
 import { useToast } from '../../components/admin/common/Toast';
 import { useAuth } from '../../hooks/useAuth';
 
@@ -46,8 +47,6 @@ export const ProductsCMS: React.FC = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Partial<ProductItem>>({});
   const [isSaving, setIsSaving] = useState(false);
-  const [urlInputError, setUrlInputError] = useState<string | null>(null);
-  const [imagePreviewStatus, setImagePreviewStatus] = useState<'idle' | 'loading' | 'loaded' | 'error'>('idle');
 
   // Delete State
   const [deleteTarget, setDeleteTarget] = useState<ProductItem | null>(null);
@@ -62,8 +61,6 @@ export const ProductsCMS: React.FC = () => {
   }, []);
 
   const handleOpenAdd = () => {
-    setUrlInputError(null);
-    setImagePreviewStatus('idle');
     setEditingProduct({
       name: '',
       category: '5-ply',
@@ -84,31 +81,12 @@ export const ProductsCMS: React.FC = () => {
   };
 
   const handleOpenEdit = (prod: ProductItem) => {
-    setUrlInputError(null);
-    setImagePreviewStatus(prod.imageUrl ? 'loading' : 'idle');
     setEditingProduct({ ...prod });
     setIsDrawerOpen(true);
   };
 
-  const handleImageUrlChange = (url: string) => {
-    const trimmed = url.trim();
-    setEditingProduct((prev) => ({ ...prev, imageUrl: url }));
-
-    if (!trimmed) {
-      setUrlInputError('Product Image URL is required.');
-      setImagePreviewStatus('idle');
-    } else if (!trimmed.startsWith('https://')) {
-      setUrlInputError('URL must start with "https://" (e.g. ImageKit CDN URL: https://ik.imagekit.io/...)');
-      setImagePreviewStatus('idle');
-    } else {
-      setUrlInputError(null);
-      setImagePreviewStatus('loading');
-    }
-  };
-
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    setUrlInputError(null);
 
     // Require logged-in admin
     if (!user && !isAdmin) {
@@ -125,15 +103,7 @@ export const ProductsCMS: React.FC = () => {
 
     const trimmedUrl = (editingProduct.imageUrl || '').trim();
     if (!trimmedUrl) {
-      setUrlInputError('Product Image URL is required.');
-      error('Validation Error', 'Product Image URL is required.');
-      return;
-    }
-
-    if (!trimmedUrl.startsWith('https://')) {
-      const msg = 'Product Image URL must start with https:// (e.g. your ImageKit CDN link).';
-      setUrlInputError(msg);
-      error('Validation Error', msg);
+      error('Validation Error', 'Product Image is required. Please upload a photo or paste a URL.');
       return;
     }
 
@@ -417,124 +387,15 @@ export const ProductsCMS: React.FC = () => {
             placeholder="Pharma, Retail, Engineering, Confectionery"
           />
 
-          {/* Product Image URL Field with ImageKit & HTTPS Support */}
-          <div className="space-y-3 p-4 bg-slate-50 border border-slate-200 rounded-xl">
-            <div className="flex items-center justify-between">
-              <label className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-                <LinkIcon className="w-3.5 h-3.5 text-[#0F4C5C]" />
-                Product Image URL <span className="text-red-500">*</span>
-              </label>
-              <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
-                Free CDN Setup
-              </span>
-            </div>
-
-            <p className="text-xs text-slate-500 leading-relaxed">
-              Upload your high-res product photos to your free <strong className="text-slate-700">ImageKit Media Library</strong> (or any HTTPS image CDN), then paste the direct URL below.
-            </p>
-
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                <LinkIcon className="w-4 h-4" />
-              </div>
-              <input
-                type="url"
-                required
-                placeholder="https://ik.imagekit.io/your_id/products/5-ply-box.jpg"
-                value={editingProduct.imageUrl || ''}
-                onChange={(e) => handleImageUrlChange(e.target.value)}
-                className={`w-full pl-9 pr-8 py-2.5 text-xs rounded-lg border bg-white font-mono text-slate-800 placeholder:text-slate-400 transition-all focus:outline-none focus:ring-2 ${
-                  urlInputError
-                    ? 'border-red-300 focus:ring-red-400 focus:border-red-400 bg-red-50/20'
-                    : 'border-slate-300 focus:ring-[#0F4C5C] focus:border-[#0F4C5C]'
-                }`}
-              />
-              {editingProduct.imageUrl && (
-                <button
-                  type="button"
-                  onClick={() => handleImageUrlChange('')}
-                  className="absolute inset-y-0 right-0 pr-2.5 flex items-center text-slate-400 hover:text-slate-600"
-                  title="Clear URL"
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
-              )}
-            </div>
-
-            {/* Validation & Error Messages */}
-            {urlInputError && (
-              <div className="flex items-start gap-2 p-2.5 bg-red-50 border border-red-200 rounded-lg text-xs text-red-700 animate-fadeIn">
-                <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
-                <div className="flex-1">
-                  <p className="font-medium">{urlInputError}</p>
-                </div>
-              </div>
-            )}
-
-            {/* Live Image Preview Section */}
-            {editingProduct.imageUrl && editingProduct.imageUrl.trim().startsWith('https://') && (
-              <div className="mt-3 p-3 bg-white border border-slate-200 rounded-lg space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1">
-                    <Eye className="w-3.5 h-3.5 text-[#0F4C5C]" />
-                    Live Image Preview
-                  </span>
-                  <div className="flex items-center gap-2">
-                    {imagePreviewStatus === 'loaded' && (
-                      <span className="text-[10px] font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded flex items-center gap-1">
-                        <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-                        Valid Image
-                      </span>
-                    )}
-                    {imagePreviewStatus === 'error' && (
-                      <span className="text-[10px] font-medium text-red-700 bg-red-50 px-2 py-0.5 rounded flex items-center gap-1">
-                        <XCircle className="w-3 h-3 text-red-600" />
-                        Failed to Load
-                      </span>
-                    )}
-                    <a
-                      href={editingProduct.imageUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[11px] text-[#0F4C5C] hover:underline flex items-center gap-0.5 font-medium"
-                    >
-                      Open Link <ExternalLink className="w-3 h-3" />
-                    </a>
-                  </div>
-                </div>
-
-                <div className="relative w-full h-44 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center overflow-hidden">
-                  {imagePreviewStatus === 'loading' && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-100/80 z-10">
-                      <Loader2 className="w-6 h-6 animate-spin text-[#0F4C5C] mb-1" />
-                      <span className="text-xs text-slate-500">Loading preview...</span>
-                    </div>
-                  )}
-
-                  {imagePreviewStatus === 'error' && (
-                    <div className="p-4 text-center text-red-600 space-y-1">
-                      <AlertCircle className="w-6 h-6 mx-auto text-red-500" />
-                      <p className="text-xs font-semibold">Image failed to load</p>
-                      <p className="text-[11px] text-slate-500">
-                        Please verify that the URL is public and points to a valid image.
-                      </p>
-                    </div>
-                  )}
-
-                  <img
-                    src={editingProduct.imageUrl}
-                    alt="Product Preview"
-                    className={`max-h-full max-w-full object-contain transition-opacity duration-200 ${
-                      imagePreviewStatus === 'loaded' ? 'opacity-100' : 'opacity-0'
-                    }`}
-                    referrerPolicy="no-referrer"
-                    onLoad={() => setImagePreviewStatus('loaded')}
-                    onError={() => setImagePreviewStatus('error')}
-                  />
-                </div>
-              </div>
-            )}
-          </div>
+          {/* Product Image Upload & URL with compression */}
+          <FileUpload
+            label="Product Photo / Technical CAD"
+            folder="products"
+            value={editingProduct.imageUrl || ''}
+            onChange={(url) => setEditingProduct({ ...editingProduct, imageUrl: url })}
+            helperText="Upload JPG/PNG box photo (auto-compressed) or paste ImageKit CDN URL"
+            isImage={true}
+          />
 
           <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
             <FormField

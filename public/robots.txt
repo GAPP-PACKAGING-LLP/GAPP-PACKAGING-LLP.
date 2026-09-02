@@ -1,9 +1,30 @@
 # GAPP Packaging LLP - robots.txt
+# https://gapp-packaging-llp.vercel.app/
+
 User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /admin/
 Disallow: /admin/*
+
+# Search Engine Crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
 
 # Sitemap reference
 Sitemap: https://gapp-packaging-llp.vercel.app/sitemap.xml

@@ -6,6 +6,7 @@ import { WhatsAppButton } from './components/layout/WhatsAppButton';
 import { QuoteModal } from './components/modals/QuoteModal';
 import { BrochureModal } from './components/modals/BrochureModal';
 
+import { SEOHead } from './components/common/SEOHead';
 import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
 import { ProductsPage } from './pages/ProductsPage';
@@ -59,42 +60,6 @@ function AppLayout() {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
 
-  // Dynamic document title and SEO meta tag controller
-  useEffect(() => {
-    let robotsMeta = document.querySelector('meta[name="robots"]');
-    
-    if (isAdminRoute) {
-      document.title = 'GAPP Packaging LLP | Admin CMS Portal';
-      if (!robotsMeta) {
-        robotsMeta = document.createElement('meta');
-        robotsMeta.setAttribute('name', 'robots');
-        document.head.appendChild(robotsMeta);
-      }
-      robotsMeta.setAttribute('content', 'noindex, nofollow');
-    } else {
-      // Set public titles based on route
-      const routeTitles: Record<string, string> = {
-        '/': 'GAPP Packaging LLP | Corrugated Box Manufacturer Mandideep, Bhopal',
-        '/about': 'About Us | GAPP Packaging LLP - Mandideep Plant & Profile',
-        '/products': 'Corrugated Products & Boxes | 3-Ply, 5-Ply, 7-Ply | GAPP Packaging',
-        '/industries': 'Industries Served | Pharma, Auto, FMCG Packaging | GAPP Packaging',
-        '/infrastructure': 'Manufacturing Infrastructure & 12 Conversion Lines | GAPP Packaging',
-        '/plant-tour': 'Virtual Plant Tour | 8-Stage Manufacturing Flow | GAPP Packaging',
-        '/quality': 'Quality Assurance & In-House Testing Lab | GAPP Packaging',
-        '/calculator': 'Box Configurator & RFQ Estimator | GAPP Packaging',
-        '/clients': 'Industrial Clients & Trust Partners | GAPP Packaging',
-        '/faq': 'Procurement FAQ & B2B Buyer Guide | GAPP Packaging',
-        '/contact': 'Contact & Request Quote | GAPP Packaging LLP Mandideep',
-      };
-      
-      document.title = routeTitles[location.pathname] || 'GAPP Packaging LLP | Industrial Corrugated Packaging Solutions';
-      
-      if (robotsMeta) {
-        robotsMeta.setAttribute('content', 'index, follow');
-      }
-    }
-  }, [location.pathname, isAdminRoute]);
-
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
   const [isBrochureModalOpen, setIsBrochureModalOpen] = useState(false);
   const [prefilledQuoteData, setPrefilledQuoteData] = useState<{
@@ -116,6 +81,9 @@ function AppLayout() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F8F9FA] text-[#334155] font-sans antialiased selection:bg-[#0F4C5C] selection:text-white">
+      {/* Comprehensive SEO Head Manager */}
+      <SEOHead />
+
       {/* Sticky Header (shown on public site only) */}
       {!isAdminRoute && (
         <Navbar 
