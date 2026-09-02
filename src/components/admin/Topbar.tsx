@@ -15,6 +15,8 @@ interface TopbarProps {
 
 const pageTitles: Record<string, { title: string; subtitle: string }> = {
   '/admin': { title: 'Dashboard Overview', subtitle: 'Real-time inquiries and manufacturing metrics' },
+  '/admin/users': { title: 'Users & Access Control', subtitle: 'Super Admin ID & Password management for Directors and Staff' },
+  '/admin/directors': { title: 'Directors & Leadership', subtitle: 'Manage company partners, leadership profiles, and credentials' },
   '/admin/inquiries': { title: 'Customer Inquiries RFQ', subtitle: 'Review, manage, and filter customer quotation requests' },
   '/admin/pages': { title: 'Page Content CMS', subtitle: 'Update copy for Home, About, and Contact sections' },
   '/admin/products': { title: 'Packaging Offerings', subtitle: 'Manage corrugated boxes, ply counts, and technical specs' },

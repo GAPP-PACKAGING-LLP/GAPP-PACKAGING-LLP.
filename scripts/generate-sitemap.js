@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Target base URL (can be customized via environment variable SITE_URL)
-const SITE_URL = process.env.SITE_URL || process.env.VITE_SITE_URL || 'https://www.gapppackaging.com';
+const SITE_URL = process.env.SITE_URL || process.env.VITE_SITE_URL || 'https://gapp-packaging-llp.vercel.app';
 
 const routes = [
   {
@@ -16,15 +16,27 @@ const routes = [
     lastmod: new Date().toISOString().split('T')[0]
   },
   {
-    path: '/about',
+    path: '/products',
+    priority: '0.9',
+    changefreq: 'weekly',
+    lastmod: new Date().toISOString().split('T')[0]
+  },
+  {
+    path: '/calculator',
+    priority: '0.9',
+    changefreq: 'monthly',
+    lastmod: new Date().toISOString().split('T')[0]
+  },
+  {
+    path: '/industries',
     priority: '0.8',
     changefreq: 'monthly',
     lastmod: new Date().toISOString().split('T')[0]
   },
   {
-    path: '/products',
-    priority: '0.9',
-    changefreq: 'weekly',
+    path: '/about',
+    priority: '0.8',
+    changefreq: 'monthly',
     lastmod: new Date().toISOString().split('T')[0]
   },
   {
@@ -35,6 +47,24 @@ const routes = [
   },
   {
     path: '/quality',
+    priority: '0.8',
+    changefreq: 'monthly',
+    lastmod: new Date().toISOString().split('T')[0]
+  },
+  {
+    path: '/plant-tour',
+    priority: '0.7',
+    changefreq: 'monthly',
+    lastmod: new Date().toISOString().split('T')[0]
+  },
+  {
+    path: '/clients',
+    priority: '0.7',
+    changefreq: 'monthly',
+    lastmod: new Date().toISOString().split('T')[0]
+  },
+  {
+    path: '/faq',
     priority: '0.8',
     changefreq: 'monthly',
     lastmod: new Date().toISOString().split('T')[0]

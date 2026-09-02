@@ -1,5 +1,5 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
-import { initializeFirestore, getFirestore } from 'firebase/firestore';
+import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import configJson from '../../firebase-applet-config.json';
 
@@ -7,7 +7,7 @@ import configJson from '../../firebase-applet-config.json';
 const env = (typeof import.meta !== 'undefined' && (import.meta as any).env) || {};
 
 // Firebase configuration using environment variables with config fallback
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: env.VITE_FIREBASE_API_KEY || configJson.apiKey,
   authDomain: env.VITE_FIREBASE_AUTH_DOMAIN || configJson.authDomain,
   projectId: env.VITE_FIREBASE_PROJECT_ID || configJson.projectId,
@@ -16,29 +16,19 @@ const firebaseConfig = {
   appId: env.VITE_FIREBASE_APP_ID || configJson.appId,
 };
 
-const firestoreDatabaseId = env.VITE_FIREBASE_FIRESTORE_DATABASE_ID || configJson.firestoreDatabaseId || '(default)';
+export const firestoreDatabaseId = 
+  env.VITE_FIREBASE_FIRESTORE_DATABASE_ID || 
+  configJson.firestoreDatabaseId || 
+  'ai-studio-gapppackagingllp-8aae7773-3162-42e9-838a-a5b0639ea025';
 
 // Initialize Firebase App
 export const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 
-// Initialize Firestore Database with auto long polling to prevent "client is offline" errors
-let dbInstance;
-try {
-  const dbId = firestoreDatabaseId && firestoreDatabaseId !== '(default)' ? firestoreDatabaseId : undefined;
-  dbInstance = initializeFirestore(app, {
-    experimentalAutoDetectLongPolling: true,
-    ignoreUndefinedProperties: true
-  }, dbId);
-} catch (e) {
-  dbInstance = firestoreDatabaseId && firestoreDatabaseId !== '(default)'
-    ? getFirestore(app, firestoreDatabaseId)
-    : getFirestore(app);
-}
-
-export const db = dbInstance;
+// Initialize Firestore Database strictly with the target databaseId
+export const db = getFirestore(app, firestoreDatabaseId);
 
 // Initialize Firebase Authentication
 export const auth = getAuth(app);
 
-export { firebaseConfig, firestoreDatabaseId };
 export default app;
+

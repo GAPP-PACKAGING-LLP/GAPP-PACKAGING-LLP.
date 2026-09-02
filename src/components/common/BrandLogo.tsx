@@ -65,7 +65,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
     logoSrc = settings?.logoUrl || '/logo.svg';
   }
 
-  const altText = alt || `${settings?.companyName || 'GAPP Packaging'} - ${settings?.tagline || 'Focus On Quality'}`;
+  const altText = alt || `${settings?.companyName || 'GAPP Packaging LLP'} - Corrugated Box Manufacturer Mandideep, Bhopal`;
   const styleObj = height ? { height: typeof height === 'number' ? `${height}px` : height } : undefined;
 
   const fallbackSrc = isDark ? '/logo-dark.svg' : (variant === 'icon' ? '/logo-icon.svg' : '/logo.svg');

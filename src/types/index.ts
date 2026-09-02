@@ -153,26 +153,47 @@ export interface FaqItem {
   category: 'procurement' | 'technical' | 'delivery' | 'customization';
 }
 
+export type AdminRole = 'super_admin' | 'partner' | 'director' | 'plant_manager' | 'editor';
+
 export interface AdminUser {
   uid: string;
   email: string;
   name: string;
-  role: 'super_admin' | 'partner' | 'plant_manager' | 'editor' | string;
+  role: AdminRole | string;
   designation?: string;
   loginMethod?: 'google' | 'passkey' | 'credentials' | string;
   createdAt: any;
   photoURL?: string | null;
+  phone?: string;
 }
 
 export interface SecondaryAdminProfile {
   id: string;
   name: string;
   email: string;
-  role: 'super_admin' | 'partner' | 'plant_manager' | 'editor';
+  role: AdminRole;
   designation: string;
   passcode: string;
   avatar?: string;
+  phone?: string;
   isActive: boolean;
+  isProtected?: boolean;
+  createdAt?: string;
+  lastLogin?: string;
+  loginCount?: number;
+  notes?: string;
+}
+
+export interface AuditLogEntry {
+  id: string;
+  timestamp: string;
+  userName: string;
+  userEmail: string;
+  role: string;
+  action: 'LOGIN_SUCCESS' | 'LOGIN_FAILED' | 'PASSWORD_CHANGED' | 'USER_CREATED' | 'USER_UPDATED' | 'USER_DELETED' | 'SETTINGS_UPDATED';
+  details?: string;
+  ipAddress?: string;
+  userAgent?: string;
 }
 
 export interface InquiryFormData {

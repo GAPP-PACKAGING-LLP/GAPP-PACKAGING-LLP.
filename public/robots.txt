@@ -1,0 +1,10 @@
+# GAPP Packaging LLP - robots.txt
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /admin/*
+
+# Sitemap reference
+Sitemap: https://gapp-packaging-llp.vercel.app/sitemap.xml
+

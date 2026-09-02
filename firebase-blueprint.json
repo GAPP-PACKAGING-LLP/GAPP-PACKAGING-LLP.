@@ -2,15 +2,37 @@
   "entities": {
     "users": {
       "title": "Users",
-      "description": "Admin user documents with role control for GAPP Packaging CMS",
+      "description": "Admin and Director user accounts with role-based access control and security passcodes for GAPP Packaging CMS",
       "type": "object",
       "properties": {
-        "email": { "type": "string", "description": "Admin email address" },
-        "name": { "type": "string", "description": "Admin user full name" },
-        "role": { "type": "string", "description": "User role: super_admin", "enum": ["super_admin"] },
-        "createdAt": { "type": "string", "format": "date-time", "description": "Account registration timestamp" }
+        "email": { "type": "string", "description": "Admin / Director login email or username" },
+        "name": { "type": "string", "description": "Full name of the user" },
+        "role": { "type": "string", "description": "Role: super_admin, partner, director, plant_manager, editor", "enum": ["super_admin", "partner", "director", "plant_manager", "editor"] },
+        "designation": { "type": "string", "description": "Corporate or Plant Designation" },
+        "passcode": { "type": "string", "description": "Encrypted or hashed security passkey" },
+        "phone": { "type": "string", "description": "Contact mobile phone number" },
+        "isActive": { "type": "boolean", "description": "Whether user account is active" },
+        "loginMethod": { "type": "string", "description": "Login provider: passkey, google, credentials" },
+        "lastLogin": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" }
       },
-      "required": ["email", "role", "name", "createdAt"]
+      "required": ["email", "name", "role", "isActive"]
+    },
+    "audit_logs": {
+      "title": "Audit Logs",
+      "description": "Security audit trail tracking login events, user modifications, and administrative operations",
+      "type": "object",
+      "properties": {
+        "timestamp": { "type": "string", "format": "date-time" },
+        "userName": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "role": { "type": "string" },
+        "action": { "type": "string" },
+        "details": { "type": "string" },
+        "ipAddress": { "type": "string" },
+        "userAgent": { "type": "string" }
+      },
+      "required": ["timestamp", "userEmail", "action"]
     },
     "inquiries": {
       "title": "Inquiries",
@@ -193,6 +215,10 @@
     "/users/{uid}": {
       "schema": "users",
       "description": "Admin user authorization document"
+    },
+    "/audit_logs/{logId}": {
+      "schema": "audit_logs",
+      "description": "Security audit trail logs"
     },
     "/directors/{directorId}": {
       "schema": "directors",

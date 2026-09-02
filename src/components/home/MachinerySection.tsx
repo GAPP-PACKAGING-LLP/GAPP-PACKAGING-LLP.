@@ -92,9 +92,11 @@ export const MachinerySection: React.FC = () => {
                     {hasImage ? (
                       <img
                         src={machine.imageUrl}
-                        alt={machine.name}
+                        alt={`${machine.name} - Corrugated Box Machinery at Mandideep Plant`}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"
+                        decoding="async"
+                        referrerPolicy="no-referrer"
                       />
                     ) : (
                       <div className="w-full h-full flex flex-col items-center justify-center text-slate-400 bg-gradient-to-br from-slate-800 to-slate-900 p-6 text-center space-y-2">
@@ -215,8 +217,11 @@ export const MachinerySection: React.FC = () => {
                             ? activeModalItem.imageUrl
                             : activeModalItem.galleryImages?.[activeModalPhotoIndex - 1] || activeModalItem.imageUrl
                         }
-                        alt={activeModalItem.name}
+                        alt={`${activeModalItem.name} - Manufacturing Machine Specification & Operational View`}
                         className="w-full h-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                        referrerPolicy="no-referrer"
                       />
                     </div>
 
@@ -230,7 +235,7 @@ export const MachinerySection: React.FC = () => {
                             activeModalPhotoIndex === 0 ? 'border-[#0F4C5C] ring-2 ring-[#0F4C5C]/20' : 'border-slate-200 opacity-70'
                           }`}
                         >
-                          <img src={activeModalItem.imageUrl} alt="Main" className="w-full h-full object-cover" />
+                          <img src={activeModalItem.imageUrl} alt={`${activeModalItem.name} Main View`} className="w-full h-full object-cover" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
                         </button>
 
                         {activeModalItem.galleryImages.map((gUrl, gIdx) => (
@@ -242,7 +247,7 @@ export const MachinerySection: React.FC = () => {
                               activeModalPhotoIndex === gIdx + 1 ? 'border-[#0F4C5C] ring-2 ring-[#0F4C5C]/20' : 'border-slate-200 opacity-70'
                             }`}
                           >
-                            <img src={gUrl} alt={`Angle ${gIdx + 1}`} className="w-full h-full object-cover" />
+                            <img src={gUrl} alt={`${activeModalItem.name} - Angle ${gIdx + 1}`} className="w-full h-full object-cover" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
                           </button>
                         ))}
                       </div>

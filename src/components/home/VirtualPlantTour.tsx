@@ -279,7 +279,9 @@ export const VirtualPlantTour: React.FC = () => {
           <div className="lg:col-span-6 relative aspect-video lg:aspect-auto min-h-[300px] sm:min-h-[400px] overflow-hidden bg-slate-950 flex items-center justify-center">
             <img
               src={currentStage.imageUrl}
-              alt={currentStage.name}
+              alt={`${currentStage.name} - Stage ${currentStage.stageNumber} at GAPP Packaging Mandideep Plant`}
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
             />
 

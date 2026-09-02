@@ -11,9 +11,14 @@ import {
   setStoredAdminSession,
   getSecondaryAdminProfiles,
   saveSecondaryAdminProfiles,
+  subscribeToAdminProfiles,
+  createOrUpdateAdminUser,
+  deleteAdminUser,
+  subscribeToAuditLogs,
+  recordAuditLog,
   ensureFirebaseAuth
 } from '../firebase/auth';
-import { AdminUser, SecondaryAdminProfile } from '../types';
+import { AdminUser, SecondaryAdminProfile, AuditLogEntry } from '../types';
 
 export interface UseAuthReturn {
   user: User | any | null;
@@ -21,10 +26,17 @@ export interface UseAuthReturn {
   loading: boolean;
   error: string | null;
   isAdmin: boolean;
+  isSuperAdmin: boolean;
   secondaryProfiles: SecondaryAdminProfile[];
+  auditLogs: AuditLogEntry[];
   loginWithGoogle: () => Promise<void>;
   loginWithSecondaryUser: (profileIdOrEmail: string, passcode: string) => Promise<void>;
+  loginWithCredentials: (identifier: string, passcode: string) => Promise<void>;
+  createUser: (profile: Partial<SecondaryAdminProfile>) => Promise<SecondaryAdminProfile>;
+  updateUser: (profile: Partial<SecondaryAdminProfile>) => Promise<SecondaryAdminProfile>;
+  deleteUser: (profileId: string) => Promise<void>;
   updateSecondaryProfiles: (profiles: SecondaryAdminProfile[]) => Promise<void>;
+  logAuditAction: (action: AuditLogEntry['action'], details?: string) => Promise<void>;
   logout: () => Promise<void>;
   clearError: () => void;
 }
@@ -37,14 +49,26 @@ export function useAuth(): UseAuthReturn {
   const [loading, setLoading] = useState<boolean>(!initialSession);
   const [error, setError] = useState<string | null>(null);
   const [secondaryProfiles, setSecondaryProfiles] = useState<SecondaryAdminProfile[]>(getSecondaryAdminProfiles());
+  const [auditLogs, setAuditLogs] = useState<AuditLogEntry[]>([]);
 
   const clearError = useCallback(() => {
     setError(null);
   }, []);
 
-  // Listen to secondary profiles changes
-  const refreshProfiles = useCallback(() => {
-    setSecondaryProfiles(getSecondaryAdminProfiles());
+  // Real-time synchronization of secondary admin profiles across clients
+  useEffect(() => {
+    const unsub = subscribeToAdminProfiles((profiles) => {
+      setSecondaryProfiles(profiles);
+    });
+    return () => unsub();
+  }, []);
+
+  // Real-time synchronization of security audit logs
+  useEffect(() => {
+    const unsub = subscribeToAuditLogs((logs) => {
+      setAuditLogs(logs);
+    });
+    return () => unsub();
   }, []);
 
   useEffect(() => {
@@ -54,9 +78,9 @@ export function useAuth(): UseAuthReturn {
     const unsubscribe = onAdminAuthStateChanged(async (firebaseUser) => {
       if (!isMounted) return;
       
-      // If user is already authenticated via secondary passkey session, preserve it
+      // If user is already authenticated via secondary credentials session, preserve it
       const currentStored = getStoredAdminSession();
-      if (currentStored && currentStored.adminData?.loginMethod === 'passkey' && !firebaseUser) {
+      if (currentStored && (currentStored.adminData?.loginMethod === 'credentials' || currentStored.adminData?.loginMethod === 'passkey') && !firebaseUser) {
         setUser(currentStored.user);
         setAdminUser(currentStored.adminData);
         setLoading(false);
@@ -100,7 +124,6 @@ export function useAuth(): UseAuthReturn {
       } catch (err: any) {
         console.error('Auth verification error:', err);
         if (isMounted) {
-          // If we had a valid session, preserve it; otherwise show error
           if (!currentStored) {
             setUser(null);
             setAdminUser(null);
@@ -135,26 +158,75 @@ export function useAuth(): UseAuthReturn {
     }
   };
 
-  const loginWithSecondaryUser = async (profileIdOrEmail: string, passcode: string) => {
+  const loginWithCredentials = async (identifier: string, passcode: string) => {
     setLoading(true);
     setError(null);
     try {
-      const session = await signInAsSecondaryAdmin(profileIdOrEmail, passcode);
+      const session = await signInAsSecondaryAdmin(identifier, passcode);
       setUser(session.user);
       setAdminUser(session.adminData);
       setError(null);
     } catch (err: any) {
-      console.error('Secondary login error:', err);
-      setError(err?.message || 'Invalid admin credentials or passcode.');
+      console.error('Credentials login error:', err);
+      setError(err?.message || 'Invalid login ID or password.');
       throw err;
     } finally {
       setLoading(false);
     }
   };
 
+  const loginWithSecondaryUser = loginWithCredentials;
+
+  const createUser = async (profile: Partial<SecondaryAdminProfile>) => {
+    try {
+      setError(null);
+      const created = await createOrUpdateAdminUser(profile);
+      setSecondaryProfiles(getSecondaryAdminProfiles());
+      return created;
+    } catch (err: any) {
+      setError(err?.message || 'Failed to create user account.');
+      throw err;
+    }
+  };
+
+  const updateUser = async (profile: Partial<SecondaryAdminProfile>) => {
+    try {
+      setError(null);
+      const updated = await createOrUpdateAdminUser(profile);
+      setSecondaryProfiles(getSecondaryAdminProfiles());
+      return updated;
+    } catch (err: any) {
+      setError(err?.message || 'Failed to update user profile.');
+      throw err;
+    }
+  };
+
+  const deleteUser = async (profileId: string) => {
+    try {
+      setError(null);
+      await deleteAdminUser(profileId);
+      setSecondaryProfiles(getSecondaryAdminProfiles());
+    } catch (err: any) {
+      setError(err?.message || 'Failed to delete user.');
+      throw err;
+    }
+  };
+
   const updateSecondaryProfiles = async (profiles: SecondaryAdminProfile[]) => {
     await saveSecondaryAdminProfiles(profiles);
     setSecondaryProfiles(profiles);
+  };
+
+  const logAuditAction = async (action: AuditLogEntry['action'], details?: string) => {
+    if (adminUser) {
+      await recordAuditLog(
+        action,
+        adminUser.name,
+        adminUser.email,
+        adminUser.role,
+        details
+      );
+    }
   };
 
   const logout = async () => {
@@ -174,6 +246,12 @@ export function useAuth(): UseAuthReturn {
     }
   };
 
+  const currentEmail = (adminUser?.email || user?.email || '').toLowerCase().trim();
+  const isSuperAdmin = Boolean(
+    currentEmail === 'satpuda.sanskriti.shodh.sansthan@gmail.com' ||
+    adminUser?.role === 'super_admin'
+  );
+
   const isAdmin = Boolean(
     user && 
     adminUser && 
@@ -186,10 +264,17 @@ export function useAuth(): UseAuthReturn {
     loading,
     error,
     isAdmin,
+    isSuperAdmin,
     secondaryProfiles,
+    auditLogs,
     loginWithGoogle,
     loginWithSecondaryUser,
+    loginWithCredentials,
+    createUser,
+    updateUser,
+    deleteUser,
     updateSecondaryProfiles,
+    logAuditAction,
     logout,
     clearError
   };

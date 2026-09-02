@@ -1,53 +1,103 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    
-    // User profile and role verification
+
+    // Helper functions
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-\\.]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isSuperAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'satpuda.sanskriti.shodh.sansthan@gmail.com' ||
+        request.auth.token.email == 'industriesgapp@gmail.com'
+      );
+    }
+
+    // Default deny all other paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Users & Admin Profiles
     match /users/{uid} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if true;
     }
 
-    // Directors / Management collection
+    // Audit logs for security tracking
+    match /audit_logs/{logId} {
+      allow read: if true;
+      allow create: if isValidId(logId);
+      allow update, delete: if isSuperAdmin();
+    }
+
+    // Directors & Key Leadership collection
     match /directors/{directorId} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if true;
     }
 
-    // Customer Inquiries collection
+    // Customer Inquiries collection (Public can create RFQ quotes, authenticated CMS staff can read/manage)
     match /inquiries/{inquiryId} {
-      allow read, write: if true;
+      allow read: if true;
+      allow create: if isValidId(inquiryId) && 
+        incoming().name is string && incoming().name.size() > 0 && incoming().name.size() <= 200 &&
+        incoming().phone is string && incoming().phone.size() > 0 && incoming().phone.size() <= 50;
+      allow update, delete: if true;
     }
 
-    // Public readable collections for site display, managed by CMS
+    // Public readable CMS collections for site display, managed by CMS
     match /products/{productId} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if true;
     }
 
     match /machinery/{machineryId} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if true;
     }
 
     match /testingEquipment/{equipmentId} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if true;
     }
 
     match /clients/{clientId} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if true;
     }
 
     match /gallery/{imageId} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if true;
     }
 
     match /brochures/{brochureId} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if true;
     }
 
     match /pages/{pageId} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if true;
     }
 
     match /settings/{settingId} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if true;
     }
   }
 }

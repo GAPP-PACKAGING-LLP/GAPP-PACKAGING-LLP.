@@ -62,9 +62,9 @@ export const BrochureModal: React.FC<BrochureModalProps> = ({ isOpen, onClose })
                 referrerPolicy="no-referrer"
               />
               <div>
-                <h1 className="text-xl font-black tracking-tight text-slate-900 font-sans">
+                <h2 className="text-xl font-black tracking-tight text-slate-900 font-sans">
                   <span className="text-[#008CE8]">GAPP</span> PACKAGING LLP
-                </h1>
+                </h2>
                 <p className="text-xs font-bold text-[#0A4D5C]">
                   Focus On Quality
                 </p>

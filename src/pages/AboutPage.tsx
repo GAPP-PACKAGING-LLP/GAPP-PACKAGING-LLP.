@@ -2,6 +2,7 @@ import React from 'react';
 import { SectionHeader } from '../components/common/SectionHeader';
 import { AboutSection } from '../components/home/AboutSection';
 import { useCMS } from '../context/CMSContext';
+import { Link } from 'react-router-dom';
 import { 
   Factory, 
   ShieldCheck, 
@@ -14,7 +15,8 @@ import {
   Phone,
   Mail,
   Building2,
-  CheckCircle2
+  CheckCircle2,
+  ArrowRight
 } from 'lucide-react';
 
 interface AboutPageProps {
@@ -23,8 +25,9 @@ interface AboutPageProps {
 }
 
 export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuoteModal, onOpenBrochureModal }) => {
-  const { settings, directors } = useCMS();
+  const { settings, directors, clients } = useCMS();
   const activeDirectors = directors.filter((d) => d.isActive !== false);
+  const activeClients = clients.filter((c) => c.isActive !== false);
 
   return (
     <div className="py-12 bg-white">
@@ -48,12 +51,6 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuoteModal, onOpenBr
               className="bg-[#D97706] hover:bg-[#B45309] text-white px-6 py-3 rounded-md font-bold text-xs uppercase tracking-wider transition-colors shadow cursor-pointer"
             >
               Request Plant Quotation
-            </button>
-            <button
-              onClick={onOpenBrochureModal}
-              className="bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-md font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
-            >
-              Download Spec Sheet
             </button>
           </div>
         </div>
@@ -86,7 +83,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuoteModal, onOpenBr
                   {director.photoUrl ? (
                     <img
                       src={director.photoUrl}
-                      alt={director.name}
+                      alt={`${director.name} - ${director.role}, GAPP Packaging LLP Mandideep`}
+                      loading="lazy"
+                      decoding="async"
                       className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover border-2 border-[#0F4C5C]/20 shadow-sm"
                     />
                   ) : (
@@ -132,6 +131,59 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onOpenQuoteModal, onOpenBr
                     )}
                   </div>
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Client Partners & Institutional Trust Logos */}
+        <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 sm:p-8 space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div className="text-xs font-bold uppercase tracking-wider text-[#0F4C5C] flex items-center gap-1.5">
+                <Building2 className="w-4 h-4 text-[#D97706]" />
+                <span>Institutional Client Base</span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">
+                Major Clients & Approved Vendor Relationships
+              </h3>
+            </div>
+            <Link
+              to="/clients"
+              className="text-xs font-bold text-[#0F4C5C] hover:text-[#D97706] flex items-center gap-1 shrink-0"
+            >
+              <span>Explore All Clients</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4">
+            {activeClients.slice(0, 10).map((client, idx) => (
+              <div
+                key={client.id || idx}
+                className="bg-white rounded-xl p-3 border border-slate-200 flex flex-col items-center justify-between text-center hover:border-[#0F4C5C]/40 hover:shadow-xs transition-all min-h-[105px]"
+              >
+                <div className="w-full h-10 flex items-center justify-center mb-1">
+                  {client.logoUrl ? (
+                    <img
+                      src={client.logoUrl}
+                      alt={client.name}
+                      className="max-h-9 max-w-full object-contain"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 rounded-lg bg-teal-50 text-[#0F4C5C] flex items-center justify-center font-bold text-xs">
+                      <Building2 className="w-4 h-4" />
+                    </div>
+                  )}
+                </div>
+                <div className="text-[10px] font-bold text-slate-800 line-clamp-2 leading-tight">
+                  {client.name}
+                </div>
+                {client.sector && (
+                  <div className="text-[8.5px] text-slate-400 font-medium truncate w-full mt-0.5">
+                    {client.sector}
+                  </div>
+                )}
               </div>
             ))}
           </div>

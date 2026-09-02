@@ -22,6 +22,7 @@ import { ProtectedRoute } from './components/auth/ProtectedRoute';
 
 import { AdminLayout } from './components/admin/AdminLayout';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
+import { UsersCMS } from './pages/admin/UsersCMS';
 import { DirectorsCMS } from './pages/admin/DirectorsCMS';
 import { PagesCMS } from './pages/admin/PagesCMS';
 import { ProductsCMS } from './pages/admin/ProductsCMS';
@@ -229,6 +230,16 @@ function AppLayout() {
               <ProtectedRoute>
                 <AdminLayout>
                   <AdminDashboard />
+                </AdminLayout>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/admin/users" 
+            element={
+              <ProtectedRoute>
+                <AdminLayout>
+                  <UsersCMS />
                 </AdminLayout>
               </ProtectedRoute>
             } 

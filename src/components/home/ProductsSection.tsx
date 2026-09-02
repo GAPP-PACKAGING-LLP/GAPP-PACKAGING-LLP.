@@ -32,8 +32,8 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onSelectProduc
         {/* Section Header */}
         <SectionHeader
           badgeText="Our Products & Solutions"
-          title="Corrugated Boxes & Customized Packaging Solutions"
-          subtitle="GAPP provides one stop professionalized solution for your trade and manufacturing. Depending on the size and field of your organization, we provide optimum and customized solutions."
+          title="Products: 3 Ply, 5 Ply & 7 Ply Corrugated Boxes"
+          subtitle="GAPP provides one stop professionalized corrugated packaging solutions for manufacturing and trade. Custom engineered 3 ply, 5 ply, and 7 ply carton boxes for all industries."
         />
 
         {/* Products Grid */}
@@ -48,7 +48,9 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onSelectProduc
                 <div className="w-full h-48 bg-slate-50 border-b border-slate-100 flex items-center justify-center overflow-hidden relative">
                   <img
                     src={product.imageUrl}
-                    alt={product.name}
+                    alt={`${product.name} - GAPP Packaging Corrugated Box Mandideep`}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-300"
                     referrerPolicy="no-referrer"
                   />

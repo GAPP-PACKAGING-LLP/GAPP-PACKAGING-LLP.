@@ -27,6 +27,7 @@ interface SidebarProps {
 
 const navItems = [
   { to: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
+  { to: '/admin/users', label: 'Users & Access Control', icon: ShieldCheck, badgeKey: 'users' },
   { to: '/admin/inquiries', label: 'Inquiries RFQ', icon: MailQuestion, badgeKey: 'inquiries' },
   { to: '/admin/directors', label: 'Directors & Team', icon: Users },
   { to: '/admin/pages', label: 'Pages Content', icon: FileText },

@@ -293,10 +293,22 @@ export function subscribeToClients(
         return;
       }
 
-      const items: ClientPartner[] = snapshot.docs.map((d) => ({
-        id: d.id,
-        ...(d.data() as any)
-      }));
+      const items: ClientPartner[] = snapshot.docs.map((d) => {
+        const data = d.data() as any;
+        const matchingDefault = clientPartnersData.find(
+          (c) => c.name.toLowerCase().trim() === (data.name || '').toLowerCase().trim() ||
+                 String(c.id) === String(data.id) ||
+                 `client-${c.id}` === d.id
+        );
+        return {
+          id: d.id,
+          ...data,
+          logoUrl: data.logoUrl || matchingDefault?.logoUrl || '',
+          details: data.details || matchingDefault?.details || '',
+          location: data.location || matchingDefault?.location || '',
+          supplyType: data.supplyType || matchingDefault?.supplyType || ''
+        };
+      });
       items.sort((a, b) => (Number(a.order || 0)) - (Number(b.order || 0)));
       onData(items);
     },

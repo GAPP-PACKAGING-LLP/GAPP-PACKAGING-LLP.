@@ -86,7 +86,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ onSelectIn
         {/* Section Header */}
         <SectionHeader
           badgeText="Sectors & Industry Verticals"
-          title="Customized Packaging Solutions for 6 Core Business Sectors"
+          title="Industries Served: Automotive, Pharma, FMCG & Engineering Packaging"
           subtitle="GAPP Packaging LLP provides custom engineered corrugation solutions tailored to the strict quality, weight capacity, and moisture resistance requirements of each industrial sector."
         />
 

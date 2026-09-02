@@ -17,8 +17,8 @@ export const FaqSection: React.FC = () => {
         {/* Section Header */}
         <SectionHeader
           badgeText="B2B Procurement Knowledge"
-          title="Frequently Asked Questions by Industrial Buyers"
-          subtitle="Clear, direct answers regarding Minimum Order Quantities (MOQ), production lead times, flute profile selection, and laboratory quality documentation."
+          title="FAQ: Frequently Asked Questions on Corrugated Packaging"
+          subtitle="Clear, direct answers regarding Minimum Order Quantities (MOQ), production lead times, flute profile selection (3 ply, 5 ply, 7 ply), and laboratory quality documentation."
           centered
         />
 

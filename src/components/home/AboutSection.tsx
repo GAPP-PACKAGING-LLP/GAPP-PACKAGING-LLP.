@@ -158,7 +158,9 @@ export const AboutSection: React.FC = () => {
                       {director.photoUrl ? (
                         <img
                           src={director.photoUrl}
-                          alt={director.name}
+                          alt={`${director.name} - ${director.role} at GAPP Packaging LLP`}
+                          loading="lazy"
+                          decoding="async"
                           className="w-10 h-10 rounded-lg object-cover border border-teal-700 shrink-0"
                         />
                       ) : (

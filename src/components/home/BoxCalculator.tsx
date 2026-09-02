@@ -134,7 +134,7 @@ export const BoxCalculator: React.FC<BoxCalculatorProps> = ({ onOpenQuoteWithSpe
         {/* Section Header */}
         <SectionHeader
           badgeText="B2B Engineering Utility"
-          title="Interactive Corrugated Box Configurator & Spec Sheet Generator"
+          title="Custom Boxes & Corrugated Packaging Configurator"
           subtitle="Input your required carton dimensions, wall construction, and kraft paper grade to instantly calculate sheet blank dimensions, Box Compression Test (BCT) estimates, and generate a customized RFQ."
         />
 

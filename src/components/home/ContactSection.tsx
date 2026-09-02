@@ -28,9 +28,9 @@ export const ContactSection: React.FC = () => {
         
         {/* Section Header */}
         <SectionHeader
-          badgeText="Contact & Plant Details (Page 1 & 9)"
-          title="Direct Plant Inquiries & Quotation Desk"
-          subtitle="Get in touch with GAPP Packaging LLP for your corrugated box requirements, urgent delivery requests, and customized packaging solutions."
+          badgeText="Contact & Plant Details"
+          title="Contact Corrugated Box Manufacturer in Mandideep, Bhopal"
+          subtitle="Get in touch with GAPP Packaging LLP for your corrugated box requirements, urgent delivery requests, and customized packaging solutions in Bhopal & Mandideep."
         />
 
         {/* 2-Column Main Contact Layout */}

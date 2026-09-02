@@ -14,7 +14,9 @@ import {
   Building2,
   Sparkles,
   Zap,
-  UserCheck
+  UserCheck,
+  Mail,
+  Shield
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { companyData } from '../data/companyData';
@@ -28,15 +30,14 @@ export const AdminLogin: React.FC = () => {
     error, 
     secondaryProfiles, 
     loginWithGoogle, 
-    loginWithSecondaryUser, 
+    loginWithCredentials, 
     clearError 
   } = useAuth();
   
-  const [activeTab, setActiveTab] = useState<'passkey' | 'google'>('passkey');
-  const [selectedProfileId, setSelectedProfileId] = useState<string>('ashish-barkhade');
+  const [activeTab, setActiveTab] = useState<'credentials' | 'google'>('credentials');
+  const [loginIdentifier, setLoginIdentifier] = useState<string>('industriesgapp@gmail.com');
   const [passcode, setPasscode] = useState<string>('gapp@2024');
-  const [customEmail, setCustomEmail] = useState<string>('');
-  const [isCustomMode, setIsCustomMode] = useState<boolean>(false);
+  const [selectedPresetId, setSelectedPresetId] = useState<string>('ashish-barkhade');
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
@@ -69,36 +70,36 @@ export const AdminLogin: React.FC = () => {
     }
   };
 
-  const handleSecondaryUserSignIn = async (e?: React.FormEvent) => {
+  const handleCredentialsSignIn = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     setLocalError(null);
     clearError();
     setIsSigningIn(true);
     try {
-      const targetIdentifier = isCustomMode ? customEmail : selectedProfileId;
+      const targetIdentifier = loginIdentifier.trim();
       if (!targetIdentifier) {
-        throw new Error('Please select an admin profile or enter your email/username.');
+        throw new Error('Please enter your User Login ID or official Email address.');
       }
-      if (!passcode) {
-        throw new Error('Please enter the security passcode or plant passkey.');
+      if (!passcode.trim()) {
+        throw new Error('Please enter your password / passcode.');
       }
 
-      await loginWithSecondaryUser(targetIdentifier, passcode);
+      await loginWithCredentials(targetIdentifier, passcode.trim());
       navigate(from, { replace: true });
     } catch (err: any) {
-      console.error('Secondary login error:', err);
+      console.error('Credentials login error:', err);
       setLocalError(
-        err?.message || 'Authentication failed. Please verify your profile selection and passkey.'
+        err?.message || 'Authentication failed. Please verify your login ID and password.'
       );
     } finally {
       setIsSigningIn(false);
     }
   };
 
-  const handleQuickSelectUser = (profileId: string) => {
-    setIsCustomMode(false);
-    setSelectedProfileId(profileId);
-    setPasscode('gapp@2024');
+  const handleQuickSelectUser = (profile: any) => {
+    setSelectedPresetId(profile.id);
+    setLoginIdentifier(profile.email || profile.id);
+    setPasscode(profile.passcode || 'gapp@2024');
     setLocalError(null);
   };
 
@@ -131,30 +132,30 @@ export const AdminLogin: React.FC = () => {
             
             <div>
               <h2 className="text-xl font-black text-slate-900 tracking-tight">
-                Admin & CMS Management
+                GAPP Packaging CMS Login
               </h2>
               <p className="text-xs text-slate-500 mt-0.5">
-                Designated Partners & Operations Control Center
+                Super Admin & Director Control Center (लॉगिन पोर्टल)
               </p>
             </div>
           </div>
 
-          {/* Login Method Switcher Tabs (2nd User / Direct vs Google OAuth) */}
+          {/* Login Method Switcher Tabs */}
           <div className="grid grid-cols-2 p-1 bg-slate-100 rounded-xl text-xs font-bold border border-slate-200">
             <button
               type="button"
               onClick={() => {
-                setActiveTab('passkey');
+                setActiveTab('credentials');
                 setLocalError(null);
               }}
               className={`flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-lg transition-all cursor-pointer ${
-                activeTab === 'passkey'
+                activeTab === 'credentials'
                   ? 'bg-[#0F4C5C] text-white shadow-xs'
                   : 'text-slate-600 hover:text-slate-900'
               }`}
             >
-              <Zap className="w-3.5 h-3.5 text-[#D97706]" />
-              <span>2nd User / Direct Login</span>
+              <KeyRound className="w-3.5 h-3.5 text-[#D97706]" />
+              <span>ID & Password Login</span>
             </button>
 
             <button
@@ -192,101 +193,87 @@ export const AdminLogin: React.FC = () => {
             </div>
           )}
 
-          {/* TAB 1: FAST 2ND USER / PASSKEY LOGIN */}
-          {activeTab === 'passkey' && (
-            <form onSubmit={handleSecondaryUserSignIn} className="space-y-5">
+          {/* TAB 1: ID & PASSWORD LOGIN */}
+          {activeTab === 'credentials' && (
+            <form onSubmit={handleCredentialsSignIn} className="space-y-5">
+              {/* Quick Select Director Presets */}
               <div className="space-y-2">
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
-                  Select User / Administrator Profile:
+                  Quick Select Director / Staff Login:
                 </label>
 
-                {/* Quick Select Profile Cards (Director 1, Director 2, Operations) */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <div className="grid grid-cols-2 gap-2">
                   {secondaryProfiles.map((p) => {
-                    const isSelected = !isCustomMode && selectedProfileId === p.id;
+                    const isSelected = selectedPresetId === p.id;
                     return (
                       <button
                         key={p.id}
                         type="button"
-                        onClick={() => handleQuickSelectUser(p.id)}
-                        className={`text-left p-3 rounded-xl border transition-all cursor-pointer flex items-start gap-2.5 ${
+                        onClick={() => handleQuickSelectUser(p)}
+                        className={`text-left p-2.5 rounded-xl border transition-all cursor-pointer flex items-center gap-2 ${
                           isSelected
                             ? 'bg-teal-50/70 border-[#0F4C5C] ring-1 ring-[#0F4C5C]'
                             : 'bg-white hover:bg-slate-50 border-slate-200'
                         }`}
                       >
-                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 ${
+                        <div className={`w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 ${
                           isSelected ? 'bg-[#0F4C5C] text-white' : 'bg-slate-100 text-slate-700'
                         }`}>
                           {p.name.charAt(0)}
                         </div>
                         <div className="min-w-0 flex-1">
-                          <div className="flex items-center justify-between">
-                            <span className="text-xs font-bold text-slate-900 truncate">
-                              {p.name}
-                            </span>
-                            {isSelected && (
-                              <CheckCircle2 className="w-3.5 h-3.5 text-[#0F4C5C] shrink-0" />
-                            )}
+                          <div className="text-xs font-bold text-slate-900 truncate">
+                            {p.name.split(' ')[0]}
                           </div>
-                          <p className="text-[10px] text-slate-500 truncate">
-                            {p.designation.split('&')[0]}
-                          </p>
+                          <div className="text-[10px] text-slate-500 truncate">
+                            {p.role === 'super_admin' ? 'Super Admin' : p.role === 'partner' ? 'Director' : 'Manager'}
+                          </div>
                         </div>
                       </button>
                     );
                   })}
                 </div>
-
-                {/* Custom Email Toggle */}
-                <div className="pt-1 flex items-center justify-end">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setIsCustomMode((prev) => !prev);
-                      setLocalError(null);
-                    }}
-                    className="text-[11px] text-[#0F4C5C] hover:underline font-semibold cursor-pointer"
-                  >
-                    {isCustomMode ? '← Choose from Preset Directors' : '+ Enter Custom Admin Email / ID'}
-                  </button>
-                </div>
-
-                {/* Custom Email Input (if enabled) */}
-                {isCustomMode && (
-                  <div className="pt-1 animate-fadeIn">
-                    <label className="block text-[11px] font-semibold text-slate-600 mb-1">
-                      Custom Admin Email / Username:
-                    </label>
-                    <input
-                      type="text"
-                      value={customEmail}
-                      onChange={(e) => setCustomEmail(e.target.value)}
-                      placeholder="e.g. pramod.gapp@gmail.com or admin"
-                      className="w-full text-xs font-mono p-2.5 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#0F4C5C] focus:bg-white outline-none"
-                    />
-                  </div>
-                )}
               </div>
 
-              {/* Passcode / Passkey Input */}
-              <div className="space-y-1.5">
+              {/* Login Identifier (Email or Username) */}
+              <div className="space-y-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                  Login ID / Official Email (यूजर आईडी या ईमेल):
+                </label>
+                <div className="relative">
+                  <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    required
+                    value={loginIdentifier}
+                    onChange={(e) => {
+                      setLoginIdentifier(e.target.value);
+                      setSelectedPresetId('');
+                    }}
+                    placeholder="e.g. industriesgapp@gmail.com or ashish@gapppackaging.com"
+                    className="w-full text-xs font-mono pl-10 pr-3.5 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0F4C5C] focus:bg-white outline-none"
+                  />
+                </div>
+              </div>
+
+              {/* Password / Passcode */}
+              <div className="space-y-1">
                 <div className="flex justify-between items-center">
                   <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
-                    Security Passcode / Plant Passkey:
+                    Password / Passcode (पासवर्ड):
                   </label>
-                  <span className="text-[10px] font-mono text-slate-400">
-                    Default: <span className="font-semibold text-slate-600">gapp@2024</span>
-                  </span>
+                  <span className="text-[10px] text-slate-400 font-mono">Default: gapp@2024</span>
                 </div>
 
                 <div className="relative">
+                  <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                   <input
                     type={showPassword ? 'text' : 'password'}
+                    required
                     value={passcode}
                     onChange={(e) => setPasscode(e.target.value)}
-                    placeholder="Enter security passcode"
-                    className="w-full text-xs font-mono p-3 pr-10 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0F4C5C] focus:bg-white outline-none transition-all"
+                    placeholder="Enter account password"
+                    className="w-full text-xs font-mono pl-10 pr-10 py-3 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#0F4C5C] focus:bg-white outline-none transition-all"
                   />
                   <button
                     type="button"
@@ -298,7 +285,7 @@ export const AdminLogin: React.FC = () => {
                 </div>
               </div>
 
-              {/* Fast Login Submit Button */}
+              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={isSigningIn}
@@ -307,23 +294,23 @@ export const AdminLogin: React.FC = () => {
                 {isSigningIn ? (
                   <>
                     <RefreshCw className="w-4 h-4 animate-spin" />
-                    <span>Instant Authenticating...</span>
+                    <span>Verifying Credentials...</span>
                   </>
                 ) : (
                   <>
-                    <Zap className="w-4 h-4 text-[#D97706]" />
-                    <span>Login to CMS Dashboard (Instant)</span>
+                    <ShieldCheck className="w-4 h-4 text-[#D97706]" />
+                    <span>Login to CMS Dashboard</span>
                   </>
                 )}
               </button>
 
               <div className="bg-slate-50 rounded-xl p-3 border border-slate-200 text-[11px] text-slate-600 space-y-1">
                 <div className="flex items-center gap-1.5 font-bold text-slate-700">
-                  <KeyRound className="w-3.5 h-3.5 text-[#D97706]" />
-                  <span>Ultra-Fast 0ms Access</span>
+                  <Shield className="w-3.5 h-3.5 text-[#0F4C5C]" />
+                  <span>Super Admin & Role Security</span>
                 </div>
                 <p className="leading-relaxed text-slate-500">
-                  Direct designated partner login bypasses third-party popup latency for immediate plant management access.
+                  Super Admin can manage and issue new login accounts for Directors, Designated Partners, and plant staff inside CMS under <strong>Users & Access Control</strong>.
                 </p>
               </div>
             </form>

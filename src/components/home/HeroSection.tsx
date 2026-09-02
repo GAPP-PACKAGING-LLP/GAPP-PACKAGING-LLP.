@@ -65,7 +65,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenQuoteModal, onOp
                 </span>
               </div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-extrabold text-[#232B39] tracking-tight leading-[1.15] font-heading">
-                Corrugated Boxes Manufacturers
+                Corrugated Box Manufacturer in Mandideep | GAPP Packaging LLP
               </h1>
             </div>
 

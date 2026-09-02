@@ -1,7 +1,8 @@
 import React from 'react';
 import { ProductsSection } from '../components/home/ProductsSection';
+import { IndustriesSection } from '../components/home/IndustriesSection';
 import { Link } from 'react-router-dom';
-import { Layers, ShieldCheck, Box, Send, ArrowRight, Calculator, CheckCircle2, Factory } from 'lucide-react';
+import { Layers, ShieldCheck, Box, Send, ArrowRight, Calculator, CheckCircle2, Factory, Building2 } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
 
 interface ProductsPageProps {
@@ -117,6 +118,9 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenQuoteModal }) 
             </div>
           </div>
         </div>
+
+        {/* Industry Verticals & Sector Applications */}
+        <IndustriesSection onSelectIndustryForQuote={(name) => onOpenQuoteModal(name)} />
 
         {/* Cross Link to Calculator */}
         <div className="bg-[#0F4C5C] text-white p-8 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-md">

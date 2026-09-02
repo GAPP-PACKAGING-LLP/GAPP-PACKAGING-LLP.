@@ -12,6 +12,7 @@ import {
   FaqItem,
   DesignatedPartner
 } from '../types';
+import { CLIENT_LOGOS } from './clientLogos';
 
 export const designatedPartnersData: DesignatedPartner[] = [
   {
@@ -149,8 +150,12 @@ export const machineryData: MachineryItem[] = [
     capacity: "80 - 100 meters/min",
     speed: "Semi-automatic continuous line",
     model: "Fingerless High-Speed Corrugator 52\"",
-    imageUrl: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80",
-    imageCaption: "Installed at Mandideep Plant - Bay 1"
+    imageUrl: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80",
+    imageCaption: "Installed at Mandideep Plant - Bay 1 Corrugation Line",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1000&q=80"
+    ]
   },
   {
     id: "machine-2",
@@ -161,8 +166,12 @@ export const machineryData: MachineryItem[] = [
     capacity: "4,000 sheets/hour",
     speed: "Ceramic anilox inking roll",
     model: "Double-Color Flexo Graphic Printer",
-    imageUrl: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80",
-    imageCaption: "Two-Colour Precision Flexo Unit"
+    imageUrl: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80",
+    imageCaption: "Two-Colour Precision Flexo Unit - Mandideep",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=1000&q=80",
+      "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?auto=format&fit=crop&w=1000&q=80"
+    ]
   },
   {
     id: "machine-3",
@@ -173,8 +182,11 @@ export const machineryData: MachineryItem[] = [
     capacity: "Heavy board lamination",
     speed: "Uniform adhesive applicator",
     model: "Industrial Sheet Pasting Machine",
-    imageUrl: "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=800&q=80",
-    imageCaption: "Multi-Ply Sheet Pasting Line"
+    imageUrl: "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1200&q=80",
+    imageCaption: "Multi-Ply Sheet Pasting Line - Bay 2",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=1000&q=80"
+    ]
   },
   {
     id: "machine-4",
@@ -185,8 +197,11 @@ export const machineryData: MachineryItem[] = [
     capacity: "Hydraulic platen compression",
     speed: "Uniform cure pressure",
     model: "Heavy Hydraulic Sheet Press",
-    imageUrl: "https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=800&q=80",
-    imageCaption: "Sheet Compression & Flattening Station"
+    imageUrl: "https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80",
+    imageCaption: "Hydraulic Platen Compression & Flattening Station",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1000&q=80"
+    ]
   },
   {
     id: "machine-5",
@@ -197,8 +212,11 @@ export const machineryData: MachineryItem[] = [
     capacity: "Tungsten alloy thin blades",
     speed: "High-speed rotary scoring",
     model: "Thin Blade Slitter Scorer",
-    imageUrl: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
-    imageCaption: "Burr-Free Thin Blade Rotary Slitter"
+    imageUrl: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80",
+    imageCaption: "Burr-Free Thin Blade Rotary Slitter & Scorer Line",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?auto=format&fit=crop&w=1000&q=80"
+    ]
   },
   {
     id: "machine-6",
@@ -209,8 +227,11 @@ export const machineryData: MachineryItem[] = [
     capacity: "Deep carton slotting",
     speed: "Adjustable stroke speed",
     model: "Industrial Eccentric Slotter",
-    imageUrl: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=800&q=80",
-    imageCaption: "Carton Blank Corner & Flap Slotting"
+    imageUrl: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=1200&q=80",
+    imageCaption: "Carton Blank Corner & Flap Slotting Unit",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?auto=format&fit=crop&w=1000&q=80"
+    ]
   },
   {
     id: "machine-7",
@@ -221,8 +242,11 @@ export const machineryData: MachineryItem[] = [
     capacity: "Multi-operation rotary tooling",
     speed: "Synchronized feed line",
     model: "4-Bar Combined Rotary Slotter & Creaser",
-    imageUrl: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?auto=format&fit=crop&w=800&q=80",
-    imageCaption: "4-Bar Rotary Creasing & Slotting Unit"
+    imageUrl: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?auto=format&fit=crop&w=1200&q=80",
+    imageCaption: "4-Bar Rotary Creasing & Slotting Equipment",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1000&q=80"
+    ]
   },
   {
     id: "machine-8",
@@ -233,8 +257,11 @@ export const machineryData: MachineryItem[] = [
     capacity: "Copper / Galvanized wire stitch",
     speed: "350 - 450 stitches/min",
     model: "Heavy Angular Wire Stitcher 48\"",
-    imageUrl: "https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?auto=format&fit=crop&w=800&q=80",
-    imageCaption: "Heavy Duty Joint Wire Stitching Machine"
+    imageUrl: "https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?auto=format&fit=crop&w=1200&q=80",
+    imageCaption: "Heavy Duty Joint Angular Wire Stitching Machine",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1581092162384-8987c1d64718?auto=format&fit=crop&w=1000&q=80"
+    ]
   },
   {
     id: "machine-9",
@@ -245,8 +272,11 @@ export const machineryData: MachineryItem[] = [
     capacity: "Cold PVA / Hot melt adhesive",
     speed: "Fast continuous conveyor",
     model: "Semi-Auto Flap Gluer & Folder",
-    imageUrl: "https://images.unsplash.com/photo-1581092162384-8987c1d64718?auto=format&fit=crop&w=800&q=80",
-    imageCaption: "Semi-Automatic Flap Gluing Line"
+    imageUrl: "https://images.unsplash.com/photo-1581092162384-8987c1d64718?auto=format&fit=crop&w=1200&q=80",
+    imageCaption: "Semi-Automatic Continuous Flap Gluing & Folding Line",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1581092334651-ddf26d9a09d0?auto=format&fit=crop&w=1000&q=80"
+    ]
   },
   {
     id: "machine-10",
@@ -257,8 +287,11 @@ export const machineryData: MachineryItem[] = [
     capacity: "Thermo-regulated air chamber",
     speed: "Constant speed curing",
     model: "Industrial Board Drying Chamber",
-    imageUrl: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=800&q=80",
-    imageCaption: "Moisture Stabilization Drying Tunnel"
+    imageUrl: "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?auto=format&fit=crop&w=1200&q=80",
+    imageCaption: "Moisture Stabilization & Starch Curing Drying Tunnel",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=1000&q=80"
+    ]
   },
   {
     id: "machine-11",
@@ -269,8 +302,11 @@ export const machineryData: MachineryItem[] = [
     capacity: "Programmed hydraulic clamping",
     speed: "Heavy alloy guillotine knife",
     model: "Industrial Heavy Paper Guillotine Cutter",
-    imageUrl: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=800&q=80",
-    imageCaption: "Precision Blank Cutting & Trimming Machine"
+    imageUrl: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=1200&q=80",
+    imageCaption: "Precision Blank Cutting & Heavy Guillotine Trimmer",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1000&q=80"
+    ]
   },
   {
     id: "machine-12",
@@ -281,8 +317,11 @@ export const machineryData: MachineryItem[] = [
     capacity: "3,000 kg Heavy Platform Scale",
     speed: "Digital precision sensor",
     model: "Industrial Heavy Platform Scale",
-    imageUrl: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
-    imageCaption: "Inward Paper Reel Weight Verification Platform"
+    imageUrl: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80",
+    imageCaption: "Inward Paper Reel Weight & GSM Verification Platform",
+    galleryImages: [
+      "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1000&q=80"
+    ]
   }
 ];
 
@@ -387,54 +426,112 @@ export const clientPartnersData: ClientPartner[] = [
   {
     id: 1,
     name: "ARISTO PHARMACEUTICALS PVT LTD",
-    sector: "Pharmaceuticals"
+    sector: "Pharmaceuticals",
+    details: "National Pharmaceutical Leader",
+    location: "Mandideep & National Operations",
+    supplyType: "Pharma Grade Master Shippers & Inner Cartons",
+    logoUrl: CLIENT_LOGOS.aristo,
+    isActive: true,
+    order: 1
   },
   {
     id: 2,
     name: "LIFESPAN BIOTECH PVT LTD",
-    sector: "Biotechnology & Pharmaceuticals"
+    sector: "Biotechnology & Pharmaceuticals",
+    details: "Injectables & Formulation Facility",
+    location: "Mandideep Industrial Area, MP",
+    supplyType: "Heavy-Duty Sterile Shippers",
+    logoUrl: CLIENT_LOGOS.lifespan,
+    isActive: true,
+    order: 2
   },
   {
     id: 3,
     name: "PAWANSHREE INTERNATIONAL PVT LTD",
-    sector: "International Trade & Manufacturing"
+    sector: "International Trade & Manufacturing",
+    details: "Global Export Operations",
+    location: "Central India & Export Hubs",
+    supplyType: "High Bursting Strength Export Cartons",
+    logoUrl: CLIENT_LOGOS.pawanshree,
+    isActive: true,
+    order: 3
   },
   {
     id: 4,
     name: "M.H. PETS (Vendor of CIPLA)",
     details: "Vendor of CIPLA",
-    sector: "Pharmaceutical Packaging & Containers"
+    sector: "Pharmaceutical Packaging & Containers",
+    location: "Central India",
+    supplyType: "Precision Corrugated Outer Shippers",
+    logoUrl: CLIENT_LOGOS.cipla,
+    isActive: true,
+    order: 4
   },
   {
     id: 5,
     name: "TRENDPORT PVT LTD (Vendor of SOM Distilleries PVT LTD)",
     details: "Vendor of SOM Distilleries PVT LTD",
-    sector: "Distilleries & Beverage Packaging"
+    sector: "Distilleries & Beverage Packaging",
+    location: "Bhopal / Raisen Industrial Belt",
+    supplyType: "Liquor & Beverage Heavy Stitched Cartons",
+    logoUrl: CLIENT_LOGOS.som,
+    isActive: true,
+    order: 5
   },
   {
     id: 6,
     name: "SANJAY FRESH BAKE",
-    sector: "Confectionery & Bakery"
+    sector: "Confectionery & Bakery",
+    details: "Artisan & Commercial Bakery Distribution",
+    location: "Bhopal / MP",
+    supplyType: "Clean Food-Grade Starch Glued Cartons",
+    logoUrl: CLIENT_LOGOS.freshbake,
+    isActive: true,
+    order: 6
   },
   {
     id: 7,
     name: "AADITYA FOOD PRODUCTS",
-    sector: "Food Products & FMCG"
+    sector: "Food Products & FMCG",
+    details: "Packaged Food & FMCG Brand",
+    location: "Madhya Pradesh",
+    supplyType: "High-Volume FMCG Distribution Boxes",
+    logoUrl: CLIENT_LOGOS.aaditya,
+    isActive: true,
+    order: 7
   },
   {
     id: 8,
     name: "FORTCAPS HEALTHCARE LTD",
-    sector: "Healthcare & Pharmaceuticals"
+    sector: "Healthcare & Pharmaceuticals",
+    details: "Premier Hard Gelatin Capsule Manufacturer",
+    location: "Mandideep, MP",
+    supplyType: "Pharma Spec High-Cobb Resistant Shippers",
+    logoUrl: CLIENT_LOGOS.fortcaps,
+    isActive: true,
+    order: 8
   },
   {
     id: 9,
     name: "ANANT PRODUCTS",
-    sector: "Consumer Products & Manufacturing"
+    sector: "Consumer Products & Manufacturing",
+    details: "Industrial & Consumer Goods",
+    location: "Madhya Pradesh",
+    supplyType: "Custom Printed Corrugated Boxes",
+    logoUrl: CLIENT_LOGOS.anant,
+    isActive: true,
+    order: 9
   },
   {
     id: 10,
     name: "PENTAGON LABS LTD",
-    sector: "Pharmaceuticals & Healthcare Formulations"
+    sector: "Pharmaceuticals & Healthcare Formulations",
+    details: "IV Infusion & Sterile Solutions",
+    location: "Indore / Mandideep, MP",
+    supplyType: "Heavy-Duty IV Bottle Shipper Boxes",
+    logoUrl: CLIENT_LOGOS.pentagon,
+    isActive: true,
+    order: 10
   }
 ];
 
@@ -517,8 +614,23 @@ export const productsData: ProductItem[] = [
 export const faqsData: FaqItem[] = [
   {
     category: "procurement",
-    question: "Where is GAPP Packaging LLP located?",
-    answer: "Our manufacturing unit is located at Survey no. 13/1/1/3 Khanpura Rd, Industrial Area, Mandideep, Pipaliya Korka, Madhya Pradesh 464993. Our registered office is Near bank of baroda, Hoshangbad road, Obedullaganj, Madhya Pradesh 464993."
+    question: "Where is GAPP Packaging LLP located and what regions do you serve?",
+    answer: "Our manufacturing unit is located at Survey no. 13/1/1/3 Khanpura Rd, Industrial Area, Mandideep, Pipaliya Korka, Madhya Pradesh 464993. We provide reliable corrugated box supply across Mandideep, Bhopal, Obedullaganj, Raisen, Hoshangabad, Indore, Dewas, and all of Central India."
+  },
+  {
+    category: "technical",
+    question: "What types of corrugated boxes does GAPP Packaging manufacture?",
+    answer: "We manufacture single wall 3 ply corrugated boxes, double wall 5 ply master cartons, triple wall 7 ply heavy-duty shipping containers, universal RSC cartons, custom packaging die-cut boxes, and precision two-colour flexographic printed boxes."
+  },
+  {
+    category: "technical",
+    question: "What is the difference between 3 ply, 5 ply, and 7 ply corrugated boxes?",
+    answer: "3 ply boxes feature 1 fluted medium between 2 Kraft liners, ideal for lightweight cargo up to 15 kg. 5 ply boxes use 2 fluted mediums and 3 liners for 15–45 kg industrial loads. 7 ply boxes feature 3 fluted layers and 4 liners, providing ultra-heavy-duty compression strength for 40–120+ kg machinery and export consignments."
+  },
+  {
+    category: "customization",
+    question: "Do you offer custom packaging solutions with custom dimensions and printing?",
+    answer: "Yes, we engineer custom packaging solutions tailored to exact product dimensions, flute profiles (B, C, E, BC), bursting strength (BF/GSM), internal partitions, and branded two-colour flexographic printing."
   },
   {
     category: "delivery",
@@ -528,17 +640,17 @@ export const faqsData: FaqItem[] = [
   {
     category: "technical",
     question: "What testing equipment is installed in your in-house laboratory?",
-    answer: "Our in-house testing equipment includes a Bursting Strength Tester, Cobb testing machine, Grammage tester, Ford cup B4 viscometer, and Moisture meter."
+    answer: "Our in-house testing equipment includes a Bursting Strength Tester, Cobb moisture absorption tester, Grammage (GSM) scale, Ford cup B4 viscometer, and digital Moisture meter. Every batch undergoes rigorous quality checks."
   },
   {
     category: "procurement",
     question: "Do you issue a Test Certificate with every shipment?",
-    answer: "Yes. Prior to dispatch, every lot is sampled and certified, and a formal Test Certificate is issued with every lot."
+    answer: "Yes. Prior to dispatch, every lot is sampled and certified, and a formal Quality Test Certificate (QC Certificate) is issued with every shipment."
   },
   {
     category: "technical",
-    question: "What is your environmental and plastic policy?",
-    answer: "GAPP Packaging LLP is a zero-discharge manufacturing unit. All our materials are 100% recyclable, and we do not use any sorts of plastic at our facility."
+    question: "What is your environmental and sustainability policy?",
+    answer: "GAPP Packaging LLP is a zero-discharge manufacturing unit. All our raw materials are 100% recyclable Kraft paper with eco-friendly starch adhesive. We maintain a zero plastic footprint across our facility."
   },
   {
     category: "procurement",

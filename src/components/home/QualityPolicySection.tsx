@@ -19,9 +19,9 @@ export const QualityPolicySection: React.FC = () => {
         
         {/* Section Header */}
         <SectionHeader
-          badgeText="Quality Governance (Page 4)"
-          title="Quality Policy & Continuous Quality Process"
-          subtitle="GAPP is committed to understanding and meeting our customer needs and expectations through state-of-the-art facilities, skilled workforce training, and lot-wise certification."
+          badgeText="Quality Governance"
+          title="Quality Assurance, Testing Standards & Quality Policy"
+          subtitle="GAPP is committed to understanding and meeting customer needs through laboratory testing, skilled workforce training, and lot-wise Quality Test Certificates."
         />
 
         {/* Quality Policy Statement Banner */}
