@@ -16,11 +16,12 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
           <div className="inline-block text-xs font-bold uppercase tracking-widest text-[#008CE8] bg-[#008CE8]/10 px-4 py-1.5 rounded-full border border-[#008CE8]/20">
             Certified Corrugated Box Manufacturer
           </div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#232B39] tracking-tight leading-tight max-w-4xl mx-auto">
-            Packaging Solutions in Bhopal, Mandideep & Madhya Pradesh
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#262D38] tracking-tight leading-tight max-w-4xl mx-auto flex flex-col gap-2">
+            <span className="text-[#008CE8] text-5xl sm:text-6xl md:text-7xl uppercase tracking-tighter" style={{ fontFamily: "'Montserrat', sans-serif" }}>GAPP Packaging LLP</span>
+            <span>Packaging Solutions in Bhopal, Mandideep & Madhya Pradesh</span>
           </h1>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            GAPP Packaging LLP provides high-quality industrial packaging, customized corrugated boxes, and reliable supply chain materials for businesses across Central India.
+          <p className="text-lg text-slate-600 max-w-2xl mx-auto font-medium">
+            We provide high-quality industrial packaging, customized corrugated boxes, and reliable supply chain materials for businesses across Central India.
           </p>
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
             <button

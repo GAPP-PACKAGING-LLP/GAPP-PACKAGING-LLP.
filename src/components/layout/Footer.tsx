@@ -19,8 +19,11 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
           
           {/* Brand & Address */}
           <div className="space-y-4">
-            <Link to="/" className="inline-block" title="GAPP Packaging - Homepage">
-              <BrandLogo theme="dark" className="h-14 w-auto max-w-[220px]" alt="GAPP Packaging" />
+            <Link to="/" className="flex flex-col gap-3" title="GAPP Packaging LLP - Homepage">
+              <BrandLogo variant="icon" theme="dark" className="h-12 w-auto self-start" alt="GAPP Packaging LLP logo" />
+              <span className="text-white font-bold text-xl tracking-tight leading-none" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+                GAPP PACKAGING <span className="text-slate-400">LLP</span>
+              </span>
             </Link>
             <p className="text-sm text-slate-300 leading-relaxed">
               Industrial B2B manufacturer of high-strength corrugated boxes in Mandideep, serving Madhya Pradesh.
