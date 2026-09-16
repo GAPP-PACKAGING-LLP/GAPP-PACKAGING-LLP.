@@ -21,6 +21,13 @@ import { ContactPage } from './pages/ContactPage';
 import { AdminLogin } from './pages/AdminLogin';
 import { ProtectedRoute } from './components/auth/ProtectedRoute';
 
+import { BhopalPage } from './pages/locations/BhopalPage';
+import { MandideepPage } from './pages/locations/MandideepPage';
+import { RaisenPage } from './pages/locations/RaisenPage';
+import { IndorePage } from './pages/locations/IndorePage';
+import { RatlamPage } from './pages/locations/RatlamPage';
+import { MadhyaPradeshPage } from './pages/locations/MadhyaPradeshPage';
+
 import { AdminLayout } from './components/admin/AdminLayout';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
 import { UsersCMS } from './pages/admin/UsersCMS';
@@ -183,6 +190,32 @@ function AppLayout() {
           <Route 
             path="/contact" 
             element={<ContactPage />} 
+          />
+
+          {/* Location Pages */}
+          <Route 
+            path="/packaging-bhopal" 
+            element={<BhopalPage onOpenQuoteModal={handleOpenQuoteModal} onOpenBrochureModal={handleOpenBrochureModal} />} 
+          />
+          <Route 
+            path="/packaging-mandideep" 
+            element={<MandideepPage onOpenQuoteModal={handleOpenQuoteModal} onOpenBrochureModal={handleOpenBrochureModal} />} 
+          />
+          <Route 
+            path="/packaging-raisen" 
+            element={<RaisenPage onOpenQuoteModal={handleOpenQuoteModal} onOpenBrochureModal={handleOpenBrochureModal} />} 
+          />
+          <Route 
+            path="/packaging-indore" 
+            element={<IndorePage onOpenQuoteModal={handleOpenQuoteModal} onOpenBrochureModal={handleOpenBrochureModal} />} 
+          />
+          <Route 
+            path="/packaging-ratlam" 
+            element={<RatlamPage onOpenQuoteModal={handleOpenQuoteModal} onOpenBrochureModal={handleOpenBrochureModal} />} 
+          />
+          <Route 
+            path="/packaging-madhya-pradesh" 
+            element={<MadhyaPradeshPage onOpenQuoteModal={handleOpenQuoteModal} onOpenBrochureModal={handleOpenBrochureModal} />} 
           />
 
           {/* Admin Authentication Login */}

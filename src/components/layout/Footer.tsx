@@ -157,6 +157,21 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal, onOpenBrochure
                 </Link>
               </li>
             </ul>
+
+            <div className="pt-4 space-y-4">
+              <h3 className="text-base font-bold text-white uppercase tracking-wider text-xs border-b border-teal-500/30 pb-2 flex items-center gap-2">
+                <span className="w-2 h-2 bg-[#D97706] rounded-full"></span>
+                <span>Service Areas</span>
+              </h3>
+              <ul className="grid grid-cols-2 gap-2 text-xs text-slate-300">
+                <li><Link to="/packaging-bhopal" className="hover:text-[#D97706] transition-colors">Bhopal</Link></li>
+                <li><Link to="/packaging-mandideep" className="hover:text-[#D97706] transition-colors">Mandideep</Link></li>
+                <li><Link to="/packaging-indore" className="hover:text-[#D97706] transition-colors">Indore</Link></li>
+                <li><Link to="/packaging-raisen" className="hover:text-[#D97706] transition-colors">Raisen</Link></li>
+                <li><Link to="/packaging-ratlam" className="hover:text-[#D97706] transition-colors">Ratlam</Link></li>
+                <li><Link to="/packaging-madhya-pradesh" className="hover:text-[#D97706] transition-colors">Madhya Pradesh</Link></li>
+              </ul>
+            </div>
           </div>
 
           {/* Col 3: Manufacturing Facility & Plant Address */}

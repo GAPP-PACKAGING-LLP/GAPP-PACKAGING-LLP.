@@ -38,13 +38,49 @@ export const PAGE_SEO_CONFIG: Record<string, {
     ],
   },
   '/calculator': {
-    title: 'Corrugated Box Size & RFQ Cost Estimator | Instant Quote | GAPP Packaging',
-    description: 'Online Box Configurator & RFQ Estimator. Calculate length, width, height, ply count, bursting strength (BS), and get instant competitive factory pricing for bulk box orders.',
-    keywords: 'corrugated box price calculator, box dimension cost estimator, 5 ply box weight calculator, RFQ box quotation online, custom packaging price calculator Bhopal Mandideep',
+    title: 'Packaging Calculator | Estimate Packaging Material and Cost | GAPP Packaging LLP',
+    description: 'Use the GAPP Packaging Calculator to estimate packaging material, box dimensions and packaging cost for businesses in Bhopal, Mandideep, Raisen, Indore, Ratlam and Madhya Pradesh.',
+    keywords: 'packaging calculator, corrugated box price calculator, box dimension cost estimator, packaging material cost Bhopal Mandideep',
     breadcrumbs: [
       { name: 'Home', path: '/' },
-      { name: 'Box Calculator', path: '/calculator' },
+      { name: 'Packaging Calculator', path: '/calculator' },
     ],
+  },
+  '/packaging-bhopal': {
+    title: 'Packaging Manufacturer in Bhopal | GAPP Packaging LLP',
+    description: 'Looking for a reliable packaging manufacturer in Bhopal? We supply high-quality corrugated boxes and industrial packaging solutions.',
+    keywords: 'packaging manufacturer in Bhopal, packaging manufacturer near Bhopal, corrugated box manufacturer in Bhopal',
+    breadcrumbs: [{ name: 'Home', path: '/' }, { name: 'Packaging Bhopal', path: '/packaging-bhopal' }],
+  },
+  '/packaging-mandideep': {
+    title: 'Packaging Manufacturer in Mandideep | GAPP Packaging LLP',
+    description: 'GAPP Packaging LLP is a leading packaging company in Mandideep providing industrial packaging solutions and heavy-duty corrugated boxes.',
+    keywords: 'packaging company in Mandideep, industrial packaging in Mandideep, corrugated box manufacturer in Mandideep',
+    breadcrumbs: [{ name: 'Home', path: '/' }, { name: 'Packaging Mandideep', path: '/packaging-mandideep' }],
+  },
+  '/packaging-raisen': {
+    title: 'Packaging Supplier in Raisen | GAPP Packaging LLP',
+    description: 'Your trusted packaging supplier in Raisen. We deliver strong 3-ply, 5-ply, and 7-ply corrugated carton boxes for agricultural and industrial needs.',
+    keywords: 'packaging supplier in Raisen, corrugated box supplier in Raisen, packaging solutions',
+    breadcrumbs: [{ name: 'Home', path: '/' }, { name: 'Packaging Raisen', path: '/packaging-raisen' }],
+  },
+  '/packaging-indore': {
+    title: 'Packaging Manufacturer and Supplier in Indore | GAPP Packaging LLP',
+    description: 'We are a premier packaging material supplier for Indore and Pithampur, offering custom corrugated packaging for various industrial sectors.',
+    keywords: 'packaging material supplier in Indore, corrugated packaging in Indore, packaging solutions in Madhya Pradesh',
+    breadcrumbs: [{ name: 'Home', path: '/' }, { name: 'Packaging Indore', path: '/packaging-indore' }],
+  },
+  '/packaging-ratlam': {
+    title: 'Packaging Supplier in Ratlam | GAPP Packaging LLP',
+    description: 'Need durable transit packaging? GAPP Packaging LLP is your go-to packaging supplier in Ratlam for heavy-duty shipping cartons.',
+    keywords: 'packaging supplier in Ratlam, carton box supplier in Ratlam',
+    breadcrumbs: [{ name: 'Home', path: '/' }, { name: 'Packaging Ratlam', path: '/packaging-ratlam' }],
+  },
+  '/packaging-madhya-pradesh': {
+    title: 'Packaging Solutions Across Madhya Pradesh | GAPP Packaging LLP',
+    description: 'We are a top packaging manufacturer across Madhya Pradesh, serving businesses with industrial corrugated boxes and transit materials.',
+    keywords: 'packaging solutions in Madhya Pradesh, packaging manufacturer across Madhya Pradesh, corrugated boxes across Madhya Pradesh',
+    breadcrumbs: [{ name: 'Home', path: '/' }, { name: 'Packaging Madhya Pradesh', path: '/packaging-madhya-pradesh' }],
   },
   '/industries': {
     title: 'Packaging Solutions for Pharma, Auto, Food & FMCG | GAPP Packaging LLP',

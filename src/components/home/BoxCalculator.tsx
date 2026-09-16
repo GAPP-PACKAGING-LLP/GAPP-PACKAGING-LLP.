@@ -203,8 +203,8 @@ export const BoxCalculator: React.FC<BoxCalculatorProps> = ({ onOpenQuoteWithSpe
                     type="number"
                     min={unit === 'mm' ? 100 : 4}
                     max={unit === 'mm' ? 2000 : 80}
-                    value={length}
-                    onChange={(e) => setLength(Number(e.target.value))}
+                    value={length || ''}
+                    onChange={(e) => setLength(Math.max(0, Number(e.target.value)))}
                     className="w-full text-sm font-mono p-1 border border-slate-200 rounded outline-none focus:ring-1 focus:ring-[#0F4C5C]"
                   />
                 </div>
@@ -219,8 +219,8 @@ export const BoxCalculator: React.FC<BoxCalculatorProps> = ({ onOpenQuoteWithSpe
                     type="number"
                     min={unit === 'mm' ? 100 : 4}
                     max={unit === 'mm' ? 1500 : 60}
-                    value={width}
-                    onChange={(e) => setWidth(Number(e.target.value))}
+                    value={width || ''}
+                    onChange={(e) => setWidth(Math.max(0, Number(e.target.value)))}
                     className="w-full text-sm font-mono p-1 border border-slate-200 rounded outline-none focus:ring-1 focus:ring-[#0F4C5C]"
                   />
                 </div>
@@ -235,8 +235,8 @@ export const BoxCalculator: React.FC<BoxCalculatorProps> = ({ onOpenQuoteWithSpe
                     type="number"
                     min={unit === 'mm' ? 80 : 3}
                     max={unit === 'mm' ? 1500 : 60}
-                    value={height}
-                    onChange={(e) => setHeight(Number(e.target.value))}
+                    value={height || ''}
+                    onChange={(e) => setHeight(Math.max(0, Number(e.target.value)))}
                     className="w-full text-sm font-mono p-1 border border-slate-200 rounded outline-none focus:ring-1 focus:ring-[#0F4C5C]"
                   />
                 </div>
@@ -431,7 +431,7 @@ export const BoxCalculator: React.FC<BoxCalculatorProps> = ({ onOpenQuoteWithSpe
                 className="w-full bg-[#D97706] hover:bg-[#B45309] text-white py-3 px-4 rounded-md font-bold text-xs uppercase tracking-wider transition-colors shadow flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Send className="w-4 h-4" />
-                <span>Transfer Spec to Official RFQ Form</span>
+                <span>Request Quotation</span>
               </button>
 
               <button
@@ -442,6 +442,23 @@ export const BoxCalculator: React.FC<BoxCalculatorProps> = ({ onOpenQuoteWithSpe
               >
                 <MessageSquare className="w-4 h-4" />
                 <span>Instant WhatsApp Price Estimate</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setUnit('mm');
+                  setLength(400);
+                  setWidth(300);
+                  setHeight(250);
+                  setPlyCount('5-ply');
+                  setKraftGrade('high-bf');
+                  setPrintOption('1-color');
+                  setEstimatedQuantity(2500);
+                }}
+                className="w-full bg-transparent hover:bg-teal-900 border border-teal-700 text-teal-300 py-2.5 px-4 rounded-md font-bold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span>Reset Calculator</span>
               </button>
             </div>
 
