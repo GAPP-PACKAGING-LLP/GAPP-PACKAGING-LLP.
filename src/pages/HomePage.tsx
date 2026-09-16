@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Send, Calculator, CheckCircle, Package, Box, Truck, ShieldCheck, MapPin, PhoneCall } from 'lucide-react';
+import { Send, Calculator, CheckCircle, Package, Box, Truck, ShieldCheck, MapPin, PhoneCall, Factory } from 'lucide-react';
 
 interface HomePageProps {
   onOpenQuoteModal: (boxType?: string, dimensions?: any) => void;
