@@ -23,9 +23,9 @@ export const PAGE_SEO_CONFIG: Record<string, {
   breadcrumbs: Array<{ name: string; path: string }>;
 }> = {
   '/': {
-    title: 'GAPP Packaging LLP | Top Corrugated Box Manufacturer Mandideep, Bhopal MP',
-    description: 'Leading B2B corrugated box manufacturer in Mandideep Industrial Area & Bhopal (Madhya Pradesh). Automatic 3-ply, 5-ply, 7-ply heavy duty boxes, printed cartons, die-cut packaging & fast custom quotes.',
-    keywords: 'corrugated box manufacturer in Mandideep, corrugated box manufacturer in Bhopal, packaging boxes supplier Madhya Pradesh, 3 ply 5 ply 7 ply carton boxes, heavy duty shipping boxes Bhopal, custom corrugated boxes factory Indore Mandideep, industrial packaging solutions Central India, printed cartons factory MP',
+    title: 'GAPP Packaging LLP | Top Corrugated Box Manufacturer in Bhopal, Mandideep & Indore',
+    description: 'Leading B2B corrugated box manufacturer serving Bhopal, Mandideep, Indore & Madhya Pradesh. Automatic 3-ply, 5-ply, 7-ply heavy duty boxes, printed cartons, die-cut packaging & fast custom quotes.',
+    keywords: 'corrugated box manufacturer in Mandideep, corrugated box manufacturer in Bhopal, corrugated box supplier in Indore, packaging boxes supplier Madhya Pradesh, 3 ply 5 ply 7 ply carton boxes, heavy duty shipping boxes Bhopal, custom corrugated boxes factory Indore Mandideep, industrial packaging solutions Central India, printed cartons factory MP',
     breadcrumbs: [{ name: 'Home', path: '/' }],
   },
   '/products': {
@@ -204,7 +204,7 @@ export function SEOHead({
 
       // Geo Tags for Central India & Madhya Pradesh
       setMetaTag('geo.region', 'IN-MP');
-      setMetaTag('geo.placename', 'Mandideep, Bhopal, Obedullaganj, Raisen, Indore');
+      setMetaTag('geo.placename', 'Mandideep, Bhopal, Obedullaganj, Raisen, Indore, Dewas, Pithampur');
       setMetaTag('geo.position', '23.0645;77.5256');
       setMetaTag('ICBM', '23.0645, 77.5256');
 
