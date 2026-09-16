@@ -263,8 +263,9 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal, onOpenBrochure
             </span>
           </div>
 
-          <div className="text-center md:text-right font-mono text-[11px] text-slate-400">
-            © {currentYear} {settings.companyName || 'GAPP Packaging LLP'}. All Rights Reserved. • {settings.unitLocation || 'Mandideep, MP'}
+          <div className="text-center md:text-right font-mono text-[11px] text-slate-400 space-y-1">
+            <div>© {currentYear} {settings.companyName || 'GAPP Packaging LLP'}. All Rights Reserved. • {settings.unitLocation || 'Mandideep, MP'}</div>
+            <div className="text-slate-500 font-semibold tracking-wide">Developed by Rajesh Barange Pawar</div>
           </div>
         </div>
 
