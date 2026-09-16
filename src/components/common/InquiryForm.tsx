@@ -194,7 +194,7 @@ export const InquiryForm: React.FC<InquiryFormProps> = ({
         </div>
 
         <div className="space-y-1">
-          <h4 className="text-xl font-bold text-[#0F4C5C]">
+          <h4 className="text-xl font-bold text-brand-primary">
             Inquiry Saved in Plant Database
           </h4>
           <p className="text-xs text-slate-600">
@@ -205,7 +205,7 @@ export const InquiryForm: React.FC<InquiryFormProps> = ({
         {/* Reference Box */}
         <div className="bg-[#F8F9FA] border border-slate-200 rounded-lg p-3 max-w-sm mx-auto font-mono text-xs space-y-1">
           <span className="text-slate-500 block text-[11px] uppercase tracking-wider">Inquiry Reference Number</span>
-          <span className="text-lg font-bold text-[#0F4C5C]">{successData.ref}</span>
+          <span className="text-lg font-bold text-brand-primary">{successData.ref}</span>
           <div className="text-[10px] text-slate-400">ID: {successData.id}</div>
         </div>
 
@@ -263,7 +263,7 @@ export const InquiryForm: React.FC<InquiryFormProps> = ({
               className={`w-full px-3.5 py-2.5 bg-white border rounded-md text-xs sm:text-sm outline-none transition-colors ${
                 validationErrors.name 
                   ? 'border-red-400 focus:ring-2 focus:ring-red-200' 
-                  : 'border-slate-300 focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent'
+                  : 'border-slate-300 focus:ring-2 focus:ring-brand-primary focus:border-transparent'
               }`}
             />
           </div>
@@ -288,7 +288,7 @@ export const InquiryForm: React.FC<InquiryFormProps> = ({
               className={`w-full px-3.5 py-2.5 bg-white border rounded-md text-xs sm:text-sm outline-none transition-colors ${
                 validationErrors.company 
                   ? 'border-red-400 focus:ring-2 focus:ring-red-200' 
-                  : 'border-slate-300 focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent'
+                  : 'border-slate-300 focus:ring-2 focus:ring-brand-primary focus:border-transparent'
               }`}
             />
           </div>
@@ -316,7 +316,7 @@ export const InquiryForm: React.FC<InquiryFormProps> = ({
               className={`w-full px-3.5 py-2.5 bg-white border rounded-md text-xs sm:text-sm outline-none transition-colors ${
                 validationErrors.phone 
                   ? 'border-red-400 focus:ring-2 focus:ring-red-200' 
-                  : 'border-slate-300 focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent'
+                  : 'border-slate-300 focus:ring-2 focus:ring-brand-primary focus:border-transparent'
               }`}
             />
           </div>
@@ -341,7 +341,7 @@ export const InquiryForm: React.FC<InquiryFormProps> = ({
               className={`w-full px-3.5 py-2.5 bg-white border rounded-md text-xs sm:text-sm outline-none transition-colors ${
                 validationErrors.email 
                   ? 'border-red-400 focus:ring-2 focus:ring-red-200' 
-                  : 'border-slate-300 focus:ring-2 focus:ring-[#0F4C5C] focus:border-transparent'
+                  : 'border-slate-300 focus:ring-2 focus:ring-brand-primary focus:border-transparent'
               }`}
             />
           </div>
@@ -364,7 +364,7 @@ export const InquiryForm: React.FC<InquiryFormProps> = ({
                 disabled={isSubmitting}
                 value={formData.boxType}
                 onChange={handleChange}
-                className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-md text-xs sm:text-sm focus:ring-2 focus:ring-[#0F4C5C] outline-none"
+                className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-md text-xs sm:text-sm focus:ring-2 focus:ring-brand-primary outline-none"
               >
                 <option value="Pharmaceuticals">Pharmaceuticals</option>
                 <option value="Retail & E-commerce">Retail & E-commerce</option>
@@ -385,7 +385,7 @@ export const InquiryForm: React.FC<InquiryFormProps> = ({
                 disabled={isSubmitting}
                 value={formData.plyCount}
                 onChange={handleChange}
-                className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-md text-xs sm:text-sm focus:ring-2 focus:ring-[#0F4C5C] outline-none"
+                className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-md text-xs sm:text-sm focus:ring-2 focus:ring-brand-primary outline-none"
               >
                 <option value="3-ply Single Wall Corrugated Box">3-ply Single Wall Corrugated Box</option>
                 <option value="5-ply Double Wall Corrugated Box">5-ply Double Wall Corrugated Box</option>
@@ -411,7 +411,7 @@ export const InquiryForm: React.FC<InquiryFormProps> = ({
                     value="mm"
                     checked={formData.dimensionUnit === 'mm'}
                     onChange={handleChange}
-                    className="text-[#0F4C5C]"
+                    className="text-brand-primary"
                   />
                   <span className="ml-1 text-slate-700 font-medium">mm</span>
                 </label>
@@ -422,7 +422,7 @@ export const InquiryForm: React.FC<InquiryFormProps> = ({
                     value="inches"
                     checked={formData.dimensionUnit === 'inches'}
                     onChange={handleChange}
-                    className="text-[#0F4C5C]"
+                    className="text-brand-primary"
                   />
                   <span className="ml-1 text-slate-700 font-medium">Inches</span>
                 </label>
@@ -437,7 +437,7 @@ export const InquiryForm: React.FC<InquiryFormProps> = ({
                 value={formData.dimensionsLength}
                 onChange={handleChange}
                 placeholder="Length (L)"
-                className="px-3 py-2 bg-white border border-slate-300 rounded-md text-xs sm:text-sm outline-none focus:ring-2 focus:ring-[#0F4C5C]"
+                className="px-3 py-2 bg-white border border-slate-300 rounded-md text-xs sm:text-sm outline-none focus:ring-2 focus:ring-brand-primary"
               />
               <input
                 type="number"
@@ -446,7 +446,7 @@ export const InquiryForm: React.FC<InquiryFormProps> = ({
                 value={formData.dimensionsWidth}
                 onChange={handleChange}
                 placeholder="Width (W)"
-                className="px-3 py-2 bg-white border border-slate-300 rounded-md text-xs sm:text-sm outline-none focus:ring-2 focus:ring-[#0F4C5C]"
+                className="px-3 py-2 bg-white border border-slate-300 rounded-md text-xs sm:text-sm outline-none focus:ring-2 focus:ring-brand-primary"
               />
               <input
                 type="number"
@@ -455,7 +455,7 @@ export const InquiryForm: React.FC<InquiryFormProps> = ({
                 value={formData.dimensionsHeight}
                 onChange={handleChange}
                 placeholder="Height (H)"
-                className="px-3 py-2 bg-white border border-slate-300 rounded-md text-xs sm:text-sm outline-none focus:ring-2 focus:ring-[#0F4C5C]"
+                className="px-3 py-2 bg-white border border-slate-300 rounded-md text-xs sm:text-sm outline-none focus:ring-2 focus:ring-brand-primary"
               />
             </div>
           </div>
@@ -474,7 +474,7 @@ export const InquiryForm: React.FC<InquiryFormProps> = ({
           value={formData.message}
           onChange={handleChange}
           placeholder="Please specify order quantity, target delivery timeline, or any specific box requirements."
-          className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-md text-xs sm:text-sm focus:ring-2 focus:ring-[#0F4C5C] outline-none resize-none"
+          className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-md text-xs sm:text-sm focus:ring-2 focus:ring-brand-primary outline-none resize-none"
         />
       </div>
 
@@ -484,16 +484,16 @@ export const InquiryForm: React.FC<InquiryFormProps> = ({
           type="submit"
           disabled={isSubmitting}
           id="submit-inquiry-btn"
-          className="w-full bg-[#0F4C5C] hover:bg-[#0A3642] disabled:bg-slate-400 text-white py-3 px-6 rounded-md font-bold text-xs uppercase tracking-wider shadow-sm transition-all duration-150 flex items-center justify-center gap-2 cursor-pointer"
+          className="w-full bg-brand-primary hover:bg-brand-primary-hover disabled:bg-slate-400 text-white py-3 px-6 rounded-md font-bold text-xs uppercase tracking-wider shadow-sm transition-all duration-150 flex items-center justify-center gap-2 cursor-pointer"
         >
           {isSubmitting ? (
             <>
-              <Loader2 className="w-4 h-4 text-[#D97706] animate-spin" />
+              <Loader2 className="w-4 h-4 text-brand-accent animate-spin" />
               <span>Saving to Firestore Database...</span>
             </>
           ) : (
             <>
-              <Send className="w-4 h-4 text-[#D97706]" />
+              <Send className="w-4 h-4 text-brand-accent" />
               <span>Submit Inquiry & Request Quotation</span>
             </>
           )}

@@ -16,8 +16,8 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     return (
       <div className="min-h-screen bg-[#F8F9FA] flex flex-col items-center justify-center p-4">
         <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm max-w-sm w-full text-center space-y-4">
-          <div className="w-12 h-12 rounded-xl bg-teal-50 text-[#0F4C5C] flex items-center justify-center mx-auto border border-teal-100">
-            <RefreshCw className="w-6 h-6 animate-spin text-[#0F4C5C]" />
+          <div className="w-12 h-12 rounded-xl bg-teal-50 text-brand-primary flex items-center justify-center mx-auto border border-teal-100">
+            <RefreshCw className="w-6 h-6 animate-spin text-brand-primary" />
           </div>
           <div className="space-y-1">
             <h3 className="font-bold text-slate-800 text-base">Verifying Admin Access</h3>
@@ -56,7 +56,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
               onClick={async () => {
                 await logout();
               }}
-              className="inline-flex items-center justify-center gap-1.5 bg-[#0F4C5C] hover:bg-[#0A3642] text-white px-4 py-2 rounded-lg font-semibold text-xs transition-colors cursor-pointer"
+              className="inline-flex items-center justify-center gap-1.5 bg-brand-primary hover:bg-brand-primary-hover text-white px-4 py-2 rounded-lg font-semibold text-xs transition-colors cursor-pointer"
             >
               <LogOut className="w-3.5 h-3.5" />
               <span>Switch Google Account</span>

@@ -73,7 +73,7 @@ export const AdminDashboard: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Top Banner / Welcome */}
-      <div className="bg-gradient-to-r from-[#0A2540] via-[#0F4C5C] to-[#0A2540] rounded-2xl p-6 text-white shadow-sm border border-slate-700/50 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-gradient-to-r from-[#0A2540] via-brand-primary to-[#0A2540] rounded-2xl p-6 text-white shadow-sm border border-slate-700/50 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-start gap-4">
           <div className="p-2 bg-white/10 rounded-xl hidden sm:flex items-center justify-center shrink-0 border border-white/10">
             <BrandMark size={40} isDark={true} />
@@ -109,7 +109,7 @@ export const AdminDashboard: React.FC = () => {
         <div className="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-2xs">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Total RFQs</span>
-            <div className="p-2 rounded-lg bg-teal-50 text-[#0F4C5C]">
+            <div className="p-2 rounded-lg bg-teal-50 text-brand-primary">
               <MailQuestion className="w-4 h-4" />
             </div>
           </div>
@@ -190,7 +190,7 @@ export const AdminDashboard: React.FC = () => {
             </div>
             <Link
               to="/admin/inquiries"
-              className="text-xs font-bold text-[#0F4C5C] hover:underline flex items-center gap-1"
+              className="text-xs font-bold text-brand-primary hover:underline flex items-center gap-1"
             >
               <span>View All</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -252,7 +252,7 @@ export const AdminDashboard: React.FC = () => {
                     {inq.status === 'new' && (
                       <button
                         onClick={() => handleQuickStatus(inq.id, 'contacted')}
-                        className="px-2.5 py-1 bg-[#0F4C5C] hover:bg-[#0c3c49] text-white text-[11px] font-bold rounded-lg transition-colors cursor-pointer"
+                        className="px-2.5 py-1 bg-brand-primary hover:bg-[#0c3c49] text-white text-[11px] font-bold rounded-lg transition-colors cursor-pointer"
                       >
                         Mark Contacted
                       </button>
@@ -286,57 +286,57 @@ export const AdminDashboard: React.FC = () => {
             <div className="grid grid-cols-1 gap-2">
               <Link
                 to="/admin/products"
-                className="flex items-center justify-between p-2.5 rounded-lg border border-slate-200 hover:border-[#0F4C5C] hover:bg-teal-50/40 transition-colors text-xs font-semibold text-slate-700 group"
+                className="flex items-center justify-between p-2.5 rounded-lg border border-slate-200 hover:border-brand-primary hover:bg-teal-50/40 transition-colors text-xs font-semibold text-slate-700 group"
               >
                 <div className="flex items-center gap-2.5">
-                  <Boxes className="w-4 h-4 text-[#0F4C5C]" />
+                  <Boxes className="w-4 h-4 text-brand-primary" />
                   <span>Manage Products Catalog</span>
                 </div>
-                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#0F4C5C]" />
+                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-brand-primary" />
               </Link>
 
               <Link
                 to="/admin/machinery"
-                className="flex items-center justify-between p-2.5 rounded-lg border border-slate-200 hover:border-[#0F4C5C] hover:bg-teal-50/40 transition-colors text-xs font-semibold text-slate-700 group"
+                className="flex items-center justify-between p-2.5 rounded-lg border border-slate-200 hover:border-brand-primary hover:bg-teal-50/40 transition-colors text-xs font-semibold text-slate-700 group"
               >
                 <div className="flex items-center gap-2.5">
-                  <Cpu className="w-4 h-4 text-[#0F4C5C]" />
+                  <Cpu className="w-4 h-4 text-brand-primary" />
                   <span>Update Machinery (12 Units)</span>
                 </div>
-                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#0F4C5C]" />
+                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-brand-primary" />
               </Link>
 
               <Link
                 to="/admin/testing-equipment"
-                className="flex items-center justify-between p-2.5 rounded-lg border border-slate-200 hover:border-[#0F4C5C] hover:bg-teal-50/40 transition-colors text-xs font-semibold text-slate-700 group"
+                className="flex items-center justify-between p-2.5 rounded-lg border border-slate-200 hover:border-brand-primary hover:bg-teal-50/40 transition-colors text-xs font-semibold text-slate-700 group"
               >
                 <div className="flex items-center gap-2.5">
-                  <Microscope className="w-4 h-4 text-[#0F4C5C]" />
+                  <Microscope className="w-4 h-4 text-brand-primary" />
                   <span>Testing Lab & QC Standards</span>
                 </div>
-                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#0F4C5C]" />
+                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-brand-primary" />
               </Link>
 
               <Link
                 to="/admin/gallery"
-                className="flex items-center justify-between p-2.5 rounded-lg border border-slate-200 hover:border-[#0F4C5C] hover:bg-teal-50/40 transition-colors text-xs font-semibold text-slate-700 group"
+                className="flex items-center justify-between p-2.5 rounded-lg border border-slate-200 hover:border-brand-primary hover:bg-teal-50/40 transition-colors text-xs font-semibold text-slate-700 group"
               >
                 <div className="flex items-center gap-2.5">
-                  <GalleryIcon className="w-4 h-4 text-[#0F4C5C]" />
+                  <GalleryIcon className="w-4 h-4 text-brand-primary" />
                   <span>Upload Plant Photos</span>
                 </div>
-                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#0F4C5C]" />
+                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-brand-primary" />
               </Link>
 
               <Link
                 to="/admin/settings"
-                className="flex items-center justify-between p-2.5 rounded-lg border border-slate-200 hover:border-[#0F4C5C] hover:bg-teal-50/40 transition-colors text-xs font-semibold text-slate-700 group"
+                className="flex items-center justify-between p-2.5 rounded-lg border border-slate-200 hover:border-brand-primary hover:bg-teal-50/40 transition-colors text-xs font-semibold text-slate-700 group"
               >
                 <div className="flex items-center gap-2.5">
-                  <Building className="w-4 h-4 text-[#0F4C5C]" />
+                  <Building className="w-4 h-4 text-brand-primary" />
                   <span>Plant & Statutory Settings</span>
                 </div>
-                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-[#0F4C5C]" />
+                <ArrowRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-brand-primary" />
               </Link>
             </div>
           </div>

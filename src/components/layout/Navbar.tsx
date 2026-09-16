@@ -70,21 +70,21 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal, onOpenBrochure
   return (
     <header className="w-full z-50 sticky top-0 bg-white/95 backdrop-blur-md shadow-sm transition-all duration-200 border-b border-slate-200">
       {/* Top Industrial Info Bar (Desktop) */}
-      <div className="hidden lg:block bg-[#0A3642] text-slate-200 text-xs py-2 px-4 sm:px-8 border-b border-[#134E4A]/40">
+      <div className="hidden lg:block bg-brand-primary-hover text-slate-200 text-xs py-2 px-4 sm:px-8 border-b border-[#134E4A]/40">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-6">
             <div className="flex items-center space-x-2 text-slate-300">
-              <MapPin className="w-3.5 h-3.5 text-[#D97706]" />
+              <MapPin className="w-3.5 h-3.5 text-brand-accent" />
               <span>Plant: Mandideep Industrial Area, MP</span>
             </div>
             <div className="flex items-center space-x-2 text-slate-300">
-              <Mail className="w-3.5 h-3.5 text-[#D97706]" />
+              <Mail className="w-3.5 h-3.5 text-brand-accent" />
               <a href={`mailto:${email}`} className="hover:text-white transition-colors underline-offset-2 hover:underline">
                 {email}
               </a>
             </div>
             <div className="flex items-center space-x-2 text-slate-300">
-              <Phone className="w-3.5 h-3.5 text-[#D97706]" />
+              <Phone className="w-3.5 h-3.5 text-brand-accent" />
               <a href={`tel:${phone1}`} className="hover:text-white font-medium">
                 {phone1}
               </a>
@@ -97,16 +97,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal, onOpenBrochure
 
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-1.5 text-slate-300 bg-white/10 px-2.5 py-0.5 rounded text-[11px] font-mono">
-              <span className="text-[#D97706] font-semibold">GSTIN:</span>
+              <span className="text-brand-accent font-semibold">GSTIN:</span>
               <span>{gst}</span>
             </div>
             <div className="flex items-center space-x-1.5 text-slate-300 bg-white/10 px-2.5 py-0.5 rounded text-[11px] font-mono">
-              <span className="text-[#D97706] font-semibold">LLPIN:</span>
+              <span className="text-brand-accent font-semibold">LLPIN:</span>
               <span>{llpin}</span>
             </div>
             <button
               onClick={onOpenBrochureModal}
-              className="flex items-center space-x-1 text-[#D97706] hover:text-amber-300 font-semibold cursor-pointer text-[11px] transition-colors"
+              className="flex items-center space-x-1 text-brand-accent hover:text-amber-300 font-semibold cursor-pointer text-[11px] transition-colors"
             >
               <FileText className="w-3 h-3" />
               <span>Spec Sheet</span>
@@ -134,8 +134,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal, onOpenBrochure
                   onClick={handleNavClick}
                   className={`px-2.5 py-1.5 text-xs lg:text-[13px] font-bold rounded-md transition-colors ${
                     isActive
-                      ? 'bg-[#0F4C5C] text-white shadow-xs'
-                      : 'text-[#334155] hover:text-[#0F4C5C] hover:bg-slate-100'
+                      ? 'bg-brand-primary text-white shadow-xs'
+                      : 'text-[#334155] hover:text-brand-primary hover:bg-slate-100'
                   }`}
                 >
                   {link.name}
@@ -149,9 +149,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal, onOpenBrochure
             <button
               onClick={onOpenQuoteModal}
               id="header-get-quote-btn"
-              className="inline-flex items-center gap-2 bg-[#0F4C5C] hover:bg-[#0A3642] text-white px-5 py-2.5 rounded-md font-semibold text-sm shadow-sm transition-all duration-150 active:scale-95 cursor-pointer"
+              className="inline-flex items-center gap-2 bg-brand-primary hover:bg-brand-primary-hover text-white px-5 py-2.5 rounded-md font-semibold text-sm shadow-sm transition-all duration-150 active:scale-95 cursor-pointer"
             >
-              <Send className="w-4 h-4 text-[#D97706]" />
+              <Send className="w-4 h-4 text-brand-accent" />
               <span>Get Instant Quote</span>
             </button>
           </div>
@@ -160,14 +160,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal, onOpenBrochure
           <div className="flex items-center space-x-2 xl:hidden">
             <button
               onClick={onOpenQuoteModal}
-              className="sm:hidden bg-[#0F4C5C] text-white px-3 py-1.5 rounded text-xs font-semibold"
+              className="sm:hidden bg-brand-primary text-white px-3 py-1.5 rounded text-xs font-semibold"
             >
               Quote
             </button>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               id="mobile-menu-toggle-btn"
-              className="p-2 rounded-md text-[#334155] hover:text-[#0F4C5C] hover:bg-slate-100 transition-colors focus:outline-none"
+              className="p-2 rounded-md text-[#334155] hover:text-brand-primary hover:bg-slate-100 transition-colors focus:outline-none"
               aria-label="Toggle Menu"
             >
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -189,8 +189,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal, onOpenBrochure
                   onClick={handleNavClick}
                   className={`px-3 py-2.5 text-base font-semibold rounded-md flex items-center justify-between transition-colors ${
                     isActive
-                      ? 'bg-[#0F4C5C] text-white font-bold'
-                      : 'text-[#334155] hover:text-[#0F4C5C] hover:bg-slate-50'
+                      ? 'bg-brand-primary text-white font-bold'
+                      : 'text-[#334155] hover:text-brand-primary hover:bg-slate-50'
                   }`}
                 >
                   <span>{link.name}</span>
@@ -206,9 +206,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal, onOpenBrochure
                 setIsMobileMenuOpen(false);
                 onOpenQuoteModal();
               }}
-              className="w-full flex items-center justify-center gap-2 bg-[#0F4C5C] text-white py-3 rounded-md font-bold text-sm shadow-sm"
+              className="w-full flex items-center justify-center gap-2 bg-brand-primary text-white py-3 rounded-md font-bold text-sm shadow-sm"
             >
-              <Send className="w-4 h-4 text-[#D97706]" />
+              <Send className="w-4 h-4 text-brand-accent" />
               <span>Request Custom Box Quotation</span>
             </button>
             
@@ -217,9 +217,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal, onOpenBrochure
                 setIsMobileMenuOpen(false);
                 onOpenBrochureModal();
               }}
-              className="w-full flex items-center justify-center gap-2 bg-slate-100 text-[#0F4C5C] py-2.5 rounded-md font-semibold text-sm hover:bg-slate-200"
+              className="w-full flex items-center justify-center gap-2 bg-slate-100 text-brand-primary py-2.5 rounded-md font-semibold text-sm hover:bg-slate-200"
             >
-              <FileText className="w-4 h-4 text-[#D97706]" />
+              <FileText className="w-4 h-4 text-brand-accent" />
               <span>View Technical Spec Brochure</span>
             </button>
 

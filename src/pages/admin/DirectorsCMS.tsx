@@ -138,10 +138,10 @@ export const DirectorsCMS: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <h2 className="text-base font-extrabold text-slate-800 flex items-center gap-2">
-              <Users className="w-5 h-5 text-[#0F4C5C]" />
+              <Users className="w-5 h-5 text-brand-primary" />
               <span>Directors & Key Management CMS</span>
             </h2>
-            <span className="bg-cyan-100 text-[#0F4C5C] text-xs font-bold px-2 py-0.5 rounded-full border border-cyan-200">
+            <span className="bg-cyan-100 text-brand-primary text-xs font-bold px-2 py-0.5 rounded-full border border-cyan-200">
               {directors.length} Profiles
             </span>
           </div>
@@ -164,7 +164,7 @@ export const DirectorsCMS: React.FC = () => {
           <button
             type="button"
             onClick={handleOpenAdd}
-            className="px-4 py-2 bg-[#0F4C5C] hover:bg-[#0c3c49] text-white text-xs font-bold rounded-xl shadow transition-all flex items-center gap-2 cursor-pointer"
+            className="px-4 py-2 bg-brand-primary hover:bg-[#0c3c49] text-white text-xs font-bold rounded-xl shadow transition-all flex items-center gap-2 cursor-pointer"
             id="add-director-btn"
           >
             <Plus className="w-4 h-4" />
@@ -182,7 +182,7 @@ export const DirectorsCMS: React.FC = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search director name, DIN, role, or phone..."
-            className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-hidden focus:border-[#0F4C5C] focus:bg-white text-slate-800"
+            className="w-full pl-9 pr-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-lg focus:outline-hidden focus:border-brand-primary focus:bg-white text-slate-800"
           />
         </div>
 
@@ -208,7 +208,7 @@ export const DirectorsCMS: React.FC = () => {
           </p>
           <button
             onClick={handleOpenAdd}
-            className="px-4 py-2 bg-[#0F4C5C] text-white text-xs font-bold rounded-lg cursor-pointer inline-flex items-center gap-1.5"
+            className="px-4 py-2 bg-brand-primary text-white text-xs font-bold rounded-lg cursor-pointer inline-flex items-center gap-1.5"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Add First Director</span>
@@ -234,7 +234,7 @@ export const DirectorsCMS: React.FC = () => {
                         className="w-16 h-16 rounded-xl object-cover border border-slate-200 shadow-2xs"
                       />
                     ) : (
-                      <div className="w-16 h-16 rounded-xl bg-linear-to-br from-[#0F4C5C] to-[#0A2540] text-white flex items-center justify-center font-black text-xl shadow-2xs">
+                      <div className="w-16 h-16 rounded-xl bg-linear-to-br from-brand-primary to-[#0A2540] text-white flex items-center justify-center font-black text-xl shadow-2xs">
                         {director.name.charAt(0)}
                       </div>
                     )}
@@ -255,7 +255,7 @@ export const DirectorsCMS: React.FC = () => {
                       </span>
                     </div>
 
-                    <p className="text-xs font-semibold text-[#0F4C5C] mt-0.5 truncate" title={director.role}>
+                    <p className="text-xs font-semibold text-brand-primary mt-0.5 truncate" title={director.role}>
                       {director.role}
                     </p>
 
@@ -312,7 +312,7 @@ export const DirectorsCMS: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleOpenEdit(director)}
-                    className="p-1.5 text-slate-600 hover:text-[#0F4C5C] hover:bg-slate-200/80 rounded-lg transition-colors cursor-pointer"
+                    className="p-1.5 text-slate-600 hover:text-brand-primary hover:bg-slate-200/80 rounded-lg transition-colors cursor-pointer"
                     title="Edit Director"
                   >
                     <Edit3 className="w-4 h-4" />
@@ -441,7 +441,7 @@ export const DirectorsCMS: React.FC = () => {
               <button
                 type="submit"
                 disabled={saving}
-                className="px-5 py-2 bg-[#0F4C5C] hover:bg-[#0c3c49] text-white text-xs font-bold rounded-lg shadow cursor-pointer disabled:opacity-50 flex items-center gap-1.5"
+                className="px-5 py-2 bg-brand-primary hover:bg-[#0c3c49] text-white text-xs font-bold rounded-lg shadow cursor-pointer disabled:opacity-50 flex items-center gap-1.5"
               >
                 <span>{saving ? 'Saving...' : 'Save Director Profile'}</span>
               </button>

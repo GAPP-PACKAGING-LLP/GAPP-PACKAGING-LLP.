@@ -200,13 +200,13 @@ export const QuotationGeneratorModal: React.FC<QuotationGeneratorModalProps> = (
         {/* Modal Top Action Bar */}
         <div className="p-4 bg-slate-900 text-white flex items-center justify-between border-b border-slate-800 shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#0F4C5C] text-white flex items-center justify-center font-bold">
+            <div className="w-10 h-10 rounded-xl bg-brand-primary text-white flex items-center justify-center font-bold">
               <FileText className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-base font-bold text-white">Quotation & Proforma Invoice Generator</h3>
-                <span className="text-[10px] font-mono font-bold bg-[#D97706] text-white px-2 py-0.5 rounded">
+                <span className="text-[10px] font-mono font-bold bg-brand-accent text-white px-2 py-0.5 rounded">
                   {quoteNumber}
                 </span>
               </div>
@@ -265,17 +265,17 @@ export const QuotationGeneratorModal: React.FC<QuotationGeneratorModalProps> = (
           >
             
             {/* Document Letterhead */}
-            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 pb-6 border-b-2 border-[#0F4C5C]">
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 pb-6 border-b-2 border-brand-primary">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-[#0F4C5C] text-white flex items-center justify-center font-bold text-sm">
+                  <div className="w-8 h-8 rounded-lg bg-brand-primary text-white flex items-center justify-center font-bold text-sm">
                     G
                   </div>
-                  <h1 className="text-xl sm:text-2xl font-black tracking-tight text-[#0F4C5C]">
+                  <h1 className="text-xl sm:text-2xl font-black tracking-tight text-brand-primary">
                     GAPP PACKAGING LLP
                   </h1>
                 </div>
-                <p className="text-xs font-bold text-[#D97706] tracking-wide uppercase">
+                <p className="text-xs font-bold text-brand-accent tracking-wide uppercase">
                   Corrugated Boxes & Packaging Solutions Manufacturers
                 </p>
                 <div className="text-[11px] text-slate-600 font-mono space-y-0.5 pt-1">
@@ -286,7 +286,7 @@ export const QuotationGeneratorModal: React.FC<QuotationGeneratorModalProps> = (
               </div>
 
               <div className="bg-teal-50/70 border border-teal-100 rounded-xl p-3 sm:text-right space-y-1 shrink-0">
-                <span className="text-xs font-extrabold text-[#0F4C5C] uppercase tracking-wider block">
+                <span className="text-xs font-extrabold text-brand-primary uppercase tracking-wider block">
                   FORMAL QUOTATION
                 </span>
                 <p className="text-xs font-mono font-bold text-slate-900">{quoteNumber}</p>
@@ -307,14 +307,14 @@ export const QuotationGeneratorModal: React.FC<QuotationGeneratorModalProps> = (
                     value={clientName}
                     onChange={(e) => setClientName(e.target.value)}
                     placeholder="Contact Person Name"
-                    className="text-xs font-bold p-2 bg-white border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-[#0F4C5C]"
+                    className="text-xs font-bold p-2 bg-white border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-brand-primary"
                   />
                   <input
                     type="text"
                     value={clientCompany}
                     onChange={(e) => setClientCompany(e.target.value)}
                     placeholder="Company / Firm Name"
-                    className="text-xs font-semibold p-2 bg-white border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-[#0F4C5C]"
+                    className="text-xs font-semibold p-2 bg-white border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-brand-primary"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-2">
@@ -323,14 +323,14 @@ export const QuotationGeneratorModal: React.FC<QuotationGeneratorModalProps> = (
                     value={clientPhone}
                     onChange={(e) => setClientPhone(e.target.value)}
                     placeholder="Phone / WhatsApp (+91)"
-                    className="text-xs font-mono p-2 bg-white border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-[#0F4C5C]"
+                    className="text-xs font-mono p-2 bg-white border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-brand-primary"
                   />
                   <input
                     type="email"
                     value={clientEmail}
                     onChange={(e) => setClientEmail(e.target.value)}
                     placeholder="Email Address"
-                    className="text-xs font-mono p-2 bg-white border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-[#0F4C5C]"
+                    className="text-xs font-mono p-2 bg-white border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-brand-primary"
                   />
                 </div>
               </div>
@@ -344,7 +344,7 @@ export const QuotationGeneratorModal: React.FC<QuotationGeneratorModalProps> = (
                   value={deliveryLocation}
                   onChange={(e) => setDeliveryLocation(e.target.value)}
                   placeholder="Delivery Destination (e.g. Mandideep / Bhopal)"
-                  className="w-full text-xs font-semibold p-2 bg-white border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-[#0F4C5C]"
+                  className="w-full text-xs font-semibold p-2 bg-white border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-brand-primary"
                 />
                 <div className="grid grid-cols-2 gap-2">
                   <input
@@ -352,14 +352,14 @@ export const QuotationGeneratorModal: React.FC<QuotationGeneratorModalProps> = (
                     value={clientGst}
                     onChange={(e) => setClientGst(e.target.value)}
                     placeholder="Client GSTIN (Optional)"
-                    className="text-xs font-mono p-2 bg-white border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-[#0F4C5C]"
+                    className="text-xs font-mono p-2 bg-white border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-brand-primary"
                   />
                   <input
                     type="text"
                     value={preparedBy}
                     onChange={(e) => setPreparedBy(e.target.value)}
                     placeholder="Prepared by Partner"
-                    className="text-xs font-semibold p-2 bg-white border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-[#0F4C5C]"
+                    className="text-xs font-semibold p-2 bg-white border border-slate-300 rounded-lg outline-none focus:ring-1 focus:ring-brand-primary"
                   />
                 </div>
               </div>
@@ -374,7 +374,7 @@ export const QuotationGeneratorModal: React.FC<QuotationGeneratorModalProps> = (
                 <button
                   type="button"
                   onClick={handleAddItem}
-                  className="px-2.5 py-1 bg-teal-50 hover:bg-teal-100 text-[#0F4C5C] text-xs font-bold rounded-lg border border-teal-200 transition-colors flex items-center gap-1 cursor-pointer"
+                  className="px-2.5 py-1 bg-teal-50 hover:bg-teal-100 text-brand-primary text-xs font-bold rounded-lg border border-teal-200 transition-colors flex items-center gap-1 cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>Add Box Item</span>
@@ -507,7 +507,7 @@ export const QuotationGeneratorModal: React.FC<QuotationGeneratorModalProps> = (
 
                 {/* Bank Details Note */}
                 <div className="p-3 bg-teal-50/80 rounded-xl border border-teal-100 text-[11px] space-y-1 font-mono text-slate-700">
-                  <div className="flex items-center gap-1 font-bold text-[#0F4C5C]">
+                  <div className="flex items-center gap-1 font-bold text-brand-primary">
                     <ShieldCheck className="w-3.5 h-3.5" />
                     <span>Bank Transfer Details:</span>
                   </div>
@@ -567,7 +567,7 @@ export const QuotationGeneratorModal: React.FC<QuotationGeneratorModalProps> = (
                   <span className="font-bold text-slate-900">₹{gstAmount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</span>
                 </div>
 
-                <div className="pt-2 border-t-2 border-[#0F4C5C] flex justify-between items-center text-sm sm:text-base font-bold text-[#0F4C5C]">
+                <div className="pt-2 border-t-2 border-brand-primary flex justify-between items-center text-sm sm:text-base font-bold text-brand-primary">
                   <span>Grand Total (Net):</span>
                   <span>₹{Math.round(grandTotal).toLocaleString('en-IN')}</span>
                 </div>
@@ -589,7 +589,7 @@ export const QuotationGeneratorModal: React.FC<QuotationGeneratorModalProps> = (
               <div className="text-right space-y-1">
                 <div className="w-36 h-12 border-b border-dashed border-slate-400 mx-auto"></div>
                 <p className="text-xs font-bold text-slate-900">For GAPP PACKAGING LLP</p>
-                <p className="text-[11px] text-[#0F4C5C] font-semibold">{preparedBy}</p>
+                <p className="text-[11px] text-brand-primary font-semibold">{preparedBy}</p>
                 <p className="text-[10px] text-slate-500 font-mono">Authorized Signatory</p>
               </div>
             </div>
@@ -625,7 +625,7 @@ export const QuotationGeneratorModal: React.FC<QuotationGeneratorModalProps> = (
             <button
               type="button"
               onClick={handlePrint}
-              className="px-4 py-2 bg-[#0F4C5C] hover:bg-[#0c3c49] text-white text-xs font-bold rounded-xl shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+              className="px-4 py-2 bg-brand-primary hover:bg-[#0c3c49] text-white text-xs font-bold rounded-xl shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
             >
               <Printer className="w-4 h-4" />
               <span>Print / Download PDF</span>

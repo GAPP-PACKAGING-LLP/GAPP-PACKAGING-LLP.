@@ -108,7 +108,7 @@ export const GalleryCMS: React.FC = () => {
 
         <button
           onClick={handleOpenAdd}
-          className="px-4 py-2 bg-[#0F4C5C] hover:bg-[#0c3c49] text-white text-xs font-bold rounded-xl shadow transition-colors flex items-center gap-1.5 cursor-pointer shrink-0"
+          className="px-4 py-2 bg-brand-primary hover:bg-[#0c3c49] text-white text-xs font-bold rounded-xl shadow transition-colors flex items-center gap-1.5 cursor-pointer shrink-0"
         >
           <Plus className="w-4 h-4" />
           <span>Upload New Image</span>
@@ -123,7 +123,7 @@ export const GalleryCMS: React.FC = () => {
             onClick={() => setSelectedCategory(cat)}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer shrink-0 ${
               selectedCategory === cat
-                ? 'bg-[#0F4C5C] text-white'
+                ? 'bg-brand-primary text-white'
                 : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
             }`}
           >
@@ -152,7 +152,7 @@ export const GalleryCMS: React.FC = () => {
           {filteredGallery.map((item) => (
             <div
               key={item.id}
-              className="bg-white rounded-xl border border-slate-200 shadow-2xs overflow-hidden flex flex-col group hover:border-[#0F4C5C] transition-all"
+              className="bg-white rounded-xl border border-slate-200 shadow-2xs overflow-hidden flex flex-col group hover:border-brand-primary transition-all"
             >
               {/* Image Thumbnail with Overlay */}
               <div className="relative aspect-4/3 bg-slate-100 overflow-hidden">
@@ -226,7 +226,7 @@ export const GalleryCMS: React.FC = () => {
               type="button"
               onClick={handleSave}
               disabled={isSaving || !editingItem.imageUrl}
-              className="px-4 py-2 bg-[#0F4C5C] hover:bg-[#0c3c49] text-white text-xs font-bold rounded-lg shadow transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+              className="px-4 py-2 bg-brand-primary hover:bg-[#0c3c49] text-white text-xs font-bold rounded-lg shadow transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
             >
               <UploadCloud className="w-3.5 h-3.5" />
               <span>{isSaving ? 'Uploading...' : 'Publish Image'}</span>

@@ -55,19 +55,19 @@ export const CLIENT_LOGOS: Record<string, string> = {
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 70" width="100%" height="100%">
       <defs>
         <linearGradient id="pawanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#D97706" />
+          <stop offset="0%" stop-color="#0F4C5C" />
           <stop offset="100%" stop-color="#92400E" />
         </linearGradient>
       </defs>
       <g transform="translate(10, 10)">
         <!-- Globe / Suncrest Emblem -->
         <circle cx="25" cy="25" r="22" fill="#FFFBEB" stroke="#FDE68A" stroke-width="1.5" />
-        <path d="M15,25 C15,16 35,16 35,25 C35,34 15,34 15,25 Z" fill="none" stroke="#D97706" stroke-width="1.5" />
-        <line x1="25" y1="5" x2="25" y2="45" stroke="#D97706" stroke-width="1.5" />
+        <path d="M15,25 C15,16 35,16 35,25 C35,34 15,34 15,25 Z" fill="none" stroke="#0F4C5C" stroke-width="1.5" />
+        <line x1="25" y1="5" x2="25" y2="45" stroke="#0F4C5C" stroke-width="1.5" />
         <path d="M10,25 Q25,12 40,25" stroke="#92400E" stroke-width="1.5" fill="none" />
         <!-- Typography -->
         <text x="56" y="24" font-family="Georgia, serif" font-weight="900" font-size="16" fill="#78350F" letter-spacing="0.5">PAWANSHREE</text>
-        <text x="57" y="38" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="9" fill="#D97706" letter-spacing="2">INTERNATIONAL</text>
+        <text x="57" y="38" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="9" fill="#0F4C5C" letter-spacing="2">INTERNATIONAL</text>
         <text x="57" y="49" font-family="Arial, Helvetica, sans-serif" font-weight="600" font-size="7" fill="#64748B" letter-spacing="1">PVT. LTD. • GLOBAL EXPORTS</text>
       </g>
     </svg>
@@ -117,11 +117,11 @@ export const CLIENT_LOGOS: Record<string, string> = {
       <g transform="translate(10, 10)">
         <!-- Bakery Wheat & Oven Emblem -->
         <circle cx="25" cy="25" r="22" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1.5" />
-        <path d="M18,34 Q25,12 32,34 Q25,28 18,34 Z" fill="#D97706" />
+        <path d="M18,34 Q25,12 32,34 Q25,28 18,34 Z" fill="#0F4C5C" />
         <circle cx="25" cy="18" r="2.5" fill="#92400E" />
         <!-- Typography -->
         <text x="56" y="25" font-family="Georgia, serif" font-weight="900" font-size="16" fill="#78350F">SANJAY FRESH BAKE</text>
-        <text x="56" y="39" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="9" fill="#D97706" letter-spacing="1.5">BAKERY & CONFECTIONERY</text>
+        <text x="56" y="39" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="9" fill="#0F4C5C" letter-spacing="1.5">BAKERY & CONFECTIONERY</text>
         <text x="56" y="50" font-family="Arial, Helvetica, sans-serif" font-weight="600" font-size="7" fill="#64748B">PREMIUM FOOD GRADE PACKAGING</text>
       </g>
     </svg>
@@ -148,7 +148,7 @@ export const CLIENT_LOGOS: Record<string, string> = {
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" width="100%" height="100%">
       <defs>
         <linearGradient id="fortGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#0F4C5C" />
+          <stop offset="0%" stop-color="#008CE8" />
           <stop offset="100%" stop-color="#0A3642" />
         </linearGradient>
       </defs>
@@ -156,9 +156,9 @@ export const CLIENT_LOGOS: Record<string, string> = {
         <!-- Fortcaps Capsule Shield Emblem -->
         <polygon points="25,4 45,12 45,34 25,47 5,34 5,12" fill="url(#fortGrad)" stroke="#38BDF8" stroke-width="1.5" />
         <rect x="18" y="16" width="14" height="20" rx="7" fill="#38BDF8" />
-        <line x1="18" y1="26" x2="32" y2="26" stroke="#0F4C5C" stroke-width="1.5" />
+        <line x1="18" y1="26" x2="32" y2="26" stroke="#008CE8" stroke-width="1.5" />
         <!-- Typography -->
-        <text x="56" y="25" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="17" fill="#0F4C5C" letter-spacing="0.5">FORTCAPS</text>
+        <text x="56" y="25" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="17" fill="#008CE8" letter-spacing="0.5">FORTCAPS</text>
         <text x="56" y="39" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="9.5" fill="#0284C7" letter-spacing="2">HEALTHCARE LTD.</text>
         <text x="56" y="50" font-family="Arial, Helvetica, sans-serif" font-weight="600" font-size="7" fill="#64748B">EMPTY HARD GELATIN CAPSULES • MP</text>
       </g>
@@ -171,10 +171,10 @@ export const CLIENT_LOGOS: Record<string, string> = {
       <g transform="translate(10, 10)">
         <!-- Infinity Loop Emblem -->
         <circle cx="25" cy="25" r="22" fill="#F8FAFC" stroke="#94A3B8" stroke-width="1.5" />
-        <path d="M16,25 C16,20 21,20 25,25 C29,30 34,30 34,25 C34,20 29,20 25,25 C21,30 16,30 16,25 Z" fill="none" stroke="#0F4C5C" stroke-width="2.5" stroke-linecap="round" />
+        <path d="M16,25 C16,20 21,20 25,25 C29,30 34,30 34,25 C34,20 29,20 25,25 C21,30 16,30 16,25 Z" fill="none" stroke="#008CE8" stroke-width="2.5" stroke-linecap="round" />
         <!-- Typography -->
         <text x="56" y="25" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="17" fill="#1E293B" letter-spacing="0.5">ANANT PRODUCTS</text>
-        <text x="56" y="39" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="9" fill="#0F4C5C" letter-spacing="1.5">CONSUMER PRODUCTS</text>
+        <text x="56" y="39" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="9" fill="#008CE8" letter-spacing="1.5">CONSUMER PRODUCTS</text>
         <text x="56" y="50" font-family="Arial, Helvetica, sans-serif" font-weight="600" font-size="7" fill="#64748B">INDUSTRIAL & RETAIL CORRUGATED BOXES</text>
       </g>
     </svg>

@@ -15,8 +15,8 @@ export const ClientsPage: React.FC<ClientsPageProps> = ({ onOpenQuoteModal }) =>
     <div className="py-12 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Banner */}
-        <div className="bg-[#0A3642] text-white rounded-2xl p-8 sm:p-12 border border-teal-800 space-y-4 shadow-lg">
-          <div className="inline-block text-xs font-bold uppercase tracking-wider text-[#D97706] bg-[#D97706]/10 px-3 py-1 rounded border border-[#D97706]/30">
+        <div className="bg-brand-primary-hover text-white rounded-2xl p-8 sm:p-12 border border-teal-800 space-y-4 shadow-lg">
+          <div className="inline-block text-xs font-bold uppercase tracking-wider text-brand-accent bg-brand-accent/10 px-3 py-1 rounded border border-brand-accent/30">
             Trust & Industrial Partnerships
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">
@@ -29,7 +29,7 @@ export const ClientsPage: React.FC<ClientsPageProps> = ({ onOpenQuoteModal }) =>
           <div className="pt-4 flex flex-wrap items-center gap-3">
             <button
               onClick={onOpenQuoteModal}
-              className="bg-[#D97706] hover:bg-[#B45309] text-white px-6 py-3 rounded-md font-bold text-xs uppercase tracking-wider transition-colors shadow cursor-pointer flex items-center gap-2"
+              className="bg-brand-accent hover:bg-brand-accent-hover text-white px-6 py-3 rounded-md font-bold text-xs uppercase tracking-wider transition-colors shadow cursor-pointer flex items-center gap-2"
             >
               <Send className="w-4 h-4" />
               <span>Partner With Us / Request Quote</span>
@@ -60,7 +60,7 @@ export const ClientsPage: React.FC<ClientsPageProps> = ({ onOpenQuoteModal }) =>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white p-6 rounded-xl border border-slate-200 space-y-3">
-              <div className="w-10 h-10 rounded-lg bg-teal-50 text-[#0F4C5C] flex items-center justify-center font-bold">
+              <div className="w-10 h-10 rounded-lg bg-teal-50 text-brand-primary flex items-center justify-center font-bold">
                 <Truck className="w-5 h-5" />
               </div>
               <h3 className="font-bold text-slate-900">24 to 48 Hour JIT Delivery</h3>
@@ -70,7 +70,7 @@ export const ClientsPage: React.FC<ClientsPageProps> = ({ onOpenQuoteModal }) =>
             </div>
 
             <div className="bg-white p-6 rounded-xl border border-slate-200 space-y-3">
-              <div className="w-10 h-10 rounded-lg bg-amber-50 text-[#D97706] flex items-center justify-center font-bold">
+              <div className="w-10 h-10 rounded-lg bg-amber-50 text-brand-accent flex items-center justify-center font-bold">
                 <ShieldCheck className="w-5 h-5" />
               </div>
               <h3 className="font-bold text-slate-900">Buffer Reel Stock Guarantee</h3>

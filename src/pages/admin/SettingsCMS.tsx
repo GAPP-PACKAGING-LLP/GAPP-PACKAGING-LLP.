@@ -140,7 +140,7 @@ export const SettingsCMS: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-base font-extrabold text-slate-800 flex items-center gap-2">
-            <Settings className="w-5 h-5 text-[#0F4C5C]" />
+            <Settings className="w-5 h-5 text-brand-primary" />
             <span>Master Company & Website Settings</span>
           </h2>
           <p className="text-xs text-slate-500 mt-0.5">
@@ -161,7 +161,7 @@ export const SettingsCMS: React.FC = () => {
             type="button"
             onClick={() => handleSave()}
             disabled={saving}
-            className="px-4 py-2 bg-[#0F4C5C] hover:bg-[#0c3c49] text-white text-xs font-bold rounded-xl shadow transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+            className="px-4 py-2 bg-brand-primary hover:bg-[#0c3c49] text-white text-xs font-bold rounded-xl shadow transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
             id="save-settings-btn"
           >
             <Save className="w-3.5 h-3.5" />
@@ -189,7 +189,7 @@ export const SettingsCMS: React.FC = () => {
               onClick={() => setActiveTab(tab.id as any)}
               className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                 isActive
-                  ? 'bg-[#0F4C5C] text-white shadow-xs'
+                  ? 'bg-brand-primary text-white shadow-xs'
                   : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
               }`}
             >
@@ -211,7 +211,7 @@ export const SettingsCMS: React.FC = () => {
               <div className="border-b border-slate-100 pb-4 flex items-center justify-between">
                 <div>
                   <h3 className="text-base font-extrabold text-slate-800 flex items-center gap-2">
-                    <ImageIcon className="w-5 h-5 text-[#0F4C5C]" />
+                    <ImageIcon className="w-5 h-5 text-brand-primary" />
                     <span>Company Logo & Brand Visual Assets</span>
                   </h3>
                   <p className="text-xs text-slate-500 mt-0.5">
@@ -249,7 +249,7 @@ export const SettingsCMS: React.FC = () => {
                           handleChange('logoUrl', '/logo.svg');
                           await handlePublishLogo('/logo.svg');
                         }}
-                        className="text-xs text-[#0F4C5C] hover:underline font-semibold flex items-center gap-1.5 cursor-pointer py-1"
+                        className="text-xs text-brand-primary hover:underline font-semibold flex items-center gap-1.5 cursor-pointer py-1"
                       >
                         <RefreshCw className="w-3.5 h-3.5" />
                         <span>Reset to Vector SVG (/logo.svg)</span>
@@ -260,7 +260,7 @@ export const SettingsCMS: React.FC = () => {
                         onClick={() => handlePublishLogo()}
                         disabled={logoSaving || saving}
                         id="publish-logo-changes-btn"
-                        className="px-4 py-2 bg-[#0F4C5C] hover:bg-[#0c3c49] text-white text-xs font-bold rounded-lg shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                        className="px-4 py-2 bg-brand-primary hover:bg-[#0c3c49] text-white text-xs font-bold rounded-lg shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                       >
                         <Save className="w-3.5 h-3.5" />
                         <span>{logoSaving ? 'Publishing Logo...' : 'Publish Logo Changes'}</span>
@@ -293,7 +293,7 @@ export const SettingsCMS: React.FC = () => {
                 {/* Live Logo Preview Box */}
                 <div className="space-y-4">
                   <div className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-                    <Eye className="w-4 h-4 text-[#0F4C5C]" />
+                    <Eye className="w-4 h-4 text-brand-primary" />
                     <span>Real-time Preview on Website Backgrounds</span>
                   </div>
 
@@ -366,7 +366,7 @@ export const SettingsCMS: React.FC = () => {
                       await saveSettings({ logoDarkUrl: '/logo-dark.svg' });
                       success('Default Dark Logo Restored', 'Restored vector SVG /logo-dark.svg.');
                     }}
-                    className="text-xs text-[#0F4C5C] hover:underline font-semibold flex items-center gap-1 cursor-pointer pt-1"
+                    className="text-xs text-brand-primary hover:underline font-semibold flex items-center gap-1 cursor-pointer pt-1"
                   >
                     <RefreshCw className="w-3.5 h-3.5" />
                     <span>Use Default Dark Vector (/logo-dark.svg)</span>
@@ -398,7 +398,7 @@ export const SettingsCMS: React.FC = () => {
                       await saveSettings({ faviconUrl: '/favicon.svg' });
                       success('Default Favicon Restored', 'Restored favicon.svg.');
                     }}
-                    className="text-xs text-[#0F4C5C] hover:underline font-semibold flex items-center gap-1 cursor-pointer pt-1"
+                    className="text-xs text-brand-primary hover:underline font-semibold flex items-center gap-1 cursor-pointer pt-1"
                   >
                     <RefreshCw className="w-3.5 h-3.5" />
                     <span>Use Default Interlocking Icon (/favicon.svg)</span>
@@ -426,7 +426,7 @@ export const SettingsCMS: React.FC = () => {
                     download="gapp-logo"
                     className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-lg text-xs font-bold shadow-2xs transition-colors shrink-0"
                   >
-                    <Download className="w-3.5 h-3.5 text-[#0F4C5C]" />
+                    <Download className="w-3.5 h-3.5 text-brand-primary" />
                     <span>Download Active Logo</span>
                   </a>
                 )}
@@ -441,7 +441,7 @@ export const SettingsCMS: React.FC = () => {
         {activeTab === 'identity' && (
           <div className="bg-white rounded-xl border border-slate-200 shadow-2xs p-6 space-y-4">
             <div className="border-b border-slate-100 pb-3 flex items-center gap-2">
-              <Building className="w-5 h-5 text-[#0F4C5C]" />
+              <Building className="w-5 h-5 text-brand-primary" />
               <div>
                 <h3 className="text-sm font-bold text-slate-800">Company Overview & Business Profile</h3>
                 <p className="text-xs text-slate-500">Legal entity details, taglines, and marketing introductions</p>
@@ -512,7 +512,7 @@ export const SettingsCMS: React.FC = () => {
         {activeTab === 'statutory' && (
           <div className="bg-white rounded-xl border border-slate-200 shadow-2xs p-6 space-y-6">
             <div className="border-b border-slate-100 pb-3 flex items-center gap-2">
-              <ShieldCheck className="w-5 h-5 text-[#0F4C5C]" />
+              <ShieldCheck className="w-5 h-5 text-brand-primary" />
               <div>
                 <h3 className="text-sm font-bold text-slate-800">Statutory Registrations, Tax IDs & Bank Info</h3>
                 <p className="text-xs text-slate-500">Official legal identification numbers displayed on invoice/quote specs</p>
@@ -613,7 +613,7 @@ export const SettingsCMS: React.FC = () => {
         {activeTab === 'locations' && (
           <div className="bg-white rounded-xl border border-slate-200 shadow-2xs p-6 space-y-6">
             <div className="border-b border-slate-100 pb-3 flex items-center gap-2">
-              <MapPin className="w-5 h-5 text-[#0F4C5C]" />
+              <MapPin className="w-5 h-5 text-brand-primary" />
               <div>
                 <h3 className="text-sm font-bold text-slate-800">Plant & Registered Office Locations</h3>
                 <p className="text-xs text-slate-500">Official physical plant address in Mandideep and corporate office</p>
@@ -622,7 +622,7 @@ export const SettingsCMS: React.FC = () => {
 
             {/* Factory Address */}
             <div className="space-y-3 bg-slate-50/70 p-4 rounded-xl border border-slate-200">
-              <span className="text-xs font-extrabold text-[#0F4C5C] uppercase tracking-wide block">
+              <span className="text-xs font-extrabold text-brand-primary uppercase tracking-wide block">
                 1. Manufacturing Unit / Factory Address (Mandideep)
               </span>
 
@@ -666,7 +666,7 @@ export const SettingsCMS: React.FC = () => {
 
             {/* Registered Office Address */}
             <div className="space-y-3 bg-slate-50/70 p-4 rounded-xl border border-slate-200">
-              <span className="text-xs font-extrabold text-[#0F4C5C] uppercase tracking-wide block">
+              <span className="text-xs font-extrabold text-brand-primary uppercase tracking-wide block">
                 2. Registered Office Address (Obedullaganj)
               </span>
 
@@ -708,7 +708,7 @@ export const SettingsCMS: React.FC = () => {
         {activeTab === 'contact' && (
           <div className="bg-white rounded-xl border border-slate-200 shadow-2xs p-6 space-y-4">
             <div className="border-b border-slate-100 pb-3 flex items-center gap-2">
-              <Phone className="w-5 h-5 text-[#0F4C5C]" />
+              <Phone className="w-5 h-5 text-brand-primary" />
               <div>
                 <h3 className="text-sm font-bold text-slate-800">Customer Connect & Communication Desk</h3>
                 <p className="text-xs text-slate-500">Phone numbers, WhatsApp gateway, email inboxes, and plant shift timings</p>
@@ -772,7 +772,7 @@ export const SettingsCMS: React.FC = () => {
         {activeTab === 'stats' && (
           <div className="bg-white rounded-xl border border-slate-200 shadow-2xs p-6 space-y-4">
             <div className="border-b border-slate-100 pb-3 flex items-center gap-2">
-              <BarChart3 className="w-5 h-5 text-[#0F4C5C]" />
+              <BarChart3 className="w-5 h-5 text-brand-primary" />
               <div>
                 <h3 className="text-sm font-bold text-slate-800">Home & About Statistics Counters</h3>
                 <p className="text-xs text-slate-500">Edit the key manufacturing and credential metrics showcased on the website</p>
@@ -782,7 +782,7 @@ export const SettingsCMS: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {(settings.stats || DEFAULT_SETTINGS.stats || []).map((stat, idx) => (
                 <div key={idx} className="p-4 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
-                  <div className="text-xs font-bold text-[#0F4C5C] flex items-center justify-between">
+                  <div className="text-xs font-bold text-brand-primary flex items-center justify-between">
                     <span>Stat Metric #{idx + 1}</span>
                     <span className="font-mono text-slate-400">Card {idx + 1}</span>
                   </div>
@@ -827,7 +827,7 @@ export const SettingsCMS: React.FC = () => {
             type="button"
             onClick={() => handleSave()}
             disabled={saving}
-            className="px-6 py-2.5 bg-[#0F4C5C] hover:bg-[#0c3c49] text-white text-xs font-bold rounded-xl shadow transition-colors flex items-center gap-2 cursor-pointer disabled:opacity-50"
+            className="px-6 py-2.5 bg-brand-primary hover:bg-[#0c3c49] text-white text-xs font-bold rounded-xl shadow transition-colors flex items-center gap-2 cursor-pointer disabled:opacity-50"
           >
             <Save className="w-4 h-4" />
             <span>{saving ? 'Publishing Changes...' : 'Save & Publish All Changes'}</span>

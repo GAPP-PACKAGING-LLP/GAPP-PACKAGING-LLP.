@@ -158,9 +158,9 @@ export const InquiriesCMS: React.FC = () => {
         <div className="space-y-0.5 text-xs font-mono">
           <a
             href={`tel:${row.phone}`}
-            className="flex items-center gap-1 text-slate-700 hover:text-[#0F4C5C] font-semibold"
+            className="flex items-center gap-1 text-slate-700 hover:text-brand-primary font-semibold"
           >
-            <Phone className="w-3 h-3 text-[#0F4C5C]" />
+            <Phone className="w-3 h-3 text-brand-primary" />
             <span>{row.phone}</span>
           </a>
           <a
@@ -242,7 +242,7 @@ export const InquiriesCMS: React.FC = () => {
               setQuotationInquiryTarget(null);
               setIsQuotationModalOpen(true);
             }}
-            className="px-3.5 py-2 bg-[#0F4C5C] hover:bg-[#0c3c49] text-white text-xs font-bold rounded-xl shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+            className="px-3.5 py-2 bg-brand-primary hover:bg-[#0c3c49] text-white text-xs font-bold rounded-xl shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
           >
             <Plus className="w-4 h-4" />
             <span>Create New Quotation</span>
@@ -272,7 +272,7 @@ export const InquiriesCMS: React.FC = () => {
             onClick={() => setStatusFilter(tab.key)}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer flex items-center gap-2 shrink-0 ${
               statusFilter === tab.key
-                ? 'bg-[#0F4C5C] text-white font-bold'
+                ? 'bg-brand-primary text-white font-bold'
                 : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'
             }`}
           >
@@ -317,7 +317,7 @@ export const InquiriesCMS: React.FC = () => {
             </button>
             <button
               onClick={() => setSelectedInquiry(row)}
-              className="p-1.5 text-[#0F4C5C] hover:bg-teal-50 rounded-lg transition-colors cursor-pointer"
+              className="p-1.5 text-brand-primary hover:bg-teal-50 rounded-lg transition-colors cursor-pointer"
               title="View Full RFQ Details"
             >
               <Eye className="w-4 h-4" />
@@ -371,7 +371,7 @@ export const InquiriesCMS: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => handleStatusChange(selectedInquiry.id, 'completed')}
-                  className="px-3.5 py-1.5 bg-[#0F4C5C] hover:bg-[#0c3c49] text-white text-xs font-bold rounded-lg shadow-xs transition-colors cursor-pointer"
+                  className="px-3.5 py-1.5 bg-brand-primary hover:bg-[#0c3c49] text-white text-xs font-bold rounded-lg shadow-xs transition-colors cursor-pointer"
                 >
                   Mark as Closed / Won
                 </button>
@@ -399,12 +399,12 @@ export const InquiriesCMS: React.FC = () => {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-slate-200/60 text-xs font-mono">
-                <a href={`tel:${selectedInquiry.phone}`} className="text-slate-700 hover:text-[#0F4C5C] flex items-center gap-1.5 font-bold">
-                  <Phone className="w-3.5 h-3.5 text-[#0F4C5C]" />
+                <a href={`tel:${selectedInquiry.phone}`} className="text-slate-700 hover:text-brand-primary flex items-center gap-1.5 font-bold">
+                  <Phone className="w-3.5 h-3.5 text-brand-primary" />
                   <span>{selectedInquiry.phone}</span>
                 </a>
-                <a href={`mailto:${selectedInquiry.email}`} className="text-slate-700 hover:text-[#0F4C5C] flex items-center gap-1.5 truncate">
-                  <Mail className="w-3.5 h-3.5 text-[#0F4C5C]" />
+                <a href={`mailto:${selectedInquiry.email}`} className="text-slate-700 hover:text-brand-primary flex items-center gap-1.5 truncate">
+                  <Mail className="w-3.5 h-3.5 text-brand-primary" />
                   <span className="truncate">{selectedInquiry.email}</span>
                 </a>
               </div>

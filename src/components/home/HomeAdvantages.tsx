@@ -63,8 +63,8 @@ export const HomeAdvantages: React.FC = () => {
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-100 text-[#0F4C5C] text-xs font-bold uppercase tracking-wider">
-            <Award className="w-3.5 h-3.5 text-[#0F4C5C]" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-100 text-brand-primary text-xs font-bold uppercase tracking-wider">
+            <Award className="w-3.5 h-3.5 text-brand-primary" />
             <span>The GAPP Manufacturing Standard</span>
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight font-heading">
@@ -82,12 +82,12 @@ export const HomeAdvantages: React.FC = () => {
             return (
               <div
                 key={pillar.id}
-                className="bg-[#F8F9FA] rounded-2xl p-6 border border-slate-200/90 flex flex-col justify-between hover:bg-white hover:border-[#0F4C5C]/40 hover:shadow-md transition-all duration-200 space-y-6 group"
+                className="bg-[#F8F9FA] rounded-2xl p-6 border border-slate-200/90 flex flex-col justify-between hover:bg-white hover:border-brand-primary/40 hover:shadow-md transition-all duration-200 space-y-6 group"
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <div className="w-12 h-12 rounded-xl bg-[#0F4C5C] text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
-                      <IconComponent className="w-6 h-6 text-[#D97706]" />
+                    <div className="w-12 h-12 rounded-xl bg-brand-primary text-white flex items-center justify-center shadow-xs group-hover:scale-105 transition-transform">
+                      <IconComponent className="w-6 h-6 text-brand-accent" />
                     </div>
                     <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-200 text-slate-700">
                       {pillar.badge}
@@ -106,13 +106,13 @@ export const HomeAdvantages: React.FC = () => {
 
                   <div className="bg-white p-2.5 rounded-lg border border-slate-200/60 flex items-center gap-2 text-xs font-medium text-slate-800">
                     <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0" />
-                    <span className="text-xs font-bold text-[#0F4C5C]">{pillar.highlight}</span>
+                    <span className="text-xs font-bold text-brand-primary">{pillar.highlight}</span>
                   </div>
                 </div>
 
                 <Link
                   to={pillar.linkTo}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C5C] hover:text-[#D97706] transition-colors pt-3 border-t border-slate-200/70"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-primary hover:text-brand-accent transition-colors pt-3 border-t border-slate-200/70"
                 >
                   <span>{pillar.linkText}</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />

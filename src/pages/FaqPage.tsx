@@ -15,8 +15,8 @@ export const FaqPage: React.FC<FaqPageProps> = ({ onOpenQuoteModal }) => {
     <div className="py-12 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Banner */}
-        <div className="bg-[#0A3642] text-white rounded-2xl p-8 sm:p-12 border border-teal-800 space-y-4 shadow-lg">
-          <div className="inline-block text-xs font-bold uppercase tracking-wider text-[#D97706] bg-[#D97706]/10 px-3 py-1 rounded border border-[#D97706]/30">
+        <div className="bg-brand-primary-hover text-white rounded-2xl p-8 sm:p-12 border border-teal-800 space-y-4 shadow-lg">
+          <div className="inline-block text-xs font-bold uppercase tracking-wider text-brand-accent bg-brand-accent/10 px-3 py-1 rounded border border-brand-accent/30">
             Procurement & Technical FAQ
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">
@@ -29,7 +29,7 @@ export const FaqPage: React.FC<FaqPageProps> = ({ onOpenQuoteModal }) => {
           <div className="pt-4 flex flex-wrap items-center gap-3">
             <button
               onClick={onOpenQuoteModal}
-              className="bg-[#D97706] hover:bg-[#B45309] text-white px-6 py-3 rounded-md font-bold text-xs uppercase tracking-wider transition-colors shadow cursor-pointer flex items-center gap-2"
+              className="bg-brand-accent hover:bg-brand-accent-hover text-white px-6 py-3 rounded-md font-bold text-xs uppercase tracking-wider transition-colors shadow cursor-pointer flex items-center gap-2"
             >
               <Send className="w-4 h-4" />
               <span>Ask a Specific Question</span>
@@ -48,7 +48,7 @@ export const FaqPage: React.FC<FaqPageProps> = ({ onOpenQuoteModal }) => {
         <FaqSection />
 
         {/* Need More Assistance Banner */}
-        <div className="bg-[#0F4C5C] text-white p-8 sm:p-10 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md">
+        <div className="bg-brand-primary text-white p-8 sm:p-10 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md">
           <div className="space-y-2 text-center sm:text-left">
             <h3 className="text-xl font-extrabold">Have a Custom Technical Requirement?</h3>
             <p className="text-xs sm:text-sm text-teal-100">
@@ -58,7 +58,7 @@ export const FaqPage: React.FC<FaqPageProps> = ({ onOpenQuoteModal }) => {
           <div className="flex items-center gap-3 shrink-0">
             <a
               href="tel:+919806419199"
-              className="bg-[#D97706] hover:bg-[#B45309] text-white px-6 py-3 rounded-lg font-bold text-xs uppercase tracking-wider transition-colors flex items-center gap-2"
+              className="bg-brand-accent hover:bg-brand-accent-hover text-white px-6 py-3 rounded-lg font-bold text-xs uppercase tracking-wider transition-colors flex items-center gap-2"
             >
               <Phone className="w-4 h-4" />
               <span>+91 9806419199</span>

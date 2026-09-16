@@ -166,12 +166,12 @@ export const AdminInquiriesPage: React.FC = () => {
         {/* Top Management Bar */}
         <div className="bg-white rounded-xl p-5 sm:p-6 border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center space-x-3">
-            <div className="w-11 h-11 bg-[#0F4C5C] text-white rounded-lg flex items-center justify-center font-bold shadow-xs">
-              <Database className="w-6 h-6 text-[#D97706]" />
+            <div className="w-11 h-11 bg-brand-primary text-white rounded-lg flex items-center justify-center font-bold shadow-xs">
+              <Database className="w-6 h-6 text-brand-accent" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-xl sm:text-2xl font-black text-[#0F4C5C] tracking-tight">
+                <h1 className="text-xl sm:text-2xl font-black text-brand-primary tracking-tight">
                   GAPP Inquiries CMS
                 </h1>
                 <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 text-[11px] font-mono font-bold px-2 py-0.5 rounded border border-emerald-200">
@@ -227,7 +227,7 @@ export const AdminInquiriesPage: React.FC = () => {
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
           <div className="bg-white p-3.5 rounded-lg border border-slate-200 shadow-2xs">
             <div className="text-xs text-slate-500 font-medium">Total Inquiries</div>
-            <div className="text-2xl font-bold text-[#0F4C5C]">{inquiries.length}</div>
+            <div className="text-2xl font-bold text-brand-primary">{inquiries.length}</div>
           </div>
           <div className="bg-white p-3.5 rounded-lg border border-emerald-200 shadow-2xs">
             <div className="text-xs text-emerald-700 font-medium">New / Uncontacted</div>
@@ -266,7 +266,7 @@ export const AdminInquiriesPage: React.FC = () => {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by client, company, ref..."
-              className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-md text-xs focus:ring-2 focus:ring-[#0F4C5C] focus:bg-white outline-none"
+              className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-300 rounded-md text-xs focus:ring-2 focus:ring-brand-primary focus:bg-white outline-none"
             />
           </div>
 
@@ -278,7 +278,7 @@ export const AdminInquiriesPage: React.FC = () => {
                 onClick={() => setStatusFilter(st)}
                 className={`px-3 py-1.5 rounded-md text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer ${
                   statusFilter === st
-                    ? 'bg-[#0F4C5C] text-white'
+                    ? 'bg-brand-primary text-white'
                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
@@ -308,7 +308,7 @@ export const AdminInquiriesPage: React.FC = () => {
         {/* Inquiries Table / Feed */}
         {loading ? (
           <div className="bg-white rounded-xl p-12 border border-slate-200 text-center space-y-3">
-            <RefreshCw className="w-8 h-8 text-[#0F4C5C] animate-spin mx-auto" />
+            <RefreshCw className="w-8 h-8 text-brand-primary animate-spin mx-auto" />
             <p className="text-xs text-slate-500 font-mono">Syncing real-time records from Firestore collection 'inquiries'...</p>
           </div>
         ) : filteredInquiries.length === 0 ? (
@@ -338,7 +338,7 @@ export const AdminInquiriesPage: React.FC = () => {
               return (
                 <div
                   key={inquiry.id}
-                  className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs hover:border-[#0F4C5C]/40 transition-all space-y-4"
+                  className="bg-white rounded-xl border border-slate-200 p-5 shadow-xs hover:border-brand-primary/40 transition-all space-y-4"
                 >
                   {/* Inquiry Header */}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
@@ -361,7 +361,7 @@ export const AdminInquiriesPage: React.FC = () => {
                         value={inquiry.status}
                         onChange={(e) => handleStatusChange(inquiry.id, e.target.value as InquiryStatus)}
                         disabled={actionLoading === inquiry.id}
-                        className="text-xs font-semibold bg-slate-50 border border-slate-300 rounded px-2 py-1 focus:ring-2 focus:ring-[#0F4C5C] outline-none cursor-pointer"
+                        className="text-xs font-semibold bg-slate-50 border border-slate-300 rounded px-2 py-1 focus:ring-2 focus:ring-brand-primary outline-none cursor-pointer"
                       >
                         <option value="new">New</option>
                         <option value="contacted">Contacted</option>
@@ -387,7 +387,7 @@ export const AdminInquiriesPage: React.FC = () => {
                     {/* Client Info */}
                     <div className="space-y-1.5 bg-[#F8F9FA] p-3 rounded-lg border border-slate-200">
                       <div className="flex items-center gap-1.5 font-bold text-slate-900 text-sm">
-                        <User className="w-4 h-4 text-[#0F4C5C]" />
+                        <User className="w-4 h-4 text-brand-primary" />
                         <span>{inquiry.name}</span>
                       </div>
                       <div className="flex items-center gap-1.5 text-slate-600">
@@ -419,7 +419,7 @@ export const AdminInquiriesPage: React.FC = () => {
                           href={`mailto:${inquiry.email}?subject=GAPP Packaging Quotation - ${inquiry.inquiryRef || inquiry.id}`}
                           className="inline-flex items-center gap-1 bg-white hover:bg-slate-100 border border-slate-300 px-2 py-1 rounded text-slate-700 text-[11px]"
                         >
-                          <Mail className="w-3 h-3 text-[#0F4C5C]" />
+                          <Mail className="w-3 h-3 text-brand-primary" />
                           <span>Email</span>
                         </a>
                       </div>
@@ -427,8 +427,8 @@ export const AdminInquiriesPage: React.FC = () => {
 
                     {/* Box Technical Specs */}
                     <div className="space-y-1.5 bg-[#F8F9FA] p-3 rounded-lg border border-slate-200">
-                      <div className="font-bold text-[#0F4C5C] flex items-center gap-1.5">
-                        <Box className="w-4 h-4 text-[#D97706]" />
+                      <div className="font-bold text-brand-primary flex items-center gap-1.5">
+                        <Box className="w-4 h-4 text-brand-accent" />
                         <span>{inquiry.boxType || 'Corrugated Boxes'}</span>
                       </div>
                       <div className="text-slate-600">
@@ -471,7 +471,7 @@ export const AdminInquiriesPage: React.FC = () => {
                             <div className="flex gap-2">
                               <button
                                 onClick={() => handleSaveNotes(inquiry.id)}
-                                className="bg-[#0F4C5C] text-white text-[10px] px-2 py-0.5 rounded font-bold"
+                                className="bg-brand-primary text-white text-[10px] px-2 py-0.5 rounded font-bold"
                               >
                                 Save Note
                               </button>
@@ -493,7 +493,7 @@ export const AdminInquiriesPage: React.FC = () => {
                                 setEditingNotesId(inquiry.id);
                                 setNotesText(inquiry.adminNotes || '');
                               }}
-                              className="text-[#0F4C5C] hover:underline font-semibold flex items-center gap-0.5 ml-2 shrink-0 cursor-pointer"
+                              className="text-brand-primary hover:underline font-semibold flex items-center gap-0.5 ml-2 shrink-0 cursor-pointer"
                             >
                               <Edit3 className="w-3 h-3" />
                               <span>Edit</span>

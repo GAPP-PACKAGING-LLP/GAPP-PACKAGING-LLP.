@@ -17,8 +17,8 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenQuoteModal }) 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         
         {/* Banner */}
-        <div className="bg-[#0A3642] text-white rounded-2xl p-8 sm:p-12 border border-teal-800 space-y-4 shadow-lg">
-          <div className="inline-block text-xs font-bold uppercase tracking-wider text-[#D97706] bg-[#D97706]/10 px-3 py-1 rounded border border-[#D97706]/30">
+        <div className="bg-brand-primary-hover text-white rounded-2xl p-8 sm:p-12 border border-teal-800 space-y-4 shadow-lg">
+          <div className="inline-block text-xs font-bold uppercase tracking-wider text-brand-accent bg-brand-accent/10 px-3 py-1 rounded border border-brand-accent/30">
             Products & Technical Specifications
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">
@@ -31,7 +31,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenQuoteModal }) 
           <div className="pt-4 flex flex-wrap items-center gap-3">
             <button
               onClick={() => onOpenQuoteModal()}
-              className="bg-[#D97706] hover:bg-[#B45309] text-white px-6 py-3 rounded-md font-bold text-xs uppercase tracking-wider transition-colors shadow cursor-pointer flex items-center gap-2"
+              className="bg-brand-accent hover:bg-brand-accent-hover text-white px-6 py-3 rounded-md font-bold text-xs uppercase tracking-wider transition-colors shadow cursor-pointer flex items-center gap-2"
             >
               <Send className="w-4 h-4" />
               <span>Get Custom Carton Quotation</span>
@@ -52,7 +52,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenQuoteModal }) 
         {/* Flute Profiles & Technical Selection Guide */}
         <div className="bg-slate-50 border border-slate-200 rounded-2xl p-8 space-y-6">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-100 text-[#0F4C5C] text-xs font-bold uppercase tracking-wider">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-100 text-brand-primary text-xs font-bold uppercase tracking-wider">
               <Layers className="w-3.5 h-3.5" />
               <span>Flute Engineering Reference</span>
             </div>
@@ -67,7 +67,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenQuoteModal }) 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs space-y-3">
               <div className="flex justify-between items-center">
-                <span className="font-extrabold text-lg text-[#0F4C5C]">B-Flute</span>
+                <span className="font-extrabold text-lg text-brand-primary">B-Flute</span>
                 <span className="text-xs font-mono bg-teal-50 text-teal-800 px-2 py-0.5 rounded font-bold">~3.0 mm</span>
               </div>
               <p className="text-xs text-slate-600 leading-relaxed">
@@ -80,7 +80,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenQuoteModal }) 
 
             <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs space-y-3">
               <div className="flex justify-between items-center">
-                <span className="font-extrabold text-lg text-[#0F4C5C]">C-Flute</span>
+                <span className="font-extrabold text-lg text-brand-primary">C-Flute</span>
                 <span className="text-xs font-mono bg-amber-50 text-amber-800 px-2 py-0.5 rounded font-bold">~4.0 mm</span>
               </div>
               <p className="text-xs text-slate-600 leading-relaxed">
@@ -93,7 +93,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenQuoteModal }) 
 
             <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs space-y-3">
               <div className="flex justify-between items-center">
-                <span className="font-extrabold text-lg text-[#0F4C5C]">E-Flute</span>
+                <span className="font-extrabold text-lg text-brand-primary">E-Flute</span>
                 <span className="text-xs font-mono bg-cyan-50 text-cyan-800 px-2 py-0.5 rounded font-bold">~1.5 mm</span>
               </div>
               <p className="text-xs text-slate-600 leading-relaxed">
@@ -106,7 +106,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenQuoteModal }) 
 
             <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs space-y-3">
               <div className="flex justify-between items-center">
-                <span className="font-extrabold text-lg text-[#0F4C5C]">BC-Flute (5-Ply)</span>
+                <span className="font-extrabold text-lg text-brand-primary">BC-Flute (5-Ply)</span>
                 <span className="text-xs font-mono bg-indigo-50 text-indigo-800 px-2 py-0.5 rounded font-bold">~7.0 mm</span>
               </div>
               <p className="text-xs text-slate-600 leading-relaxed">
@@ -123,7 +123,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenQuoteModal }) 
         <IndustriesSection onSelectIndustryForQuote={(name) => onOpenQuoteModal(name)} />
 
         {/* Cross Link to Calculator */}
-        <div className="bg-[#0F4C5C] text-white p-8 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-md">
+        <div className="bg-brand-primary text-white p-8 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 shadow-md">
           <div className="space-y-2">
             <h3 className="text-xl font-bold">Calculate Custom Box Dimensions & GSM</h3>
             <p className="text-xs sm:text-sm text-teal-100">
@@ -132,7 +132,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({ onOpenQuoteModal }) 
           </div>
           <Link
             to="/calculator"
-            className="bg-[#D97706] hover:bg-[#B45309] text-white px-6 py-3 rounded-lg font-bold text-xs uppercase tracking-wider transition-colors shrink-0 flex items-center gap-2"
+            className="bg-brand-accent hover:bg-brand-accent-hover text-white px-6 py-3 rounded-lg font-bold text-xs uppercase tracking-wider transition-colors shrink-0 flex items-center gap-2"
           >
             <span>Open Box Calculator</span>
             <ArrowRight className="w-4 h-4" />

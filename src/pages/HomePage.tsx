@@ -25,16 +25,16 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
             <button
               onClick={() => onOpenQuoteModal()}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#0F4C5C] hover:bg-[#0A3642] text-white px-8 py-4 rounded-md font-bold text-sm shadow-md transition-colors cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-brand-primary hover:bg-brand-primary-hover text-white px-8 py-4 rounded-md font-bold text-sm shadow-md transition-colors cursor-pointer"
             >
-              <Send className="w-5 h-5 text-[#D97706]" />
+              <Send className="w-5 h-5 text-brand-accent" />
               <span>Get a Quote</span>
             </button>
             <Link
               to="/calculator"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-[#0F4C5C] border border-slate-300 px-8 py-4 rounded-md font-bold text-sm shadow-sm transition-colors cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-brand-primary border border-slate-300 px-8 py-4 rounded-md font-bold text-sm shadow-sm transition-colors cursor-pointer"
             >
-              <Calculator className="w-5 h-5 text-[#0F4C5C]" />
+              <Calculator className="w-5 h-5 text-brand-primary" />
               <span>Packaging Calculator</span>
             </Link>
           </div>
@@ -56,7 +56,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
               { icon: Calculator, title: 'Packaging Calculator', desc: 'Instantly estimate your dimension and material costs.' },
             ].map((service, idx) => (
               <div key={idx} className="bg-slate-50 border border-slate-200 rounded-xl p-6 text-center space-y-4 hover:shadow-md transition-shadow">
-                <div className="w-12 h-12 mx-auto bg-teal-100 text-[#0F4C5C] rounded-lg flex items-center justify-center">
+                <div className="w-12 h-12 mx-auto bg-teal-100 text-brand-primary rounded-lg flex items-center justify-center">
                   <service.icon className="w-6 h-6" />
                 </div>
                 <h3 className="font-bold text-lg text-slate-900">{service.title}</h3>
@@ -82,14 +82,14 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
               </div>
             </div>
             <div className="flex items-start gap-3 p-4">
-              <Factory className="w-6 h-6 text-[#0F4C5C] shrink-0 mt-1" />
+              <Factory className="w-6 h-6 text-brand-primary shrink-0 mt-1" />
               <div>
                 <h3 className="font-bold text-lg text-slate-900">Industrial Solutions</h3>
                 <p className="text-slate-600 text-sm mt-1">Custom die-cut and printed cartons designed for B2B supply chains.</p>
               </div>
             </div>
             <div className="flex items-start gap-3 p-4">
-              <MapPin className="w-6 h-6 text-[#D97706] shrink-0 mt-1" />
+              <MapPin className="w-6 h-6 text-brand-accent shrink-0 mt-1" />
               <div>
                 <h3 className="font-bold text-lg text-slate-900">Madhya Pradesh Service Area</h3>
                 <p className="text-slate-600 text-sm mt-1">Local manufacturing presence ensuring faster regional deliveries.</p>
@@ -111,7 +111,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
           <h2 className="text-3xl font-extrabold text-slate-900">Service Areas</h2>
           <p className="text-slate-600 max-w-2xl mx-auto">
-            We actively manufacture and supply corrugated packaging to businesses in <Link to="/packaging-bhopal" className="text-[#0F4C5C] font-semibold hover:underline">Bhopal</Link>, <Link to="/packaging-mandideep" className="text-[#0F4C5C] font-semibold hover:underline">Mandideep</Link>, <Link to="/packaging-raisen" className="text-[#0F4C5C] font-semibold hover:underline">Raisen</Link>, <Link to="/packaging-indore" className="text-[#0F4C5C] font-semibold hover:underline">Indore</Link>, <Link to="/packaging-ratlam" className="text-[#0F4C5C] font-semibold hover:underline">Ratlam</Link> and selected locations across <Link to="/packaging-madhya-pradesh" className="text-[#0F4C5C] font-semibold hover:underline">Madhya Pradesh</Link>.
+            We actively manufacture and supply corrugated packaging to businesses in <Link to="/packaging-bhopal" className="text-brand-primary font-semibold hover:underline">Bhopal</Link>, <Link to="/packaging-mandideep" className="text-brand-primary font-semibold hover:underline">Mandideep</Link>, <Link to="/packaging-raisen" className="text-brand-primary font-semibold hover:underline">Raisen</Link>, <Link to="/packaging-indore" className="text-brand-primary font-semibold hover:underline">Indore</Link>, <Link to="/packaging-ratlam" className="text-brand-primary font-semibold hover:underline">Ratlam</Link> and selected locations across <Link to="/packaging-madhya-pradesh" className="text-brand-primary font-semibold hover:underline">Madhya Pradesh</Link>.
           </p>
         </div>
       </section>
@@ -124,7 +124,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
             <button
               onClick={() => onOpenQuoteModal()}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#D97706] hover:bg-[#B45309] text-white px-8 py-4 rounded-md font-bold text-sm shadow-md transition-colors cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-brand-accent hover:bg-brand-accent-hover text-white px-8 py-4 rounded-md font-bold text-sm shadow-md transition-colors cursor-pointer"
             >
               <Send className="w-5 h-5" />
               <span>Request a Quote</span>

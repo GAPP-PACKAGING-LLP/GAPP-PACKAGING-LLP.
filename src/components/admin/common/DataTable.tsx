@@ -113,7 +113,7 @@ export function DataTable<T extends { id?: string | number }>({
                 setCurrentPage(1);
               }}
               placeholder={searchPlaceholder}
-              className="w-full pl-9 pr-4 py-2 bg-white border border-slate-300 rounded-lg text-xs font-medium text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C5C]/20 focus:border-[#0F4C5C]"
+              className="w-full pl-9 pr-4 py-2 bg-white border border-slate-300 rounded-lg text-xs font-medium text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary"
             />
           </div>
           {filterComponent}
@@ -126,7 +126,7 @@ export function DataTable<T extends { id?: string | number }>({
       <div className="overflow-x-auto min-h-[250px]">
         {loading ? (
           <div className="py-20 flex flex-col items-center justify-center text-slate-500 gap-3">
-            <RefreshCw className="w-8 h-8 text-[#0F4C5C] animate-spin" />
+            <RefreshCw className="w-8 h-8 text-brand-primary animate-spin" />
             <span className="text-xs font-mono">Syncing real-time records from Firestore...</span>
           </div>
         ) : paginatedData.length === 0 ? (
@@ -146,7 +146,7 @@ export function DataTable<T extends { id?: string | number }>({
                   <th
                     key={idx}
                     className={`py-3 px-4 ${col.className || ''} ${
-                      col.sortable ? 'cursor-pointer select-none hover:text-[#0F4C5C]' : ''
+                      col.sortable ? 'cursor-pointer select-none hover:text-brand-primary' : ''
                     }`}
                     onClick={() => col.sortable && handleSort(idx)}
                   >

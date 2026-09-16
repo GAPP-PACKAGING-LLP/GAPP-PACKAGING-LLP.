@@ -24,10 +24,10 @@ export const HomeCtaBanner: React.FC<HomeCtaBannerProps> = ({
   const { settings } = useCMS();
 
   return (
-    <section className="py-16 md:py-20 bg-[#0A3642] text-white relative overflow-hidden">
+    <section className="py-16 md:py-20 bg-brand-primary-hover text-white relative overflow-hidden">
       {/* Background Graphic Accents */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#D97706]/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-brand-accent/10 rounded-full blur-3xl pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-10">
         
@@ -35,7 +35,7 @@ export const HomeCtaBanner: React.FC<HomeCtaBannerProps> = ({
           
           {/* Left Text (7 Cols) */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 bg-white/10 px-3.5 py-1.5 rounded-full border border-white/20 text-xs font-semibold text-[#D97706]">
+            <div className="inline-flex items-center gap-2 bg-white/10 px-3.5 py-1.5 rounded-full border border-white/20 text-xs font-semibold text-brand-accent">
               <ShieldCheck className="w-4 h-4" />
               <span>Direct Factory Supply • Mandideep Plant</span>
             </div>
@@ -71,7 +71,7 @@ export const HomeCtaBanner: React.FC<HomeCtaBannerProps> = ({
               <button
                 type="button"
                 onClick={onOpenQuoteModal}
-                className="inline-flex items-center justify-center gap-2.5 bg-[#D97706] hover:bg-[#B45309] text-white px-8 py-4 rounded-xl font-extrabold text-sm shadow-lg transition-all active:scale-95 cursor-pointer"
+                className="inline-flex items-center justify-center gap-2.5 bg-brand-accent hover:bg-brand-accent-hover text-white px-8 py-4 rounded-xl font-extrabold text-sm shadow-lg transition-all active:scale-95 cursor-pointer"
               >
                 <Send className="w-4 h-4" />
                 <span>Request Plant RFQ & Quotation</span>
@@ -94,7 +94,7 @@ export const HomeCtaBanner: React.FC<HomeCtaBannerProps> = ({
               
               <div className="flex items-center justify-between border-b border-white/10 pb-4">
                 <div className="flex items-center gap-2">
-                  <Building2 className="w-5 h-5 text-[#D97706]" />
+                  <Building2 className="w-5 h-5 text-brand-accent" />
                   <span className="font-extrabold text-sm uppercase tracking-wider text-white">
                     Factory Desk & Direct Lines
                   </span>
@@ -110,16 +110,16 @@ export const HomeCtaBanner: React.FC<HomeCtaBannerProps> = ({
                   <div className="flex flex-col gap-2 pt-1 font-mono">
                     <a 
                       href="tel:+919806419199" 
-                      className="flex items-center gap-2 text-white hover:text-[#D97706] font-bold transition-colors bg-white/5 p-2.5 rounded-lg border border-white/10"
+                      className="flex items-center gap-2 text-white hover:text-brand-accent font-bold transition-colors bg-white/5 p-2.5 rounded-lg border border-white/10"
                     >
-                      <PhoneCall className="w-4 h-4 text-[#D97706]" />
+                      <PhoneCall className="w-4 h-4 text-brand-accent" />
                       <span>Ashish Barkhade: +91 9806419199</span>
                     </a>
                     <a 
                       href="tel:+919981280902" 
-                      className="flex items-center gap-2 text-white hover:text-[#D97706] font-bold transition-colors bg-white/5 p-2.5 rounded-lg border border-white/10"
+                      className="flex items-center gap-2 text-white hover:text-brand-accent font-bold transition-colors bg-white/5 p-2.5 rounded-lg border border-white/10"
                     >
-                      <PhoneCall className="w-4 h-4 text-[#D97706]" />
+                      <PhoneCall className="w-4 h-4 text-brand-accent" />
                       <span>Pramod Singh: +91 9981280902</span>
                     </a>
                   </div>
@@ -127,7 +127,7 @@ export const HomeCtaBanner: React.FC<HomeCtaBannerProps> = ({
 
                 <div className="space-y-1 pt-2 border-t border-white/10">
                   <div className="text-slate-400 font-medium flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-[#D97706]" />
+                    <MapPin className="w-3.5 h-3.5 text-brand-accent" />
                     <span>Manufacturing Unit Location:</span>
                   </div>
                   <p className="text-slate-300 font-mono text-xs leading-relaxed">
@@ -139,7 +139,7 @@ export const HomeCtaBanner: React.FC<HomeCtaBannerProps> = ({
               <div className="pt-2">
                 <Link
                   to="/contact"
-                  className="w-full inline-flex items-center justify-center gap-2 bg-white text-[#0A3642] hover:bg-slate-100 py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors"
+                  className="w-full inline-flex items-center justify-center gap-2 bg-white text-brand-primary-hover hover:bg-slate-100 py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors"
                 >
                   <span>Open Interactive Map & Factory Details</span>
                 </Link>

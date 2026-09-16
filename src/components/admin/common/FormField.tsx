@@ -49,8 +49,8 @@ export const FormField: React.FC<FormFieldProps> = ({
           rows={rows}
           disabled={disabled}
           className={`w-full px-3 py-2 bg-white border ${
-            error ? 'border-red-400 focus:border-red-500' : 'border-slate-300 focus:border-[#0F4C5C]'
-          } rounded-lg text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C5C]/20 disabled:bg-slate-50`}
+            error ? 'border-red-400 focus:border-red-500' : 'border-slate-300 focus:border-brand-primary'
+          } rounded-lg text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 disabled:bg-slate-50`}
         />
       ) : type === 'select' ? (
         <select
@@ -59,8 +59,8 @@ export const FormField: React.FC<FormFieldProps> = ({
           onChange={(e) => onChange(e.target.value)}
           disabled={disabled}
           className={`w-full px-3 py-2 bg-white border ${
-            error ? 'border-red-400' : 'border-slate-300 focus:border-[#0F4C5C]'
-          } rounded-lg text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#0F4C5C]/20 cursor-pointer disabled:bg-slate-50`}
+            error ? 'border-red-400' : 'border-slate-300 focus:border-brand-primary'
+          } rounded-lg text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 cursor-pointer disabled:bg-slate-50`}
         >
           {options.map((opt) => (
             <option key={opt.value} value={opt.value}>
@@ -77,7 +77,7 @@ export const FormField: React.FC<FormFieldProps> = ({
             disabled={disabled}
             className="sr-only peer"
           />
-          <div className="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#0F4C5C]"></div>
+          <div className="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-primary"></div>
           <span className="ml-2 text-xs font-semibold text-slate-600">
             {value ? 'Active / Visible' : 'Inactive / Hidden'}
           </span>
@@ -93,7 +93,7 @@ export const FormField: React.FC<FormFieldProps> = ({
             }}
             placeholder={placeholder || 'Enter comma-separated items (e.g. 5-ply, Kraft, Rigid)'}
             disabled={disabled}
-            className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C5C]/20 focus:border-[#0F4C5C]"
+            className="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 focus:border-brand-primary"
           />
           {Array.isArray(value) && value.length > 0 && value[0] !== '' && (
             <div className="flex flex-wrap gap-1.5 pt-1">
@@ -117,8 +117,8 @@ export const FormField: React.FC<FormFieldProps> = ({
           placeholder={placeholder}
           disabled={disabled}
           className={`w-full px-3 py-2 bg-white border ${
-            error ? 'border-red-400 focus:border-red-500' : 'border-slate-300 focus:border-[#0F4C5C]'
-          } rounded-lg text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0F4C5C]/20 disabled:bg-slate-50`}
+            error ? 'border-red-400 focus:border-red-500' : 'border-slate-300 focus:border-brand-primary'
+          } rounded-lg text-xs text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 disabled:bg-slate-50`}
         />
       )}
 

@@ -60,7 +60,7 @@ export const MachinerySection: React.FC = () => {
               onClick={() => setSelectedCategory(cat)}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 selectedCategory === cat
-                  ? 'bg-[#0F4C5C] text-white shadow-md'
+                  ? 'bg-brand-primary text-white shadow-md'
                   : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
               }`}
             >
@@ -81,7 +81,7 @@ export const MachinerySection: React.FC = () => {
             return (
               <div
                 key={machine.id || index}
-                className="bg-white rounded-2xl border border-slate-200 overflow-hidden flex flex-col justify-between hover:border-[#0F4C5C]/60 hover:shadow-lg transition-all duration-300 group"
+                className="bg-white rounded-2xl border border-slate-200 overflow-hidden flex flex-col justify-between hover:border-brand-primary/60 hover:shadow-lg transition-all duration-300 group"
               >
                 <div>
                   {/* Machinery Attached Photo Card */}
@@ -100,7 +100,7 @@ export const MachinerySection: React.FC = () => {
                       />
                     ) : (
                       <div className="w-full h-full flex flex-col items-center justify-center text-slate-400 bg-gradient-to-br from-slate-800 to-slate-900 p-6 text-center space-y-2">
-                        <Cpu className="w-10 h-10 text-[#0F4C5C]/80" />
+                        <Cpu className="w-10 h-10 text-brand-primary/80" />
                         <span className="text-xs font-mono text-slate-400">Semi-Automatic Conversion Line</span>
                       </div>
                     )}
@@ -112,7 +112,7 @@ export const MachinerySection: React.FC = () => {
                           {machine.category}
                         </span>
 
-                        <span className="w-6 h-6 rounded-full bg-[#0F4C5C] text-white text-[11px] font-bold font-mono flex items-center justify-center shadow">
+                        <span className="w-6 h-6 rounded-full bg-brand-primary text-white text-[11px] font-bold font-mono flex items-center justify-center shadow">
                           {index + 1}
                         </span>
                       </div>
@@ -128,7 +128,7 @@ export const MachinerySection: React.FC = () => {
                           </span>
                         )}
 
-                        <div className="flex items-center gap-1 text-[11px] font-bold text-white bg-[#0F4C5C]/90 hover:bg-[#0F4C5C] px-2 py-1 rounded-lg backdrop-blur-xs transition-colors">
+                        <div className="flex items-center gap-1 text-[11px] font-bold text-white bg-brand-primary/90 hover:bg-brand-primary px-2 py-1 rounded-lg backdrop-blur-xs transition-colors">
                           <Maximize2 className="w-3 h-3" />
                           <span>Specs</span>
                         </div>
@@ -138,7 +138,7 @@ export const MachinerySection: React.FC = () => {
 
                   {/* Body Content */}
                   <div className="p-5 space-y-3">
-                    <h3 className="text-base font-bold text-slate-900 leading-snug group-hover:text-[#0F4C5C] transition-colors">
+                    <h3 className="text-base font-bold text-slate-900 leading-snug group-hover:text-brand-primary transition-colors">
                       {machine.name}
                     </h3>
 
@@ -168,7 +168,7 @@ export const MachinerySection: React.FC = () => {
                 <div className="p-5 pt-0">
                   <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-700 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
                     <span className="font-semibold text-slate-500 text-[11px]">Production Role:</span>
-                    <span className="font-bold text-[#0F4C5C] text-[11px] truncate max-w-[170px]">{machine.importance}</span>
+                    <span className="font-bold text-brand-primary text-[11px] truncate max-w-[170px]">{machine.importance}</span>
                   </div>
                 </div>
 
@@ -190,7 +190,7 @@ export const MachinerySection: React.FC = () => {
               {/* Modal Header */}
               <div className="p-4 bg-slate-900 text-white flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <span className="text-[10px] font-mono uppercase text-[#D97706] font-bold">
+                  <span className="text-[10px] font-mono uppercase text-brand-accent font-bold">
                     {activeModalItem.category} • Mandideep Infrastructure
                   </span>
                   <h3 className="text-base font-bold text-white">{activeModalItem.name}</h3>
@@ -232,7 +232,7 @@ export const MachinerySection: React.FC = () => {
                           type="button"
                           onClick={() => setActiveModalPhotoIndex(0)}
                           className={`relative aspect-video w-20 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${
-                            activeModalPhotoIndex === 0 ? 'border-[#0F4C5C] ring-2 ring-[#0F4C5C]/20' : 'border-slate-200 opacity-70'
+                            activeModalPhotoIndex === 0 ? 'border-brand-primary ring-2 ring-brand-primary/20' : 'border-slate-200 opacity-70'
                           }`}
                         >
                           <img src={activeModalItem.imageUrl} alt={`${activeModalItem.name} Main View`} className="w-full h-full object-cover" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
@@ -244,7 +244,7 @@ export const MachinerySection: React.FC = () => {
                             type="button"
                             onClick={() => setActiveModalPhotoIndex(gIdx + 1)}
                             className={`relative aspect-video w-20 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${
-                              activeModalPhotoIndex === gIdx + 1 ? 'border-[#0F4C5C] ring-2 ring-[#0F4C5C]/20' : 'border-slate-200 opacity-70'
+                              activeModalPhotoIndex === gIdx + 1 ? 'border-brand-primary ring-2 ring-brand-primary/20' : 'border-slate-200 opacity-70'
                             }`}
                           >
                             <img src={gUrl} alt={`${activeModalItem.name} - Angle ${gIdx + 1}`} className="w-full h-full object-cover" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
@@ -293,8 +293,8 @@ export const MachinerySection: React.FC = () => {
 
                 {/* Plant Notice */}
                 <div className="p-3 bg-teal-50 border border-teal-100 rounded-xl flex items-center gap-3">
-                  <ShieldCheck className="w-5 h-5 text-[#0F4C5C] shrink-0" />
-                  <p className="text-xs text-[#0F4C5C] font-medium">
+                  <ShieldCheck className="w-5 h-5 text-brand-primary shrink-0" />
+                  <p className="text-xs text-brand-primary font-medium">
                     This unit operates under strict ISO standard calibrations with scheduled preventative maintenance in Mandideep, Bhopal.
                   </p>
                 </div>
@@ -306,7 +306,7 @@ export const MachinerySection: React.FC = () => {
                 <a
                   href="#contact"
                   onClick={() => setActiveModalItem(null)}
-                  className="px-4 py-2 bg-[#0F4C5C] hover:bg-[#0A3642] text-white text-xs font-bold rounded-xl transition-colors"
+                  className="px-4 py-2 bg-brand-primary hover:bg-brand-primary-hover text-white text-xs font-bold rounded-xl transition-colors"
                 >
                   Request Plant Batch Quote
                 </a>
@@ -323,13 +323,13 @@ export const MachinerySection: React.FC = () => {
         )}
 
         {/* Semi-Automatic Machine in Bhopal Note */}
-        <div className="mt-12 bg-[#0F4C5C]/5 border border-[#0F4C5C]/20 rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="mt-12 bg-brand-primary/5 border border-brand-primary/20 rounded-2xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1.5">
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0F4C5C] bg-[#0F4C5C]/10 px-2.5 py-1 rounded-lg">
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-primary bg-brand-primary/10 px-2.5 py-1 rounded-lg">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Plant Capabilities & Technology</span>
             </div>
-            <h4 className="text-base sm:text-lg font-bold text-[#0F4C5C]">
+            <h4 className="text-base sm:text-lg font-bold text-brand-primary">
               Semi-Automatic Converting Line in Mandideep (Bhopal Region)
             </h4>
             <p className="text-xs sm:text-sm text-slate-700 max-w-3xl leading-relaxed">
@@ -338,7 +338,7 @@ export const MachinerySection: React.FC = () => {
           </div>
           <a
             href="#contact"
-            className="shrink-0 bg-[#0F4C5C] hover:bg-[#0A3642] text-white px-6 py-3 rounded-xl font-bold text-xs shadow-md transition-all flex items-center gap-1.5 cursor-pointer"
+            className="shrink-0 bg-brand-primary hover:bg-brand-primary-hover text-white px-6 py-3 rounded-xl font-bold text-xs shadow-md transition-all flex items-center gap-1.5 cursor-pointer"
           >
             <span>Inquire for Factory Order</span>
             <ChevronRight className="w-4 h-4" />

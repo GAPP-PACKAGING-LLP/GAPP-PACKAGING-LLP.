@@ -51,8 +51,8 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
         {/* Content with Firestore Connected Form */}
         <div className="p-6 space-y-4">
           <div className="bg-slate-50 p-3 rounded-md border border-slate-200 text-xs text-slate-600 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-            <span className="flex items-center gap-1.5 font-medium text-[#0F4C5C]">
-              <span className="w-2 h-2 rounded-full bg-[#D97706]"></span>
+            <span className="flex items-center gap-1.5 font-medium text-brand-primary">
+              <span className="w-2 h-2 rounded-full bg-brand-accent"></span>
               Direct B2B Manufacturer Pricing • Mandideep Plant
             </span>
             <div className="flex items-center gap-2 font-mono text-[11px] text-slate-500">

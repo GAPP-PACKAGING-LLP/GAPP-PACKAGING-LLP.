@@ -68,7 +68,7 @@ export const AboutSection: React.FC = () => {
             </div>
 
             <div className="bg-[#F8F9FA] p-6 rounded-xl border border-slate-200 space-y-3">
-              <h3 className="text-lg font-bold text-[#0F4C5C]">
+              <h3 className="text-lg font-bold text-brand-primary">
                 Introduction Letter – Corrugated Boxes Manufacturers
               </h3>
               <p className="text-slate-700 leading-relaxed text-sm sm:text-base">
@@ -87,8 +87,8 @@ export const AboutSection: React.FC = () => {
 
             {/* Mission & Vision Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
-              <div className="bg-[#0F4C5C]/5 p-5 rounded-xl border border-[#0F4C5C]/20 space-y-3">
-                <div className="flex items-center gap-2 text-[#0F4C5C]">
+              <div className="bg-brand-primary/5 p-5 rounded-xl border border-brand-primary/20 space-y-3">
+                <div className="flex items-center gap-2 text-brand-primary">
                   <Target className="w-5 h-5" />
                   <h4 className="font-bold text-base">Our Mission</h4>
                 </div>
@@ -96,13 +96,13 @@ export const AboutSection: React.FC = () => {
                   "{missionVisionData.mission}"
                 </p>
                 <div className="pt-2">
-                  <span className="text-xs font-bold text-[#0F4C5C] uppercase tracking-wider block mb-1">
+                  <span className="text-xs font-bold text-brand-primary uppercase tracking-wider block mb-1">
                     Keys for Development:
                   </span>
                   <ul className="text-xs text-slate-600 space-y-1">
                     {missionVisionData.keysForDevelopment.map((key, idx) => (
                       <li key={idx} className="flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#0F4C5C]" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-brand-primary" />
                         <span>{key}</span>
                       </li>
                     ))}
@@ -110,8 +110,8 @@ export const AboutSection: React.FC = () => {
                 </div>
               </div>
 
-              <div className="bg-[#D97706]/5 p-5 rounded-xl border border-[#D97706]/20 space-y-3">
-                <div className="flex items-center gap-2 text-[#D97706]">
+              <div className="bg-brand-accent/5 p-5 rounded-xl border border-brand-accent/20 space-y-3">
+                <div className="flex items-center gap-2 text-brand-accent">
                   <Sparkles className="w-5 h-5" />
                   <h4 className="font-bold text-base">Our Vision</h4>
                 </div>
@@ -119,13 +119,13 @@ export const AboutSection: React.FC = () => {
                   "{missionVisionData.vision}"
                 </p>
                 <div className="pt-2">
-                  <span className="text-xs font-bold text-[#D97706] uppercase tracking-wider block mb-1">
+                  <span className="text-xs font-bold text-brand-accent uppercase tracking-wider block mb-1">
                     We Believe In:
                   </span>
                   <ul className="text-xs text-slate-600 space-y-1">
                     {missionVisionData.weBelieveIn.map((item, idx) => (
                       <li key={idx} className="flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#D97706]" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-brand-accent" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -140,13 +140,13 @@ export const AboutSection: React.FC = () => {
           <div className="lg:col-span-5 space-y-5">
             
             {/* Designated Partners Card */}
-            <div className="bg-[#0A3642] text-white p-6 rounded-xl shadow-md border border-teal-800 space-y-4">
+            <div className="bg-brand-primary-hover text-white p-6 rounded-xl shadow-md border border-teal-800 space-y-4">
               <div className="flex items-center justify-between border-b border-teal-700/60 pb-3">
                 <div className="flex items-center gap-2">
-                  <Users className="w-5 h-5 text-[#D97706]" />
+                  <Users className="w-5 h-5 text-brand-accent" />
                   <span className="font-bold text-sm tracking-wide">Designated Partners & Leadership</span>
                 </div>
-                <span className="text-[11px] font-mono text-[#D97706] font-semibold bg-[#D97706]/20 px-2 py-0.5 rounded">
+                <span className="text-[11px] font-mono text-brand-accent font-semibold bg-brand-accent/20 px-2 py-0.5 rounded">
                   Management
                 </span>
               </div>
@@ -177,7 +177,7 @@ export const AboutSection: React.FC = () => {
                     {director.phone && (
                       <a 
                         href={`tel:${director.phone}`}
-                        className="text-xs text-[#D97706] font-mono bg-black/30 px-2.5 py-1 rounded hover:underline shrink-0"
+                        className="text-xs text-brand-accent font-mono bg-black/30 px-2.5 py-1 rounded hover:underline shrink-0"
                       >
                         {director.phone}
                       </a>
@@ -214,7 +214,7 @@ export const AboutSection: React.FC = () => {
             <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-xs space-y-3">
               <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800 border-b border-slate-100 pb-2 flex items-center justify-between">
                 <span>Statutory Requirements</span>
-                <FileCheck className="w-4 h-4 text-[#0F4C5C]" />
+                <FileCheck className="w-4 h-4 text-brand-primary" />
               </h4>
 
               <p className="text-xs text-slate-600">

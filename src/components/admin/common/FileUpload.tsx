@@ -122,7 +122,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
             type="button"
             onClick={() => setActiveMode('upload')}
             className={`px-2 py-0.5 rounded-md transition-colors cursor-pointer flex items-center gap-1 ${
-              activeMode === 'upload' ? 'bg-white shadow-xs text-[#0F4C5C] font-bold' : 'hover:text-slate-900'
+              activeMode === 'upload' ? 'bg-white shadow-xs text-brand-primary font-bold' : 'hover:text-slate-900'
             }`}
           >
             <UploadCloud className="w-3 h-3" />
@@ -132,7 +132,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
             type="button"
             onClick={() => setActiveMode('url')}
             className={`px-2 py-0.5 rounded-md transition-colors cursor-pointer flex items-center gap-1 ${
-              activeMode === 'url' ? 'bg-white shadow-xs text-[#0F4C5C] font-bold' : 'hover:text-slate-900'
+              activeMode === 'url' ? 'bg-white shadow-xs text-brand-primary font-bold' : 'hover:text-slate-900'
             }`}
           >
             <LinkIcon className="w-3 h-3" />
@@ -151,18 +151,18 @@ export const FileUpload: React.FC<FileUploadProps> = ({
             onClick={() => fileInputRef.current?.click()}
             className={`border-2 border-dashed rounded-xl p-4 text-center cursor-pointer transition-all ${
               isDragging
-                ? 'border-[#0F4C5C] bg-[#0F4C5C]/5 ring-2 ring-[#0F4C5C]/20'
-                : 'border-slate-300 hover:border-[#0F4C5C] hover:bg-slate-50/80 bg-slate-50/40'
+                ? 'border-brand-primary bg-brand-primary/5 ring-2 ring-brand-primary/20'
+                : 'border-slate-300 hover:border-brand-primary hover:bg-slate-50/80 bg-slate-50/40'
             }`}
           >
             {isUploading ? (
               <div className="space-y-2.5 py-2">
-                <Loader2 className="w-7 h-7 text-[#0F4C5C] animate-spin mx-auto" />
+                <Loader2 className="w-7 h-7 text-brand-primary animate-spin mx-auto" />
                 <div className="space-y-1">
                   <p className="text-xs font-bold text-slate-700">Uploading & Optimizing image...</p>
                   <div className="w-48 mx-auto bg-slate-200 rounded-full h-1.5 overflow-hidden">
                     <div
-                      className="bg-[#0F4C5C] h-full transition-all duration-200"
+                      className="bg-brand-primary h-full transition-all duration-200"
                       style={{ width: `${uploadProgress}%` }}
                     />
                   </div>
@@ -171,7 +171,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
               </div>
             ) : (
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 py-1">
-                <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-[#0F4C5C] shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-brand-primary shrink-0">
                   <FolderOpen className="w-5 h-5" />
                 </div>
                 <div className="text-center sm:text-left">
@@ -187,7 +187,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
                     e.stopPropagation();
                     fileInputRef.current?.click();
                   }}
-                  className="px-3 py-1.5 bg-[#0F4C5C] hover:bg-[#0c3c49] text-white text-xs font-bold rounded-lg shadow-xs transition-colors cursor-pointer shrink-0"
+                  className="px-3 py-1.5 bg-brand-primary hover:bg-[#0c3c49] text-white text-xs font-bold rounded-lg shadow-xs transition-colors cursor-pointer shrink-0"
                 >
                   Browse Device
                 </button>
@@ -230,7 +230,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
                     href={value}
                     target="_blank"
                     rel="noreferrer"
-                    className="p-1.5 text-slate-500 hover:text-[#0F4C5C] hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+                    className="p-1.5 text-slate-500 hover:text-brand-primary hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
                     title="Open preview in new tab"
                   >
                     <ExternalLink className="w-4 h-4" />
@@ -260,13 +260,13 @@ export const FileUpload: React.FC<FileUploadProps> = ({
               value={customUrlInput}
               onChange={(e) => setCustomUrlInput(e.target.value)}
               placeholder="https://example.com/logo.png or /logo.svg"
-              className="flex-1 px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs focus:outline-hidden focus:ring-2 focus:ring-[#0F4C5C]"
+              className="flex-1 px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs focus:outline-hidden focus:ring-2 focus:ring-brand-primary"
             />
             <button
               type="button"
               onClick={handleApplyCustomUrl}
               disabled={!customUrlInput.trim()}
-              className="px-3 py-2 bg-[#0F4C5C] hover:bg-[#0c3c49] text-white text-xs font-bold rounded-lg shadow-xs transition-colors cursor-pointer disabled:opacity-50"
+              className="px-3 py-2 bg-brand-primary hover:bg-[#0c3c49] text-white text-xs font-bold rounded-lg shadow-xs transition-colors cursor-pointer disabled:opacity-50"
             >
               Apply Link
             </button>

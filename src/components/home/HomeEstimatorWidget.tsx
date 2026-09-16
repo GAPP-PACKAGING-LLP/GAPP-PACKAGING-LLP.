@@ -61,7 +61,7 @@ export const HomeEstimatorWidget: React.FC<HomeEstimatorWidgetProps> = ({ onOpen
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="max-w-2xl space-y-3">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/20 text-[#D97706] text-xs font-bold uppercase tracking-wider border border-teal-500/30">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/20 text-brand-accent text-xs font-bold uppercase tracking-wider border border-teal-500/30">
               <Calculator className="w-3.5 h-3.5" />
               <span>Interactive Box Specifier</span>
             </div>
@@ -75,7 +75,7 @@ export const HomeEstimatorWidget: React.FC<HomeEstimatorWidgetProps> = ({ onOpen
 
           <Link
             to="/calculator"
-            className="inline-flex items-center gap-2 text-sm font-bold text-[#D97706] hover:text-amber-400 group shrink-0"
+            className="inline-flex items-center gap-2 text-sm font-bold text-brand-accent hover:text-amber-400 group shrink-0"
           >
             <span>Open Advanced 4-Stage Configurator</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -101,7 +101,7 @@ export const HomeEstimatorWidget: React.FC<HomeEstimatorWidgetProps> = ({ onOpen
                     onClick={() => setSelectedPly(ply)}
                     className={`py-3 px-4 rounded-xl border text-center font-bold text-xs sm:text-sm transition-all cursor-pointer ${
                       selectedPly === ply
-                        ? 'bg-[#0F4C5C] text-white border-[#008CE8] ring-2 ring-[#008CE8]/30 shadow-md'
+                        ? 'bg-brand-primary text-white border-[#008CE8] ring-2 ring-[#008CE8]/30 shadow-md'
                         : 'bg-slate-700/50 text-slate-300 border-slate-600 hover:bg-slate-700 hover:text-white'
                     }`}
                   >
@@ -179,7 +179,7 @@ export const HomeEstimatorWidget: React.FC<HomeEstimatorWidgetProps> = ({ onOpen
               <button
                 type="button"
                 onClick={handleInstantQuote}
-                className="flex-1 inline-flex items-center justify-center gap-2 bg-[#D97706] hover:bg-[#B45309] text-white px-6 py-3.5 rounded-xl font-bold text-sm shadow-md transition-all cursor-pointer"
+                className="flex-1 inline-flex items-center justify-center gap-2 bg-brand-accent hover:bg-brand-accent-hover text-white px-6 py-3.5 rounded-xl font-bold text-sm shadow-md transition-all cursor-pointer"
               >
                 <Send className="w-4 h-4" />
                 <span>Submit Specification for Quote</span>
@@ -221,7 +221,7 @@ export const HomeEstimatorWidget: React.FC<HomeEstimatorWidgetProps> = ({ onOpen
               <div className="space-y-2 bg-slate-900/70 p-4 rounded-xl border border-slate-700/80 text-xs font-mono">
                 <div className="flex justify-between items-center text-slate-300">
                   <span className="font-sans text-slate-400">Target Load:</span>
-                  <span className="font-bold text-[#D97706]">{plyDetails[selectedPly].idealLoad}</span>
+                  <span className="font-bold text-brand-accent">{plyDetails[selectedPly].idealLoad}</span>
                 </div>
                 <div className="flex justify-between items-center text-slate-300">
                   <span className="font-sans text-slate-400">Dimensions:</span>

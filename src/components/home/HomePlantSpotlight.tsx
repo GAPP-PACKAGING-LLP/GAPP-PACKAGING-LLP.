@@ -17,8 +17,8 @@ export const HomePlantSpotlight: React.FC = () => {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-100 text-[#0F4C5C] text-xs font-bold uppercase tracking-wider">
-            <Factory className="w-3.5 h-3.5 text-[#0F4C5C]" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-100 text-brand-primary text-xs font-bold uppercase tracking-wider">
+            <Factory className="w-3.5 h-3.5 text-brand-primary" />
             <span>Facility & Manufacturing Rigor</span>
           </div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight font-heading">
@@ -36,10 +36,10 @@ export const HomePlantSpotlight: React.FC = () => {
           <div className="bg-[#F8F9FA] rounded-2xl p-8 border border-slate-200 flex flex-col justify-between hover:shadow-lg hover:border-slate-300 transition-all duration-300 space-y-6">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <div className="w-12 h-12 rounded-xl bg-[#0F4C5C] text-white flex items-center justify-center shadow-xs">
-                  <Wrench className="w-6 h-6 text-[#D97706]" />
+                <div className="w-12 h-12 rounded-xl bg-brand-primary text-white flex items-center justify-center shadow-xs">
+                  <Wrench className="w-6 h-6 text-brand-accent" />
                 </div>
-                <span className="text-xs font-mono font-bold text-[#0F4C5C] bg-teal-50 px-2.5 py-1 rounded-md border border-teal-200">
+                <span className="text-xs font-mono font-bold text-brand-primary bg-teal-50 px-2.5 py-1 rounded-md border border-teal-200">
                   12 Converting Units
                 </span>
               </div>
@@ -72,7 +72,7 @@ export const HomePlantSpotlight: React.FC = () => {
             <div className="pt-4 border-t border-slate-200">
               <Link
                 to="/infrastructure"
-                className="inline-flex items-center gap-2 font-bold text-xs sm:text-sm uppercase tracking-wider text-[#0F4C5C] hover:text-[#D97706] transition-colors group"
+                className="inline-flex items-center gap-2 font-bold text-xs sm:text-sm uppercase tracking-wider text-brand-primary hover:text-brand-accent transition-colors group"
               >
                 <span>Explore Full Machinery Fleet & Specifications</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -84,8 +84,8 @@ export const HomePlantSpotlight: React.FC = () => {
           <div className="bg-[#F8F9FA] rounded-2xl p-8 border border-slate-200 flex flex-col justify-between hover:shadow-lg hover:border-slate-300 transition-all duration-300 space-y-6">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <div className="w-12 h-12 rounded-xl bg-[#0A3642] text-white flex items-center justify-center shadow-xs">
-                  <Eye className="w-6 h-6 text-[#D97706]" />
+                <div className="w-12 h-12 rounded-xl bg-brand-primary-hover text-white flex items-center justify-center shadow-xs">
+                  <Eye className="w-6 h-6 text-brand-accent" />
                 </div>
                 <span className="text-xs font-mono font-bold text-sky-700 bg-sky-50 px-2.5 py-1 rounded-md border border-sky-200">
                   8-Stage Process
@@ -120,7 +120,7 @@ export const HomePlantSpotlight: React.FC = () => {
             <div className="pt-4 border-t border-slate-200">
               <Link
                 to="/infrastructure"
-                className="inline-flex items-center gap-2 font-bold text-xs sm:text-sm uppercase tracking-wider text-[#0F4C5C] hover:text-[#D97706] transition-colors group"
+                className="inline-flex items-center gap-2 font-bold text-xs sm:text-sm uppercase tracking-wider text-brand-primary hover:text-brand-accent transition-colors group"
               >
                 <span>Take the 8-Stage Plant Tour & Machine View</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
