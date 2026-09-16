@@ -148,10 +148,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal, onOpenBrochure
           <div className="hidden sm:flex items-center space-x-3">
             <button
               onClick={onOpenQuoteModal}
-              className="bg-[#0F4C5C] hover:bg-[#0c3d4a] text-white px-5 py-2.5 rounded text-xs font-bold transition-colors shadow-sm flex items-center gap-2"
+              id="header-get-quote-btn"
+              className="inline-flex items-center gap-2 bg-[#0F4C5C] hover:bg-[#0A3642] text-white px-5 py-2.5 rounded-md font-semibold text-sm shadow-sm transition-all duration-150 active:scale-95 cursor-pointer"
             >
-              <Calculator className="w-4 h-4" />
-              <span>Box Calculator / RFQ</span>
+              <Send className="w-4 h-4 text-[#D97706]" />
+              <span>Get Instant Quote</span>
             </button>
           </div>
 
