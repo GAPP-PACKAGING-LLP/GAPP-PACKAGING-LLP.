@@ -16,7 +16,9 @@ import {
   deleteAdminUser,
   subscribeToAuditLogs,
   recordAuditLog,
-  ensureFirebaseAuth
+  ensureFirebaseAuth,
+  requestDirectorMobileOtp,
+  verifyDirectorMobileOtp
 } from '../firebase/auth';
 import { AdminUser, SecondaryAdminProfile, AuditLogEntry } from '../types';
 
@@ -32,6 +34,15 @@ export interface UseAuthReturn {
   loginWithGoogle: () => Promise<void>;
   loginWithSecondaryUser: (profileIdOrEmail: string, passcode: string) => Promise<void>;
   loginWithCredentials: (identifier: string, passcode: string) => Promise<void>;
+  requestOtp: (phone: string) => Promise<{
+    success: boolean;
+    message: string;
+    directorName: string;
+    directorRole: string;
+    maskedPhone: string;
+    otpHint?: string;
+  }>;
+  loginWithOtp: (phone: string, otp: string) => Promise<void>;
   createUser: (profile: Partial<SecondaryAdminProfile>) => Promise<SecondaryAdminProfile>;
   updateUser: (profile: Partial<SecondaryAdminProfile>) => Promise<SecondaryAdminProfile>;
   deleteUser: (profileId: string) => Promise<void>;
@@ -78,9 +89,16 @@ export function useAuth(): UseAuthReturn {
     const unsubscribe = onAdminAuthStateChanged(async (firebaseUser) => {
       if (!isMounted) return;
       
-      // If user is already authenticated via secondary credentials session, preserve it
       const currentStored = getStoredAdminSession();
-      if (currentStored && (currentStored.adminData?.loginMethod === 'credentials' || currentStored.adminData?.loginMethod === 'passkey') && !firebaseUser) {
+
+      // If user is already authenticated via secondary credentials/mobile OTP session, preserve it
+      if (
+        currentStored && 
+        (currentStored.adminData?.loginMethod === 'credentials' || 
+         currentStored.adminData?.loginMethod === 'passkey' ||
+         currentStored.adminData?.loginMethod === 'mobile_otp') && 
+        !firebaseUser
+      ) {
         setUser(currentStored.user);
         setAdminUser(currentStored.adminData);
         setLoading(false);
@@ -89,9 +107,11 @@ export function useAuth(): UseAuthReturn {
       }
 
       if (!firebaseUser) {
-        if (!currentStored) {
+        // If there is no firebaseUser and session was Google, clear it
+        if (!currentStored || currentStored.adminData?.loginMethod === 'google') {
           setUser(null);
           setAdminUser(null);
+          setStoredAdminSession(null);
         }
         setLoading(false);
         return;
@@ -103,10 +123,11 @@ export function useAuth(): UseAuthReturn {
         // 1. Verify email matches approved admin
         if (!isApprovedAdminEmail(email)) {
           await signOutAdmin();
+          setStoredAdminSession(null);
           if (isMounted) {
             setUser(null);
             setAdminUser(null);
-            setError('Access Denied: Your account is not in the approved administrator registry.');
+            setError(`Access Denied: The account (${email || 'unknown'}) is not authorized for Admin CMS access.`);
             setLoading(false);
           }
           return;
@@ -118,17 +139,17 @@ export function useAuth(): UseAuthReturn {
         if (isMounted) {
           setUser(firebaseUser);
           setAdminUser(adminData);
+          setStoredAdminSession({ user: firebaseUser, adminData });
           setError(null);
           setLoading(false);
         }
       } catch (err: any) {
         console.error('Auth verification error:', err);
         if (isMounted) {
-          if (!currentStored) {
-            setUser(null);
-            setAdminUser(null);
-            setError(err?.message || 'Access Denied: Unable to verify admin privileges.');
-          }
+          setUser(null);
+          setAdminUser(null);
+          setStoredAdminSession(null);
+          setError(err?.message || 'Access Denied: Unable to verify admin privileges.');
           setLoading(false);
         }
       }
@@ -151,6 +172,9 @@ export function useAuth(): UseAuthReturn {
       setError(null);
     } catch (err: any) {
       console.error('Login error:', err);
+      setUser(null);
+      setAdminUser(null);
+      setStoredAdminSession(null);
       setError(err?.message || 'Sign in failed. Access is restricted to approved administrators.');
       throw err;
     } finally {
@@ -176,6 +200,35 @@ export function useAuth(): UseAuthReturn {
   };
 
   const loginWithSecondaryUser = loginWithCredentials;
+
+  const requestOtp = async (phone: string) => {
+    setError(null);
+    try {
+      const res = await requestDirectorMobileOtp(phone);
+      return res;
+    } catch (err: any) {
+      console.error('Mobile OTP request error:', err);
+      setError(err?.message || 'Failed to send OTP.');
+      throw err;
+    }
+  };
+
+  const loginWithOtp = async (phone: string, otp: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const session = await verifyDirectorMobileOtp(phone, otp);
+      setUser(session.user);
+      setAdminUser(session.adminData);
+      setError(null);
+    } catch (err: any) {
+      console.error('Mobile OTP login error:', err);
+      setError(err?.message || 'Invalid OTP. Please try again.');
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const createUser = async (profile: Partial<SecondaryAdminProfile>) => {
     try {
@@ -270,6 +323,8 @@ export function useAuth(): UseAuthReturn {
     loginWithGoogle,
     loginWithSecondaryUser,
     loginWithCredentials,
+    requestOtp,
+    loginWithOtp,
     createUser,
     updateUser,
     deleteUser,

@@ -6,19 +6,19 @@ import configJson from '../../firebase-applet-config.json';
 // Safe environment variable accessor for Vite
 const env = (typeof import.meta !== 'undefined' && (import.meta as any).env) || {};
 
-// Firebase configuration using config with env fallback
+// Firebase configuration using env with configJson fallback
 export const firebaseConfig = {
-  apiKey: configJson.apiKey || env.VITE_FIREBASE_API_KEY,
-  authDomain: configJson.authDomain || env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: configJson.projectId || env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: configJson.storageBucket || env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: configJson.messagingSenderId || env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: configJson.appId || env.VITE_FIREBASE_APP_ID,
+  apiKey: env.VITE_FIREBASE_API_KEY || configJson.apiKey,
+  authDomain: env.VITE_FIREBASE_AUTH_DOMAIN || configJson.authDomain,
+  projectId: env.VITE_FIREBASE_PROJECT_ID || configJson.projectId,
+  storageBucket: env.VITE_FIREBASE_STORAGE_BUCKET || configJson.storageBucket,
+  messagingSenderId: env.VITE_FIREBASE_MESSAGING_SENDER_ID || configJson.messagingSenderId,
+  appId: env.VITE_FIREBASE_APP_ID || configJson.appId,
 };
 
 export const firestoreDatabaseId = 
-  configJson.firestoreDatabaseId || 
   env.VITE_FIREBASE_FIRESTORE_DATABASE_ID || 
+  configJson.firestoreDatabaseId || 
   'ai-studio-gapppackagingllp-8aae7773-3162-42e9-838a-a5b0639ea025';
 
 // Initialize Firebase App

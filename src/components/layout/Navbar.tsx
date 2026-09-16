@@ -15,7 +15,8 @@ import {
   FlaskConical,
   Award,
   Send,
-  Lock
+  Lock,
+  Calculator
 } from 'lucide-react';
 import { companyData } from '../../data/companyData';
 import { BrandLogo, BrandMark } from '../common/BrandLogo';
@@ -111,6 +112,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal, onOpenBrochure
               <FileText className="w-3 h-3" />
               <span>Spec Sheet</span>
             </button>
+            <Link
+              to="/admin/login"
+              className="flex items-center space-x-1 text-slate-300 hover:text-white font-semibold text-[11px] bg-white/10 hover:bg-white/20 px-2 py-0.5 rounded transition-colors"
+              title="Admin Inquiries Portal"
+            >
+              <Lock className="w-3 h-3 text-[#D97706]" />
+              <span>Admin Login</span>
+            </Link>
           </div>
         </div>
       </div>
@@ -154,6 +163,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal, onOpenBrochure
 
           {/* Right Action CTAs */}
           <div className="hidden sm:flex items-center space-x-3">
+            <Link
+              to="/admin/login"
+              className="text-xs font-bold text-slate-600 hover:text-[#0F4C5C] px-3 py-2 rounded-md border border-slate-300 hover:border-[#0F4C5C] transition-colors flex items-center gap-1.5"
+              title="Admin Login Portal"
+            >
+              <Lock className="w-3.5 h-3.5 text-[#D97706]" />
+              <span>Admin Login</span>
+            </Link>
+
             <button
               onClick={onOpenQuoteModal}
               id="header-get-quote-btn"
@@ -206,6 +224,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal, onOpenBrochure
                 </Link>
               );
             })}
+            <Link
+              to="/admin/login"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="px-3 py-2.5 text-base font-semibold text-[#0F4C5C] bg-teal-50 hover:bg-teal-100 rounded-md flex items-center justify-between mt-1 transition-colors"
+            >
+              <span className="flex items-center gap-2">
+                <Lock className="w-4 h-4 text-[#D97706]" />
+                Admin Login (CMS)
+              </span>
+              <ChevronRight className="w-4 h-4 text-[#0F4C5C]" />
+            </Link>
           </div>
 
           <div className="pt-3 border-t border-slate-200 space-y-2">

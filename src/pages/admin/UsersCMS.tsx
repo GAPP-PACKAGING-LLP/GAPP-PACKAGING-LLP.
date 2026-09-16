@@ -25,7 +25,8 @@ import {
   ShieldAlert,
   Search,
   Filter,
-  ExternalLink
+  ExternalLink,
+  Fingerprint
 } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
 import { useCMS } from '../../context/CMSContext';
@@ -70,18 +71,23 @@ export function UsersCMS() {
 
   const [newPassword, setNewPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [revealedPasscodes, setRevealedPasscodes] = useState<Record<string, boolean>>({});
   const [formError, setFormError] = useState<string | null>(null);
   const [formSuccess, setFormSuccess] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [copiedField, setCopiedField] = useState<string | null>(null);
 
-  // Filtered Users
+  // Filtered Users (supports search by User ID, Name, Email, Designation, or Phone)
   const filteredUsers = secondaryProfiles.filter((user) => {
+    const query = searchTerm.toLowerCase().trim();
     const matchesSearch = 
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.designation?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.phone?.includes(searchTerm);
+      !query ||
+      user.id.toLowerCase().includes(query) ||
+      user.name.toLowerCase().includes(query) ||
+      user.email.toLowerCase().includes(query) ||
+      user.designation?.toLowerCase().includes(query) ||
+      user.phone?.includes(query);
 
     const matchesRole = roleFilter === 'all' || user.role === roleFilter;
 
@@ -96,13 +102,23 @@ export function UsersCMS() {
     return `${randomPrefix}@${randomNum}`;
   };
 
+  // Helper to copy text to clipboard with field highlight
+  const handleCopyText = (text: string, fieldKey: string) => {
+    navigator.clipboard.writeText(text);
+    setCopiedField(fieldKey);
+    setTimeout(() => setCopiedField(null), 2000);
+  };
+
   // Pre-fill from existing director
   const handleLinkFromDirector = (directorId: string) => {
     const director = directors.find((d) => d.id === directorId);
     if (!director) return;
 
+    const suggestedId = director.name.toLowerCase().replace(/[^a-z0-9]/g, '_').slice(0, 20);
+
     setFormData((prev) => ({
       ...prev,
+      id: prev.id || suggestedId,
       name: director.name,
       email: director.email || `${director.name.toLowerCase().replace(/\s+/g, '.')}@gapppackaging.com`,
       designation: director.designation || 'Designated Partner',
@@ -118,10 +134,6 @@ export function UsersCMS() {
     setShowPassword(false);
 
     if (userToEdit) {
-      if (userToEdit.email.toLowerCase().trim() === 'satpuda.sanskriti.shodh.sansthan@gmail.com' || userToEdit.isProtected) {
-        alert('The Root Super Administrator account (satpuda.sanskriti.shodh.sansthan@gmail.com) is permanently protected and not editable.');
-        return;
-      }
       setEditingUser(userToEdit);
       setFormData({
         id: userToEdit.id,
@@ -137,6 +149,7 @@ export function UsersCMS() {
     } else {
       setEditingUser(null);
       setFormData({
+        id: '',
         name: '',
         email: '',
         role: 'partner',
@@ -161,24 +174,52 @@ export function UsersCMS() {
         throw new Error('Please enter the user full name.');
       }
       if (!formData.email?.trim()) {
-        throw new Error('Please enter a login ID or email.');
+        throw new Error('Please enter a login ID or official email.');
       }
       if (!formData.passcode?.trim() || formData.passcode.length < 4) {
         throw new Error('Password must be at least 4 characters.');
       }
 
+      const isRootSuperAdmin = Boolean(
+        editingUser && (
+          editingUser.email.toLowerCase().trim() === 'satpuda.sanskriti.shodh.sansthan@gmail.com' ||
+          editingUser.id === 'master-admin' ||
+          editingUser.isProtected
+        )
+      );
+
+      // Clean and sanitize User ID
+      let cleanId = (formData.id || '').trim().toLowerCase().replace(/[^a-z0-9_-]/g, '_');
+      if (!cleanId && !editingUser) {
+        cleanId = formData.name.toLowerCase().replace(/[^a-z0-9]/g, '_').slice(0, 24);
+      }
+
       if (editingUser) {
-        if (editingUser.email.toLowerCase().trim() === 'satpuda.sanskriti.shodh.sansthan@gmail.com' || editingUser.isProtected) {
-          throw new Error('The Root Super Administrator account is permanently protected and not editable.');
-        }
         await updateUser({
           ...formData,
-          id: editingUser.id
+          id: editingUser.id,
+          // Preserve Root Super Admin invariants
+          email: isRootSuperAdmin ? 'satpuda.sanskriti.shodh.sansthan@gmail.com' : formData.email?.trim(),
+          role: isRootSuperAdmin ? 'super_admin' : formData.role
         });
-        setFormSuccess(`User "${formData.name}" updated successfully!`);
+        setFormSuccess(`User "${formData.name}" details updated successfully!`);
       } else {
-        await createUser(formData);
-        setFormSuccess(`User login credentials created for "${formData.name}"!`);
+        // Check conflict before creating
+        const cleanEmail = (formData.email || '').toLowerCase().trim();
+        const conflict = secondaryProfiles.find(
+          (p) => (cleanId && p.id.toLowerCase() === cleanId) || p.email.toLowerCase().trim() === cleanEmail
+        );
+        if (conflict) {
+          throw new Error(
+            `A user with User ID "${cleanId || cleanEmail}" or Email "${cleanEmail}" already exists for ${conflict.name}. Please choose a unique User ID and Email.`
+          );
+        }
+
+        await createUser({
+          ...formData,
+          id: cleanId
+        });
+        setFormSuccess(`New user "${formData.name}" (User ID: ${cleanId}) created successfully!`);
       }
 
       setTimeout(() => {
@@ -233,18 +274,24 @@ export function UsersCMS() {
   };
 
   const handleDeleteUser = async (user: SecondaryAdminProfile) => {
-    if (user.email.toLowerCase().trim() === 'satpuda.sanskriti.shodh.sansthan@gmail.com') {
-      alert('The root Super Administrator account is protected and cannot be deleted.');
+    if (
+      user.email.toLowerCase().trim() === 'satpuda.sanskriti.shodh.sansthan@gmail.com' ||
+      user.id === 'master-admin' ||
+      user.isProtected
+    ) {
+      alert('The root Super Administrator account is permanently protected and cannot be deleted.');
       return;
     }
 
     const confirmDelete = window.confirm(
-      `Are you sure you want to remove CMS login access for ${user.name} (${user.email})?`
+      `Are you sure you want to delete the user account for ${user.name}?\n\n• User ID: ${user.id}\n• Email: ${user.email}\n• Role: ${user.role}\n\nThis will permanently revoke their access to the GAPP CMS portal.`
     );
 
     if (confirmDelete) {
       try {
         await deleteUser(user.id);
+        setFormSuccess(`User "${user.name}" (ID: ${user.id}) removed successfully.`);
+        setTimeout(() => setFormSuccess(null), 3500);
       } catch (err: any) {
         alert(err?.message || 'Failed to delete user.');
       }
@@ -253,11 +300,11 @@ export function UsersCMS() {
 
   const handleCopyCredentials = (user: SecondaryAdminProfile) => {
     const loginUrl = window.location.origin + '/admin/login';
-    const text = `🔐 *GAPP Packaging LLP - CMS Portal Login Credentials*\n\n👤 *User / Director:* ${user.name}\n🏢 *Role:* ${user.designation || user.role}\n📧 *Login ID / Email:* ${user.email}\n🔑 *Password / Passcode:* ${user.passcode}\n\n🌐 *CMS Login Link:* ${loginUrl}\n\n_Note: Please keep these credentials confidential. You can change your password anytime in the CMS._`;
+    const text = `🔐 *GAPP Packaging LLP - CMS Portal Login Credentials*\n\n👤 *User / Director:* ${user.name}\n🆔 *User ID:* ${user.id}\n🏢 *Role:* ${user.designation || user.role}\n📧 *Login ID / Email:* ${user.email}\n🔑 *Password / Passcode:* ${user.passcode}\n📱 *Phone:* ${user.phone || 'N/A'}\n\n🌐 *CMS Login Link:* ${loginUrl}\n\n_Note: You can log into the portal using either your User ID (${user.id}) or your Email address (${user.email}). Keep these credentials safe._`;
 
     navigator.clipboard.writeText(text);
     setCopiedId(user.id);
-    setTimeout(() => setCopiedId(null), 3000);
+    setTimeout(() => setCopiedId(null), 2500);
   };
 
   const getRoleBadge = (role: AdminRole | string) => {
@@ -441,7 +488,11 @@ export function UsersCMS() {
           {/* User Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {filteredUsers.map((user) => {
-              const isRootSuperAdmin = user.email.toLowerCase().trim() === 'satpuda.sanskriti.shodh.sansthan@gmail.com';
+              const isRootSuperAdmin = Boolean(
+                user.email.toLowerCase().trim() === 'satpuda.sanskriti.shodh.sansthan@gmail.com' ||
+                user.id === 'master-admin' ||
+                user.isProtected
+              );
               const isCopied = copiedId === user.id;
 
               return (
@@ -459,15 +510,19 @@ export function UsersCMS() {
                     {/* Top Row */}
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0F4C5C] to-[#164e63] text-white flex items-center justify-center font-bold text-lg shadow-sm">
+                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0F4C5C] to-[#164e63] text-white flex items-center justify-center font-bold text-lg shadow-sm shrink-0">
                           {user.name.charAt(0).toUpperCase()}
                         </div>
                         <div>
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-2 flex-wrap">
                             <h3 className="text-base font-bold text-slate-900">{user.name}</h3>
-                            {isRootSuperAdmin && (
+                            {isRootSuperAdmin ? (
                               <span className="px-2 py-0.5 rounded bg-purple-600 text-white text-[10px] font-bold uppercase tracking-wider">
-                                Root
+                                Root Admin
+                              </span>
+                            ) : (
+                              <span className="px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-[10px] font-mono font-bold border border-slate-200">
+                                ID: {user.id}
                               </span>
                             )}
                           </div>
@@ -475,44 +530,92 @@ export function UsersCMS() {
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-1.5">
+                      <div className="flex items-center gap-1.5 shrink-0">
                         {getRoleBadge(user.role)}
                       </div>
                     </div>
 
                     {/* Credentials Details Box */}
                     <div className="mt-4 p-3.5 bg-slate-50 rounded-xl border border-slate-100 space-y-2 text-xs">
+                      {/* User ID */}
                       <div className="flex items-center justify-between">
-                        <span className="text-slate-500 flex items-center gap-1.5">
-                          <Mail className="w-3.5 h-3.5 text-slate-400" />
-                          Login ID / Email:
+                        <span className="text-slate-500 flex items-center gap-1.5 font-medium">
+                          <Fingerprint className="w-3.5 h-3.5 text-[#0F4C5C]" />
+                          User ID (यूजर आईडी):
                         </span>
-                        <span className="font-semibold text-slate-800 select-all font-mono">{user.email}</span>
+                        <div className="flex items-center gap-1.5">
+                          <span className="font-mono font-bold text-slate-800 bg-white px-2 py-0.5 rounded border border-slate-200 text-xs select-all">
+                            {user.id}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => handleCopyText(user.id, `id_${user.id}`)}
+                            title="Copy User ID"
+                            className="p-1 text-slate-400 hover:text-slate-600 rounded transition-colors cursor-pointer"
+                          >
+                            {copiedField === `id_${user.id}` ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                          </button>
+                        </div>
                       </div>
 
+                      {/* Login Email */}
                       <div className="flex items-center justify-between">
-                        <span className="text-slate-500 flex items-center gap-1.5">
+                        <span className="text-slate-500 flex items-center gap-1.5 font-medium">
+                          <Mail className="w-3.5 h-3.5 text-slate-400" />
+                          Login Email / ID:
+                        </span>
+                        <div className="flex items-center gap-1.5">
+                          <span className="font-semibold text-slate-800 select-all font-mono text-xs truncate max-w-[190px]">
+                            {user.email}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => handleCopyText(user.email, `email_${user.id}`)}
+                            title="Copy Email"
+                            className="p-1 text-slate-400 hover:text-slate-600 rounded transition-colors cursor-pointer"
+                          >
+                            {copiedField === `email_${user.id}` ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Passcode */}
+                      <div className="flex items-center justify-between">
+                        <span className="text-slate-500 flex items-center gap-1.5 font-medium">
                           <KeyRound className="w-3.5 h-3.5 text-amber-500" />
                           Password / Passcode:
                         </span>
-                        <div className="flex items-center gap-2">
-                          <span className={`font-mono font-bold px-2 py-0.5 rounded border ${
+                        <div className="flex items-center gap-1.5">
+                          <span className={`font-mono font-bold px-2 py-0.5 rounded border tracking-wider text-xs ${
                             isRootSuperAdmin 
                               ? 'bg-purple-50 text-purple-900 border-purple-200' 
                               : 'text-slate-800 bg-white border-slate-200'
                           }`}>
-                            {isRootSuperAdmin ? 'Sejal@2022' : (user.passcode || 'gapp@2024')}
+                            {revealedPasscodes[user.id] 
+                              ? (isRootSuperAdmin ? 'Sejal@2022' : (user.passcode || 'gapp@2024'))
+                              : '••••••••'}
                           </span>
+                          <button
+                            type="button"
+                            onClick={() => setRevealedPasscodes((prev) => ({
+                              ...prev,
+                              [user.id]: !prev[user.id]
+                            }))}
+                            title={revealedPasscodes[user.id] ? "Hide Password" : "Show Password"}
+                            className="p-1 text-slate-400 hover:text-slate-600 rounded transition-colors cursor-pointer"
+                          >
+                            {revealedPasscodes[user.id] ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                          </button>
                           {isRootSuperAdmin ? (
-                            <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-purple-700 bg-purple-100/80 px-2 py-0.5 rounded">
+                            <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-purple-700 bg-purple-100/80 px-2 py-0.5 rounded ml-1">
                               <Lock className="w-3 h-3 text-purple-700" />
-                              Not Editable
+                              Root PIN
                             </span>
                           ) : (
                             <button
                               onClick={() => handleOpenResetPassword(user)}
                               title="Reset password"
-                              className="text-xs text-[#0F4C5C] hover:underline font-medium cursor-pointer"
+                              className="text-xs text-[#0F4C5C] hover:underline font-medium cursor-pointer ml-1"
                             >
                               Change
                             </button>
@@ -522,11 +625,11 @@ export function UsersCMS() {
 
                       {user.phone && (
                         <div className="flex items-center justify-between">
-                          <span className="text-slate-500 flex items-center gap-1.5">
+                          <span className="text-slate-500 flex items-center gap-1.5 font-medium">
                             <Smartphone className="w-3.5 h-3.5 text-slate-400" />
                             Phone:
                           </span>
-                          <span className="text-slate-700 font-medium">{user.phone}</span>
+                          <span className="text-slate-700 font-medium font-mono">{user.phone}</span>
                         </div>
                       )}
 
@@ -569,32 +672,30 @@ export function UsersCMS() {
                     </button>
 
                     <div className="flex items-center gap-1">
+                      <button
+                        onClick={() => handleOpenCreateModal(user)}
+                        className="p-1.5 text-slate-600 hover:text-[#0F4C5C] hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+                        title={isRootSuperAdmin ? "Edit Super Admin Contact / Info" : "Edit User Details"}
+                      >
+                        <Edit className="w-4 h-4" />
+                      </button>
+
                       {isRootSuperAdmin ? (
                         <span 
-                          className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold text-slate-500 bg-slate-100 rounded-lg"
-                          title="Super Admin is permanently protected and not editable"
+                          className="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] font-semibold text-purple-700 bg-purple-50 border border-purple-200 rounded-lg"
+                          title="Root Super Admin account cannot be deleted"
                         >
-                          <Lock className="w-3 h-3 text-slate-500" />
-                          Locked Account
+                          <Lock className="w-3 h-3 text-purple-600" />
+                          Protected
                         </span>
                       ) : (
-                        <>
-                          <button
-                            onClick={() => handleOpenCreateModal(user)}
-                            className="p-1.5 text-slate-600 hover:text-[#0F4C5C] hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
-                            title="Edit User Details"
-                          >
-                            <Edit className="w-4 h-4" />
-                          </button>
-
-                          <button
-                            onClick={() => handleDeleteUser(user)}
-                            className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
-                            title="Remove User"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        </>
+                        <button
+                          onClick={() => handleDeleteUser(user)}
+                          className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
+                          title="Delete User"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
                       )}
                     </div>
                   </div>
@@ -781,6 +882,51 @@ export function UsersCMS() {
                 </div>
               )}
 
+              {/* User ID Field */}
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                    <Fingerprint className="w-3.5 h-3.5 text-[#0F4C5C]" />
+                    User ID (यूजर आईडी / Username) *
+                  </label>
+                  {!editingUser && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (formData.name) {
+                          const clean = formData.name.toLowerCase().replace(/[^a-z0-9]/g, '_').slice(0, 20);
+                          setFormData({ ...formData, id: clean });
+                        } else {
+                          setFormData({ ...formData, id: `user_${Math.floor(1000 + Math.random() * 9000)}` });
+                        }
+                      }}
+                      className="text-[11px] text-[#0F4C5C] hover:underline font-semibold flex items-center gap-1"
+                    >
+                      <Sparkles className="w-3 h-3 text-[#E36414]" />
+                      Auto-Generate ID
+                    </button>
+                  )}
+                </div>
+                <input
+                  type="text"
+                  required
+                  disabled={Boolean(
+                    editingUser && (
+                      editingUser.email.toLowerCase().trim() === 'satpuda.sanskriti.shodh.sansthan@gmail.com' ||
+                      editingUser.id === 'master-admin' ||
+                      editingUser.isProtected
+                    )
+                  )}
+                  placeholder="e.g. ashish_barkhade or director_pramod"
+                  value={formData.id || ''}
+                  onChange={(e) => setFormData({ ...formData, id: e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, '') })}
+                  className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0F4C5C]/20 focus:border-[#0F4C5C] font-mono disabled:opacity-60 disabled:bg-slate-100"
+                />
+                <p className="mt-1 text-[11px] text-slate-500">
+                  Unique identifier used for fast login and system access. (Allowed: a-z, 0-9, _, -)
+                </p>
+              </div>
+
               {/* Full Name */}
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1">
@@ -791,7 +937,15 @@ export function UsersCMS() {
                   required
                   placeholder="e.g. Ashish Barkhade"
                   value={formData.name || ''}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  onChange={(e) => {
+                    const newName = e.target.value;
+                    const updates: Partial<SecondaryAdminProfile> = { name: newName };
+                    // If creating new user and no custom ID yet, suggest one
+                    if (!editingUser && !formData.id) {
+                      updates.id = newName.toLowerCase().replace(/[^a-z0-9]/g, '_').slice(0, 20);
+                    }
+                    setFormData({ ...formData, ...updates });
+                  }}
                   className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0F4C5C]/20 focus:border-[#0F4C5C]"
                 />
               </div>
@@ -802,13 +956,32 @@ export function UsersCMS() {
                   Login ID / Official Email (लॉगिन आईडी या ईमेल) *
                 </label>
                 <input
-                  type="email"
+                  type="text"
                   required
-                  placeholder="e.g. industriesgapp@gmail.com or ashish@gapppackaging.com"
+                  disabled={Boolean(
+                    editingUser && (
+                      editingUser.email.toLowerCase().trim() === 'satpuda.sanskriti.shodh.sansthan@gmail.com' ||
+                      editingUser.id === 'master-admin' ||
+                      editingUser.isProtected
+                    )
+                  )}
+                  placeholder="e.g. ashish@gapppackaging.com or industriesgapp@gmail.com"
                   value={formData.email || ''}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0F4C5C]/20 focus:border-[#0F4C5C]"
+                  className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0F4C5C]/20 focus:border-[#0F4C5C] disabled:opacity-60 disabled:bg-slate-100"
                 />
+                {Boolean(
+                  editingUser && (
+                    editingUser.email.toLowerCase().trim() === 'satpuda.sanskriti.shodh.sansthan@gmail.com' ||
+                    editingUser.id === 'master-admin' ||
+                    editingUser.isProtected
+                  )
+                ) && (
+                  <p className="mt-1 text-[11px] text-purple-700 font-semibold flex items-center gap-1">
+                    <Lock className="w-3 h-3 text-purple-600" />
+                    Root Super Administrator identity & email are permanently locked for security.
+                  </p>
+                )}
               </div>
 
               {/* Role Selection */}
@@ -818,9 +991,16 @@ export function UsersCMS() {
                     User Role (भूमिका)
                   </label>
                   <select
+                    disabled={Boolean(
+                      editingUser && (
+                        editingUser.email.toLowerCase().trim() === 'satpuda.sanskriti.shodh.sansthan@gmail.com' ||
+                        editingUser.id === 'master-admin' ||
+                        editingUser.isProtected
+                      )
+                    )}
                     value={formData.role || 'partner'}
                     onChange={(e) => setFormData({ ...formData, role: e.target.value as AdminRole })}
-                    className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0F4C5C]/20 focus:border-[#0F4C5C]"
+                    className="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0F4C5C]/20 focus:border-[#0F4C5C] disabled:opacity-60 disabled:bg-slate-100"
                   >
                     <option value="partner">Designated Partner</option>
                     <option value="director">Director / Board Member</option>
