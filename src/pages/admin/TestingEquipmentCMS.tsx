@@ -165,7 +165,7 @@ export const TestingEquipmentCMS: React.FC = () => {
 
         <button
           onClick={handleOpenAdd}
-          className="px-4 py-2 bg-brand-primary hover:bg-[#0c3c49] text-white text-xs font-bold rounded-xl shadow transition-colors flex items-center gap-1.5 cursor-pointer shrink-0"
+          className="px-4 py-2 bg-[#0F4C5C] hover:bg-[#0c3c49] text-white text-xs font-bold rounded-xl shadow transition-colors flex items-center gap-1.5 cursor-pointer shrink-0"
         >
           <Plus className="w-4 h-4" />
           <span>Add Testing Apparatus</span>
@@ -182,7 +182,7 @@ export const TestingEquipmentCMS: React.FC = () => {
           <div className="flex items-center justify-end gap-1.5">
             <button
               onClick={() => handleOpenEdit(row)}
-              className="p-1.5 text-slate-600 hover:text-brand-primary hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+              className="p-1.5 text-slate-600 hover:text-[#0F4C5C] hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
               title="Edit Testing Equipment"
             >
               <Edit3 className="w-4 h-4" />
@@ -218,7 +218,7 @@ export const TestingEquipmentCMS: React.FC = () => {
               type="button"
               onClick={handleSave}
               disabled={isSaving}
-              className="px-4 py-2 bg-brand-primary hover:bg-[#0c3c49] text-white text-xs font-bold rounded-lg shadow transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+              className="px-4 py-2 bg-[#0F4C5C] hover:bg-[#0c3c49] text-white text-xs font-bold rounded-lg shadow transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
             >
               <Save className="w-3.5 h-3.5" />
               <span>{isSaving ? 'Saving...' : 'Save Apparatus'}</span>

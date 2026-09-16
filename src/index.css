@@ -1,30 +1,9 @@
 @import "tailwindcss";
 
-@theme {
-  --color-brand-primary: #008CE8;
-  --color-brand-primary-hover: #0073BF;
-  --color-brand-secondary: #262D38;
-  --color-brand-secondary-hover: #191E25;
-  --color-brand-accent: #0E525B;
-  --color-brand-accent-hover: #09373D;
-  --color-brand-text: #334155;
-  --color-brand-background: #F8F9FA;
-  
-  --font-brand: 'Montserrat', system-ui, sans-serif;
-  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
-}
-
 @layer base {
   :root {
-    --brand-primary: #008CE8;
-    --brand-secondary: #262D38;
-    --brand-accent: #0E525B;
-    --brand-text: #334155;
-    --brand-background: #F8F9FA;
-    
-    /* Legacy ones kept just in case */
-    --color-primary: #0E525B;
-    --color-primary-dark: #09373D;
+    --color-primary: #0F4C5C;
+    --color-primary-dark: #0A3642;
     --color-primary-light: #18687D;
     --color-secondary: #334155;
     --color-accent: #D97706;
@@ -36,11 +15,7 @@
 
   html {
     scroll-behavior: smooth;
-    font-family: var(--font-body);
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-brand);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   }
 }
 
@@ -50,7 +25,7 @@
 }
 
 .font-heading {
-  font-family: var(--font-brand);
+  font-family: 'Plus Jakarta Sans', sans-serif;
   letter-spacing: -0.02em;
 }
 

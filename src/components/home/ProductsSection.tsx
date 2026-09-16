@@ -41,7 +41,7 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onSelectProduc
           {displayProducts.map((product) => (
             <div
               key={product.id}
-              className="bg-white rounded-xl border border-slate-200 overflow-hidden flex flex-col justify-between hover:border-brand-primary/60 hover:shadow-md transition-all duration-200 group"
+              className="bg-white rounded-xl border border-slate-200 overflow-hidden flex flex-col justify-between hover:border-[#0F4C5C]/60 hover:shadow-md transition-all duration-200 group"
             >
               {/* Product Image if available */}
               {product.imageUrl && (
@@ -65,14 +65,14 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onSelectProduc
                 {/* Top Badge */}
                 {!product.imageUrl && (
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-mono uppercase tracking-wider font-bold text-brand-primary bg-brand-primary/10 px-2.5 py-1 rounded">
+                    <span className="text-[11px] font-mono uppercase tracking-wider font-bold text-[#0F4C5C] bg-[#0F4C5C]/10 px-2.5 py-1 rounded">
                       {product.name}
                     </span>
                   </div>
                 )}
 
                 {/* Title */}
-                <h3 className="text-lg font-bold text-slate-900 group-hover:text-brand-primary transition-colors leading-snug">
+                <h3 className="text-lg font-bold text-slate-900 group-hover:text-[#0F4C5C] transition-colors leading-snug">
                   {product.name}
                 </h3>
 
@@ -89,7 +89,7 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onSelectProduc
                     <ul className="space-y-1.5 text-xs text-slate-600">
                       {product.features.map((feat, i) => (
                         <li key={i} className="flex items-start gap-1.5">
-                          <Check className="w-3.5 h-3.5 text-brand-primary shrink-0 mt-0.5" />
+                          <Check className="w-3.5 h-3.5 text-[#0F4C5C] shrink-0 mt-0.5" />
                           <span className="leading-snug">{feat}</span>
                         </li>
                       ))}
@@ -119,9 +119,9 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onSelectProduc
               <div className="p-6 pt-0 mt-2 border-t border-slate-100">
                 <button
                   onClick={() => onSelectProductForQuote(product.name)}
-                  className="w-full inline-flex items-center justify-center gap-2 bg-brand-primary hover:bg-brand-primary-hover text-white py-2.5 px-4 rounded-md font-semibold text-xs transition-colors cursor-pointer shadow-xs mt-4"
+                  className="w-full inline-flex items-center justify-center gap-2 bg-[#0F4C5C] hover:bg-[#0A3642] text-white py-2.5 px-4 rounded-md font-semibold text-xs transition-colors cursor-pointer shadow-xs mt-4"
                 >
-                  <Send className="w-3.5 h-3.5 text-brand-accent" />
+                  <Send className="w-3.5 h-3.5 text-[#D97706]" />
                   <span>Inquire for {product.name}</span>
                 </button>
               </div>
@@ -142,7 +142,7 @@ export const ProductsSection: React.FC<ProductsSectionProps> = ({ onSelectProduc
           </div>
           <a
             href="#contact"
-            className="shrink-0 bg-brand-primary hover:bg-brand-primary-hover text-white px-6 py-3 rounded-md font-bold text-xs uppercase tracking-wider transition-colors shadow-xs"
+            className="shrink-0 bg-[#0F4C5C] hover:bg-[#0A3642] text-white px-6 py-3 rounded-md font-bold text-xs uppercase tracking-wider transition-colors shadow-xs"
           >
             Submit Custom Specifications
           </a>

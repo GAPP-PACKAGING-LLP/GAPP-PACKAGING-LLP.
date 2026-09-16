@@ -39,7 +39,7 @@ export const FaqSection: React.FC = () => {
                   <span className="font-bold text-sm sm:text-base text-slate-900 leading-snug">
                     {faq.question}
                   </span>
-                  <div className={`p-1.5 rounded-md shrink-0 transition-transform duration-200 ${isOpen ? 'bg-brand-primary text-white' : 'bg-slate-100 text-slate-600'}`}>
+                  <div className={`p-1.5 rounded-md shrink-0 transition-transform duration-200 ${isOpen ? 'bg-[#0F4C5C] text-white' : 'bg-slate-100 text-slate-600'}`}>
                     {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                   </div>
                 </button>

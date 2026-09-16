@@ -161,7 +161,7 @@ export const BoxCalculator: React.FC<BoxCalculatorProps> = ({ onOpenQuoteWithSpe
                     setUnit('mm');
                   }}
                   className={`px-3 py-1 rounded font-semibold transition-colors cursor-pointer ${
-                    unit === 'mm' ? 'bg-brand-primary text-white' : 'text-slate-600 hover:text-slate-900'
+                    unit === 'mm' ? 'bg-[#0F4C5C] text-white' : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
                   Millimeters (mm)
@@ -177,7 +177,7 @@ export const BoxCalculator: React.FC<BoxCalculatorProps> = ({ onOpenQuoteWithSpe
                     setUnit('inches');
                   }}
                   className={`px-3 py-1 rounded font-semibold transition-colors cursor-pointer ${
-                    unit === 'inches' ? 'bg-brand-primary text-white' : 'text-slate-600 hover:text-slate-900'
+                    unit === 'inches' ? 'bg-[#0F4C5C] text-white' : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
                   Inches
@@ -197,7 +197,7 @@ export const BoxCalculator: React.FC<BoxCalculatorProps> = ({ onOpenQuoteWithSpe
                 <div className="bg-white p-3.5 rounded-lg border border-slate-200 space-y-1">
                   <div className="flex justify-between text-xs font-bold text-slate-700">
                     <span>Length (L)</span>
-                    <span className="font-mono text-brand-primary">{length} {unit}</span>
+                    <span className="font-mono text-[#0F4C5C]">{length} {unit}</span>
                   </div>
                   <input
                     type="number"
@@ -205,7 +205,7 @@ export const BoxCalculator: React.FC<BoxCalculatorProps> = ({ onOpenQuoteWithSpe
                     max={unit === 'mm' ? 2000 : 80}
                     value={length || ''}
                     onChange={(e) => setLength(Math.max(0, Number(e.target.value)))}
-                    className="w-full text-sm font-mono p-1 border border-slate-200 rounded outline-none focus:ring-1 focus:ring-brand-primary"
+                    className="w-full text-sm font-mono p-1 border border-slate-200 rounded outline-none focus:ring-1 focus:ring-[#0F4C5C]"
                   />
                 </div>
 
@@ -213,7 +213,7 @@ export const BoxCalculator: React.FC<BoxCalculatorProps> = ({ onOpenQuoteWithSpe
                 <div className="bg-white p-3.5 rounded-lg border border-slate-200 space-y-1">
                   <div className="flex justify-between text-xs font-bold text-slate-700">
                     <span>Width (W)</span>
-                    <span className="font-mono text-brand-primary">{width} {unit}</span>
+                    <span className="font-mono text-[#0F4C5C]">{width} {unit}</span>
                   </div>
                   <input
                     type="number"
@@ -221,7 +221,7 @@ export const BoxCalculator: React.FC<BoxCalculatorProps> = ({ onOpenQuoteWithSpe
                     max={unit === 'mm' ? 1500 : 60}
                     value={width || ''}
                     onChange={(e) => setWidth(Math.max(0, Number(e.target.value)))}
-                    className="w-full text-sm font-mono p-1 border border-slate-200 rounded outline-none focus:ring-1 focus:ring-brand-primary"
+                    className="w-full text-sm font-mono p-1 border border-slate-200 rounded outline-none focus:ring-1 focus:ring-[#0F4C5C]"
                   />
                 </div>
 
@@ -229,7 +229,7 @@ export const BoxCalculator: React.FC<BoxCalculatorProps> = ({ onOpenQuoteWithSpe
                 <div className="bg-white p-3.5 rounded-lg border border-slate-200 space-y-1">
                   <div className="flex justify-between text-xs font-bold text-slate-700">
                     <span>Height (H)</span>
-                    <span className="font-mono text-brand-primary">{height} {unit}</span>
+                    <span className="font-mono text-[#0F4C5C]">{height} {unit}</span>
                   </div>
                   <input
                     type="number"
@@ -237,7 +237,7 @@ export const BoxCalculator: React.FC<BoxCalculatorProps> = ({ onOpenQuoteWithSpe
                     max={unit === 'mm' ? 1500 : 60}
                     value={height || ''}
                     onChange={(e) => setHeight(Math.max(0, Number(e.target.value)))}
-                    className="w-full text-sm font-mono p-1 border border-slate-200 rounded outline-none focus:ring-1 focus:ring-brand-primary"
+                    className="w-full text-sm font-mono p-1 border border-slate-200 rounded outline-none focus:ring-1 focus:ring-[#0F4C5C]"
                   />
                 </div>
 
@@ -255,7 +255,7 @@ export const BoxCalculator: React.FC<BoxCalculatorProps> = ({ onOpenQuoteWithSpe
                   onClick={() => setPlyCount('3-ply')}
                   className={`p-3 rounded-lg border text-left transition-all cursor-pointer ${
                     plyCount === '3-ply'
-                      ? 'bg-white border-brand-primary ring-2 ring-brand-primary/20 shadow-xs'
+                      ? 'bg-white border-[#0F4C5C] ring-2 ring-[#0F4C5C]/20 shadow-xs'
                       : 'bg-white/60 border-slate-200 hover:bg-white'
                   }`}
                 >
@@ -268,12 +268,12 @@ export const BoxCalculator: React.FC<BoxCalculatorProps> = ({ onOpenQuoteWithSpe
                   onClick={() => setPlyCount('5-ply')}
                   className={`p-3 rounded-lg border text-left transition-all cursor-pointer ${
                     plyCount === '5-ply'
-                      ? 'bg-white border-brand-primary ring-2 ring-brand-primary/20 shadow-xs'
+                      ? 'bg-white border-[#0F4C5C] ring-2 ring-[#0F4C5C]/20 shadow-xs'
                       : 'bg-white/60 border-slate-200 hover:bg-white'
                   }`}
                 >
                   <div className="font-bold text-slate-900">5-Ply (Double Wall)</div>
-                  <div className="text-[11px] text-brand-primary font-semibold mt-0.5">Industrial Benchmark</div>
+                  <div className="text-[11px] text-[#0F4C5C] font-semibold mt-0.5">Industrial Benchmark</div>
                 </button>
 
                 <button
@@ -281,7 +281,7 @@ export const BoxCalculator: React.FC<BoxCalculatorProps> = ({ onOpenQuoteWithSpe
                   onClick={() => setPlyCount('7-ply')}
                   className={`p-3 rounded-lg border text-left transition-all cursor-pointer ${
                     plyCount === '7-ply'
-                      ? 'bg-white border-brand-primary ring-2 ring-brand-primary/20 shadow-xs'
+                      ? 'bg-white border-[#0F4C5C] ring-2 ring-[#0F4C5C]/20 shadow-xs'
                       : 'bg-white/60 border-slate-200 hover:bg-white'
                   }`}
                 >
@@ -301,7 +301,7 @@ export const BoxCalculator: React.FC<BoxCalculatorProps> = ({ onOpenQuoteWithSpe
                   type="button"
                   onClick={() => setKraftGrade('standard')}
                   className={`p-2.5 rounded-lg border text-left transition-colors cursor-pointer ${
-                    kraftGrade === 'standard' ? 'bg-white border-brand-primary ring-1 ring-brand-primary' : 'bg-white/60 border-slate-200'
+                    kraftGrade === 'standard' ? 'bg-white border-[#0F4C5C] ring-1 ring-[#0F4C5C]' : 'bg-white/60 border-slate-200'
                   }`}
                 >
                   <div className="font-bold text-slate-800">Commercial Kraft</div>
@@ -312,18 +312,18 @@ export const BoxCalculator: React.FC<BoxCalculatorProps> = ({ onOpenQuoteWithSpe
                   type="button"
                   onClick={() => setKraftGrade('high-bf')}
                   className={`p-2.5 rounded-lg border text-left transition-colors cursor-pointer ${
-                    kraftGrade === 'high-bf' ? 'bg-white border-brand-primary ring-1 ring-brand-primary' : 'bg-white/60 border-slate-200'
+                    kraftGrade === 'high-bf' ? 'bg-white border-[#0F4C5C] ring-1 ring-[#0F4C5C]' : 'bg-white/60 border-slate-200'
                   }`}
                 >
                   <div className="font-bold text-slate-800">Virgin High-BF Kraft</div>
-                  <div className="text-[11px] text-brand-primary font-semibold">22 - 28 BF (High Crush)</div>
+                  <div className="text-[11px] text-[#0F4C5C] font-semibold">22 - 28 BF (High Crush)</div>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setKraftGrade('heavy-export')}
                   className={`p-2.5 rounded-lg border text-left transition-colors cursor-pointer ${
-                    kraftGrade === 'heavy-export' ? 'bg-white border-brand-primary ring-1 ring-brand-primary' : 'bg-white/60 border-slate-200'
+                    kraftGrade === 'heavy-export' ? 'bg-white border-[#0F4C5C] ring-1 ring-[#0F4C5C]' : 'bg-white/60 border-slate-200'
                   }`}
                 >
                   <div className="font-bold text-slate-800">Export Grade Kraft</div>
@@ -341,7 +341,7 @@ export const BoxCalculator: React.FC<BoxCalculatorProps> = ({ onOpenQuoteWithSpe
                 <select
                   value={printOption}
                   onChange={(e: any) => setPrintOption(e.target.value)}
-                  className="w-full px-3 py-2 bg-white border border-slate-200 rounded-md text-xs font-semibold text-slate-700 outline-none focus:ring-1 focus:ring-brand-primary"
+                  className="w-full px-3 py-2 bg-white border border-slate-200 rounded-md text-xs font-semibold text-slate-700 outline-none focus:ring-1 focus:ring-[#0F4C5C]"
                 >
                   <option value="plain">Plain Unprinted (Kraft Brown)</option>
                   <option value="1-color">1-Color Flexo (Logo & Handling Signs)</option>
@@ -357,7 +357,7 @@ export const BoxCalculator: React.FC<BoxCalculatorProps> = ({ onOpenQuoteWithSpe
                 <select
                   value={estimatedQuantity}
                   onChange={(e) => setEstimatedQuantity(Number(e.target.value))}
-                  className="w-full px-3 py-2 bg-white border border-slate-200 rounded-md text-xs font-semibold text-slate-700 outline-none focus:ring-1 focus:ring-brand-primary"
+                  className="w-full px-3 py-2 bg-white border border-slate-200 rounded-md text-xs font-semibold text-slate-700 outline-none focus:ring-1 focus:ring-[#0F4C5C]"
                 >
                   <option value={1000}>1,000 Boxes / Month</option>
                   <option value={2500}>2,500 Boxes / Month</option>
@@ -371,16 +371,16 @@ export const BoxCalculator: React.FC<BoxCalculatorProps> = ({ onOpenQuoteWithSpe
           </div>
 
           {/* Right Live Spec Sheet & Engineering Outputs (5 Cols) */}
-          <div className="lg:col-span-5 bg-brand-primary text-white rounded-xl p-6 flex flex-col justify-between space-y-6 shadow-md border border-teal-700">
+          <div className="lg:col-span-5 bg-[#0F4C5C] text-white rounded-xl p-6 flex flex-col justify-between space-y-6 shadow-md border border-teal-700">
             
             <div className="space-y-4">
               
               <div className="flex items-center justify-between border-b border-teal-700 pb-3">
                 <div className="flex items-center gap-2">
-                  <Package className="w-5 h-5 text-brand-accent" />
+                  <Package className="w-5 h-5 text-[#D97706]" />
                   <span className="font-bold text-sm">Calculated Spec Matrix</span>
                 </div>
-                <span className="text-[11px] font-mono bg-brand-accent text-white px-2 py-0.5 rounded font-bold uppercase">
+                <span className="text-[11px] font-mono bg-[#D97706] text-white px-2 py-0.5 rounded font-bold uppercase">
                   {plyCount}
                 </span>
               </div>
@@ -388,32 +388,32 @@ export const BoxCalculator: React.FC<BoxCalculatorProps> = ({ onOpenQuoteWithSpe
               {/* Spec Metric Grid */}
               <div className="space-y-2.5 font-mono text-xs">
                 
-                <div className="bg-brand-primary-hover p-3 rounded-lg flex justify-between items-center border border-teal-800">
+                <div className="bg-[#0A3642] p-3 rounded-lg flex justify-between items-center border border-teal-800">
                   <span className="text-teal-200 font-sans">Sheet Blank Size:</span>
                   <span className="font-bold text-white text-sm">{calculations.blankLength_mm} × {calculations.blankWidth_mm} mm</span>
                 </div>
 
-                <div className="bg-brand-primary-hover p-3 rounded-lg flex justify-between items-center border border-teal-800">
+                <div className="bg-[#0A3642] p-3 rounded-lg flex justify-between items-center border border-teal-800">
                   <span className="text-teal-200 font-sans">Single Box Board Area:</span>
                   <span className="font-bold text-white text-sm">{calculations.sheetArea_sqm} m² ({calculations.sheetArea_sqft} sq.ft)</span>
                 </div>
 
-                <div className="bg-brand-primary-hover p-3 rounded-lg flex justify-between items-center border border-teal-800">
+                <div className="bg-[#0A3642] p-3 rounded-lg flex justify-between items-center border border-teal-800">
                   <span className="text-teal-200 font-sans">Est. Box Tare Weight:</span>
                   <span className="font-bold text-white text-sm">~{calculations.estimatedWeightGrams} grams</span>
                 </div>
 
-                <div className="bg-brand-primary-hover p-3 rounded-lg flex justify-between items-center border border-teal-800">
+                <div className="bg-[#0A3642] p-3 rounded-lg flex justify-between items-center border border-teal-800">
                   <span className="text-teal-200 font-sans">Box Compression (BCT):</span>
-                  <span className="font-bold text-brand-accent text-sm">~{calculations.estimatedBct_kgf} kgf</span>
+                  <span className="font-bold text-[#D97706] text-sm">~{calculations.estimatedBct_kgf} kgf</span>
                 </div>
 
-                <div className="bg-brand-primary-hover p-3 rounded-lg flex justify-between items-center border border-teal-800">
+                <div className="bg-[#0A3642] p-3 rounded-lg flex justify-between items-center border border-teal-800">
                   <span className="text-teal-200 font-sans">Max Recommended Payload:</span>
                   <span className="font-bold text-white text-sm">Up to {calculations.maxRecommendedPayload_kg} kg</span>
                 </div>
 
-                <div className="bg-brand-primary-hover p-3 rounded-lg flex justify-between items-center border border-teal-800">
+                <div className="bg-[#0A3642] p-3 rounded-lg flex justify-between items-center border border-teal-800">
                   <span className="text-teal-200 font-sans">Volumetric Shipping Wt:</span>
                   <span className="font-bold text-white text-sm">{calculations.volWeight_kg} kg</span>
                 </div>
@@ -428,7 +428,7 @@ export const BoxCalculator: React.FC<BoxCalculatorProps> = ({ onOpenQuoteWithSpe
                 type="button"
                 onClick={handleTransferToQuote}
                 id="transfer-spec-to-rfq-btn"
-                className="w-full bg-brand-accent hover:bg-brand-accent-hover text-white py-3 px-4 rounded-md font-bold text-xs uppercase tracking-wider transition-colors shadow flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full bg-[#D97706] hover:bg-[#B45309] text-white py-3 px-4 rounded-md font-bold text-xs uppercase tracking-wider transition-colors shadow flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Send className="w-4 h-4" />
                 <span>Request Quotation</span>

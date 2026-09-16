@@ -87,7 +87,7 @@ function AppLayout() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F8F9FA] text-[#334155] font-sans antialiased selection:bg-brand-primary selection:text-white">
+    <div className="min-h-screen flex flex-col bg-[#F8F9FA] text-[#334155] font-sans antialiased selection:bg-[#0F4C5C] selection:text-white">
       {/* Comprehensive SEO Head Manager */}
       <SEOHead />
 

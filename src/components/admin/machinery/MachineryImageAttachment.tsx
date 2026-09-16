@@ -233,7 +233,7 @@ export const MachineryImageAttachment: React.FC<MachineryImageAttachmentProps> =
       <div className="flex items-center justify-between">
         <div>
           <label className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-            <ImageIcon className="w-4 h-4 text-brand-primary" />
+            <ImageIcon className="w-4 h-4 text-[#0F4C5C]" />
             <span>Machinery Image & Photo Attachment</span>
           </label>
           <p className="text-[11px] text-slate-500 mt-0.5">
@@ -264,7 +264,7 @@ export const MachineryImageAttachment: React.FC<MachineryImageAttachmentProps> =
           {/* Overlay controls */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30 p-3 flex flex-col justify-between opacity-90 group-hover:opacity-100 transition-opacity">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-mono font-bold bg-brand-primary text-white px-2 py-0.5 rounded shadow">
+              <span className="text-[10px] font-mono font-bold bg-[#0F4C5C] text-white px-2 py-0.5 rounded shadow">
                 Primary Machine Photo
               </span>
               
@@ -306,7 +306,7 @@ export const MachineryImageAttachment: React.FC<MachineryImageAttachmentProps> =
             onClick={() => setActiveTab('url')}
             className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-colors cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'url'
-                ? 'bg-brand-primary text-white'
+                ? 'bg-[#0F4C5C] text-white'
                 : 'text-slate-600 hover:bg-slate-200/60'
             }`}
           >
@@ -319,7 +319,7 @@ export const MachineryImageAttachment: React.FC<MachineryImageAttachmentProps> =
             onClick={() => setActiveTab('presets')}
             className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-colors cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'presets'
-                ? 'bg-brand-primary text-white'
+                ? 'bg-[#0F4C5C] text-white'
                 : 'text-slate-600 hover:bg-slate-200/60'
             }`}
           >
@@ -332,7 +332,7 @@ export const MachineryImageAttachment: React.FC<MachineryImageAttachmentProps> =
             onClick={() => setActiveTab('upload')}
             className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-colors cursor-pointer flex items-center gap-1.5 ${
               activeTab === 'upload'
-                ? 'bg-brand-primary text-white'
+                ? 'bg-[#0F4C5C] text-white'
                 : 'text-slate-600 hover:bg-slate-200/60'
             }`}
           >
@@ -350,13 +350,13 @@ export const MachineryImageAttachment: React.FC<MachineryImageAttachmentProps> =
                 value={customUrlInput}
                 onChange={(e) => setCustomUrlInput(e.target.value)}
                 placeholder="https://ik.imagekit.io/your_id/corrugator-machine.jpg"
-                className="flex-1 text-xs font-mono p-2.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-primary outline-none"
+                className="flex-1 text-xs font-mono p-2.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#0F4C5C] outline-none"
               />
               <button
                 type="button"
                 onClick={handleApplyUrl}
                 disabled={!customUrlInput.trim()}
-                className="px-4 py-2 bg-brand-primary hover:bg-[#0c3c49] text-white text-xs font-bold rounded-lg transition-colors cursor-pointer disabled:opacity-50 flex items-center gap-1.5"
+                className="px-4 py-2 bg-[#0F4C5C] hover:bg-[#0c3c49] text-white text-xs font-bold rounded-lg transition-colors cursor-pointer disabled:opacity-50 flex items-center gap-1.5"
               >
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 <span>Apply Photo</span>
@@ -388,7 +388,7 @@ export const MachineryImageAttachment: React.FC<MachineryImageAttachmentProps> =
                     onClick={() => handleSelectPreset(preset.url)}
                     className={`relative rounded-lg overflow-hidden border text-left p-1.5 transition-all cursor-pointer group flex flex-col justify-between ${
                       isSelected
-                        ? 'border-brand-primary ring-2 ring-brand-primary bg-teal-50'
+                        ? 'border-[#0F4C5C] ring-2 ring-[#0F4C5C] bg-teal-50'
                         : 'border-slate-200 hover:border-slate-400 bg-white'
                     }`}
                   >
@@ -399,7 +399,7 @@ export const MachineryImageAttachment: React.FC<MachineryImageAttachmentProps> =
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                       />
                       {isSelected && (
-                        <div className="absolute top-1 right-1 bg-brand-primary text-white rounded-full p-0.5">
+                        <div className="absolute top-1 right-1 bg-[#0F4C5C] text-white rounded-full p-0.5">
                           <CheckCircle2 className="w-3 h-3" />
                         </div>
                       )}
@@ -407,7 +407,7 @@ export const MachineryImageAttachment: React.FC<MachineryImageAttachmentProps> =
 
                     <div className="pt-1.5">
                       <p className="text-[11px] font-bold text-slate-800 truncate">{preset.name}</p>
-                      <span className="text-[9px] font-mono text-brand-primary bg-teal-50 px-1 rounded">
+                      <span className="text-[9px] font-mono text-[#0F4C5C] bg-teal-50 px-1 rounded">
                         {preset.category}
                       </span>
                     </div>
@@ -446,21 +446,21 @@ export const MachineryImageAttachment: React.FC<MachineryImageAttachmentProps> =
               onClick={() => fileInputRef.current?.click()}
               className={`border-2 border-dashed rounded-xl p-5 text-center cursor-pointer transition-all ${
                 isDragging
-                  ? 'border-brand-primary bg-brand-primary/10'
-                  : 'border-slate-300 hover:border-brand-primary bg-white'
+                  ? 'border-[#0F4C5C] bg-[#0F4C5C]/10'
+                  : 'border-slate-300 hover:border-[#0F4C5C] bg-white'
               }`}
             >
               {isUploading ? (
                 <div className="space-y-2 py-2">
-                  <Loader2 className="w-7 h-7 text-brand-primary animate-spin mx-auto" />
+                  <Loader2 className="w-7 h-7 text-[#0F4C5C] animate-spin mx-auto" />
                   <p className="text-xs font-bold text-slate-800">Uploading machine photo...</p>
                   <div className="w-36 mx-auto bg-slate-200 rounded-full h-1.5 overflow-hidden">
-                    <div className="bg-brand-primary h-full transition-all" style={{ width: `${uploadProgress}%` }} />
+                    <div className="bg-[#0F4C5C] h-full transition-all" style={{ width: `${uploadProgress}%` }} />
                   </div>
                 </div>
               ) : (
                 <div className="space-y-1.5">
-                  <div className="w-10 h-10 rounded-full bg-teal-50 text-brand-primary flex items-center justify-center mx-auto">
+                  <div className="w-10 h-10 rounded-full bg-teal-50 text-[#0F4C5C] flex items-center justify-center mx-auto">
                     <UploadCloud className="w-5 h-5" />
                   </div>
                   <p className="text-xs font-bold text-slate-800">
@@ -487,7 +487,7 @@ export const MachineryImageAttachment: React.FC<MachineryImageAttachmentProps> =
             value={imageCaption}
             onChange={(e) => onImageCaptionChange(e.target.value)}
             placeholder="e.g. Mandideep Plant - Bay 1 Conversion Line"
-            className="w-full text-xs p-2.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-primary outline-none"
+            className="w-full text-xs p-2.5 bg-white border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#0F4C5C] outline-none"
           />
         </div>
       )}
@@ -497,7 +497,7 @@ export const MachineryImageAttachment: React.FC<MachineryImageAttachmentProps> =
         <div className="pt-3 border-t border-slate-200 space-y-2">
           <div className="flex items-center justify-between">
             <label className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-              <Layers className="w-3.5 h-3.5 text-brand-primary" />
+              <Layers className="w-3.5 h-3.5 text-[#0F4C5C]" />
               <span>Supplementary Gallery Photos ({galleryImages.length})</span>
             </label>
 
@@ -505,7 +505,7 @@ export const MachineryImageAttachment: React.FC<MachineryImageAttachmentProps> =
               <button
                 type="button"
                 onClick={() => setShowAddGalleryUrl(!showAddGalleryUrl)}
-                className="text-[11px] font-bold text-teal-800 hover:text-brand-primary flex items-center gap-1 cursor-pointer"
+                className="text-[11px] font-bold text-teal-800 hover:text-[#0F4C5C] flex items-center gap-1 cursor-pointer"
               >
                 <LinkIcon className="w-3 h-3" />
                 <span>Paste URL</span>
@@ -526,7 +526,7 @@ export const MachineryImageAttachment: React.FC<MachineryImageAttachmentProps> =
               <button
                 type="button"
                 onClick={() => galleryInputRef.current?.click()}
-                className="text-[11px] font-bold text-brand-primary hover:underline flex items-center gap-1 cursor-pointer"
+                className="text-[11px] font-bold text-[#0F4C5C] hover:underline flex items-center gap-1 cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Upload Angle</span>
@@ -547,7 +547,7 @@ export const MachineryImageAttachment: React.FC<MachineryImageAttachmentProps> =
                 type="button"
                 onClick={handleApplyGalleryUrl}
                 disabled={!galleryUrlInput.trim()}
-                className="px-3 py-1.5 bg-brand-primary text-white text-xs font-bold rounded cursor-pointer disabled:opacity-50"
+                className="px-3 py-1.5 bg-[#0F4C5C] text-white text-xs font-bold rounded cursor-pointer disabled:opacity-50"
               >
                 Add
               </button>
@@ -571,7 +571,7 @@ export const MachineryImageAttachment: React.FC<MachineryImageAttachmentProps> =
                       type="button"
                       onClick={() => handleSetGalleryAsPrimary(imgUrl, index)}
                       title="Set as Primary Image"
-                      className="p-1 bg-brand-primary text-white rounded hover:bg-brand-primary-hover"
+                      className="p-1 bg-[#0F4C5C] text-white rounded hover:bg-[#0A3642]"
                     >
                       <Star className="w-3 h-3" />
                     </button>

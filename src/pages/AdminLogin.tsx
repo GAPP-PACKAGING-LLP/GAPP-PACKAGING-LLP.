@@ -57,12 +57,12 @@ export const AdminLogin: React.FC = () => {
   const displayError = localError || error;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 font-sans selection:bg-brand-primary selection:text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-200 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 font-sans selection:bg-[#0F4C5C] selection:text-white">
       
       <div className="sm:mx-auto sm:w-full sm:max-w-md mb-6">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-brand-primary transition-colors"
+          className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-[#0F4C5C] transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Website</span>
@@ -113,7 +113,7 @@ export const AdminLogin: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
-                  className="w-full text-sm pl-11 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-primary focus:bg-white outline-none transition-all placeholder:text-slate-400"
+                  className="w-full text-sm pl-11 pr-4 py-3 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#0F4C5C] focus:bg-white outline-none transition-all placeholder:text-slate-400"
                   autoComplete="username"
                 />
               </div>
@@ -132,7 +132,7 @@ export const AdminLogin: React.FC = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
-                  className="w-full text-sm pl-11 pr-11 py-3 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-primary focus:bg-white outline-none transition-all placeholder:text-slate-400"
+                  className="w-full text-sm pl-11 pr-11 py-3 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#0F4C5C] focus:bg-white outline-none transition-all placeholder:text-slate-400"
                   autoComplete="current-password"
                 />
                 <button
@@ -149,7 +149,7 @@ export const AdminLogin: React.FC = () => {
             <button
               type="submit"
               disabled={isSigningIn}
-              className="w-full flex items-center justify-center gap-2 bg-brand-primary hover:bg-brand-primary-hover active:bg-brand-secondary text-white py-3.5 px-4 rounded-lg font-bold text-sm shadow-md transition-all cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-center gap-2 bg-[#0F4C5C] hover:bg-[#0A3642] active:bg-[#07242c] text-white py-3.5 px-4 rounded-lg font-bold text-sm shadow-md transition-all cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
             >
               {isSigningIn ? (
                 <>

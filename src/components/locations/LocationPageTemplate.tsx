@@ -39,7 +39,7 @@ export const LocationPageTemplate: React.FC<LocationPageProps> = ({
         <nav className="flex text-xs text-slate-500 font-medium" aria-label="Breadcrumb">
           <ol className="inline-flex items-center space-x-1 md:space-x-2">
             <li className="inline-flex items-center">
-              <Link to="/" className="hover:text-brand-primary">Home</Link>
+              <Link to="/" className="hover:text-[#0F4C5C]">Home</Link>
             </li>
             <li>
               <div className="flex items-center">
@@ -50,7 +50,7 @@ export const LocationPageTemplate: React.FC<LocationPageProps> = ({
             <li>
               <div className="flex items-center">
                 <ChevronRight className="w-3 h-3 mx-1" />
-                <span className="text-brand-primary font-semibold">{locationName}</span>
+                <span className="text-[#0F4C5C] font-semibold">{locationName}</span>
               </div>
             </li>
           </ol>
@@ -69,16 +69,16 @@ export const LocationPageTemplate: React.FC<LocationPageProps> = ({
             <div className="pt-4 flex flex-wrap gap-4">
               <button
                 onClick={() => onOpenQuoteModal()}
-                className="inline-flex items-center gap-2 bg-brand-primary hover:bg-brand-primary-hover text-white px-6 py-3 rounded-md font-bold text-sm shadow-md transition-colors cursor-pointer"
+                className="inline-flex items-center gap-2 bg-[#0F4C5C] hover:bg-[#0A3642] text-white px-6 py-3 rounded-md font-bold text-sm shadow-md transition-colors cursor-pointer"
               >
-                <Send className="w-4 h-4 text-brand-accent" />
+                <Send className="w-4 h-4 text-[#D97706]" />
                 <span>Request Quotation</span>
               </button>
               <Link
                 to="/calculator"
-                className="inline-flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-brand-primary border border-slate-300 px-6 py-3 rounded-md font-bold text-sm shadow-xs transition-colors cursor-pointer"
+                className="inline-flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-[#0F4C5C] border border-slate-300 px-6 py-3 rounded-md font-bold text-sm shadow-xs transition-colors cursor-pointer"
               >
-                <Calculator className="w-4 h-4 text-brand-primary" />
+                <Calculator className="w-4 h-4 text-[#0F4C5C]" />
                 <span>Packaging Calculator</span>
               </Link>
             </div>
@@ -86,7 +86,7 @@ export const LocationPageTemplate: React.FC<LocationPageProps> = ({
           
           <div className="lg:col-span-4">
             <div className="bg-[#F8F9FA] border border-slate-200 rounded-xl p-6 space-y-4">
-              <div className="flex items-center gap-2 text-brand-primary font-bold pb-2 border-b border-slate-200">
+              <div className="flex items-center gap-2 text-[#0F4C5C] font-bold pb-2 border-b border-slate-200">
                 <MapPin className="w-5 h-5" />
                 <span>Service Availability</span>
               </div>
@@ -94,7 +94,7 @@ export const LocationPageTemplate: React.FC<LocationPageProps> = ({
                 {serviceStatement}
               </p>
               <div className="pt-2">
-                <Link to="/contact" className="text-sm font-bold text-brand-accent hover:underline">
+                <Link to="/contact" className="text-sm font-bold text-[#D97706] hover:underline">
                   Contact us to confirm delivery →
                 </Link>
               </div>
@@ -106,7 +106,7 @@ export const LocationPageTemplate: React.FC<LocationPageProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-white border border-slate-200 rounded-xl p-8 shadow-xs">
             <div className="flex items-center gap-3 mb-6">
-              <div className="bg-teal-50 p-3 rounded-lg text-brand-primary">
+              <div className="bg-teal-50 p-3 rounded-lg text-[#0F4C5C]">
                 <Box className="w-6 h-6" />
               </div>
               <h2 className="text-2xl font-extrabold text-slate-900">Packaging Products Offered</h2>
@@ -123,7 +123,7 @@ export const LocationPageTemplate: React.FC<LocationPageProps> = ({
           
           <div className="bg-white border border-slate-200 rounded-xl p-8 shadow-xs">
             <div className="flex items-center gap-3 mb-6">
-              <div className="bg-orange-50 p-3 rounded-lg text-brand-accent">
+              <div className="bg-orange-50 p-3 rounded-lg text-[#D97706]">
                 <Factory className="w-6 h-6" />
               </div>
               <h2 className="text-2xl font-extrabold text-slate-900">Industries Served</h2>
@@ -131,7 +131,7 @@ export const LocationPageTemplate: React.FC<LocationPageProps> = ({
             <ul className="space-y-3">
               {industriesServed.map((industry, idx) => (
                 <li key={idx} className="flex items-start gap-2.5 text-sm text-slate-700">
-                  <CheckCircle2 className="w-4 h-4 text-brand-accent shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-[#D97706] shrink-0 mt-0.5" />
                   <span>{industry}</span>
                 </li>
               ))}
@@ -162,7 +162,7 @@ export const LocationPageTemplate: React.FC<LocationPageProps> = ({
             <div className="space-y-4">
               {faqs.map((faq, idx) => (
                 <div key={idx} className="bg-slate-50 border border-slate-200 rounded-lg p-5 sm:p-6 shadow-sm">
-                  <h3 className="font-bold text-brand-primary text-base sm:text-lg mb-2">
+                  <h3 className="font-bold text-[#0F4C5C] text-base sm:text-lg mb-2">
                     {faq.question}
                   </h3>
                   <p className="text-sm text-slate-700 leading-relaxed">

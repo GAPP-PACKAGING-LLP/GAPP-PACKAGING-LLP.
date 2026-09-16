@@ -26,25 +26,25 @@ export const QualityPolicySection: React.FC = () => {
 
         {/* Quality Policy Statement Banner */}
         <div className="bg-white rounded-xl border border-slate-200 p-6 sm:p-8 shadow-xs mb-10">
-          <div className="flex items-center gap-3 text-brand-primary mb-3">
-            <ShieldCheck className="w-6 h-6 text-brand-primary" />
+          <div className="flex items-center gap-3 text-[#0F4C5C] mb-3">
+            <ShieldCheck className="w-6 h-6 text-[#0F4C5C]" />
             <h3 className="text-lg font-bold text-slate-900">
               Corporate Quality Policy Statement
             </h3>
           </div>
-          <p className="text-base text-slate-700 leading-relaxed font-medium bg-brand-primary/5 p-4 rounded-lg border border-brand-primary/15">
+          <p className="text-base text-slate-700 leading-relaxed font-medium bg-[#0F4C5C]/5 p-4 rounded-lg border border-[#0F4C5C]/15">
             "{qualityPolicyData.statement}"
           </p>
 
           {/* 5 Measures to Maintain Quality Policy */}
           <div className="mt-6">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-brand-primary mb-4">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[#0F4C5C] mb-4">
               Measures to Maintain Quality Policy:
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
               {qualityPolicyData.measures.map((measure, idx) => (
                 <div key={idx} className="bg-slate-50 p-3.5 rounded-lg border border-slate-200 flex items-start gap-3">
-                  <span className="w-6 h-6 rounded-full bg-brand-primary text-white text-xs font-bold font-mono flex items-center justify-center shrink-0 mt-0.5">
+                  <span className="w-6 h-6 rounded-full bg-[#0F4C5C] text-white text-xs font-bold font-mono flex items-center justify-center shrink-0 mt-0.5">
                     {idx + 1}
                   </span>
                   <span className="text-xs sm:text-sm text-slate-700 leading-snug">
@@ -59,7 +59,7 @@ export const QualityPolicySection: React.FC = () => {
         {/* 3-Stage Quality Process */}
         <div className="space-y-4">
           <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-            <ClipboardList className="w-5 h-5 text-brand-primary" />
+            <ClipboardList className="w-5 h-5 text-[#0F4C5C]" />
             <span>End-to-End Quality Process Workflow</span>
           </h3>
 
@@ -69,10 +69,10 @@ export const QualityPolicySection: React.FC = () => {
             <div className="bg-white rounded-xl border border-slate-200 p-6 flex flex-col justify-between shadow-xs">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="w-8 h-8 rounded-lg bg-brand-primary text-white text-sm font-bold font-mono flex items-center justify-center">
+                  <span className="w-8 h-8 rounded-lg bg-[#0F4C5C] text-white text-sm font-bold font-mono flex items-center justify-center">
                     01
                   </span>
-                  <span className="text-[11px] font-bold text-brand-primary uppercase bg-brand-primary/10 px-2 py-0.5 rounded">
+                  <span className="text-[11px] font-bold text-[#0F4C5C] uppercase bg-[#0F4C5C]/10 px-2 py-0.5 rounded">
                     Inward Testing
                   </span>
                 </div>
@@ -92,10 +92,10 @@ export const QualityPolicySection: React.FC = () => {
             <div className="bg-white rounded-xl border border-slate-200 p-6 flex flex-col justify-between shadow-xs">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="w-8 h-8 rounded-lg bg-brand-primary text-white text-sm font-bold font-mono flex items-center justify-center">
+                  <span className="w-8 h-8 rounded-lg bg-[#0F4C5C] text-white text-sm font-bold font-mono flex items-center justify-center">
                     02
                   </span>
-                  <span className="text-[11px] font-bold text-brand-primary uppercase bg-brand-primary/10 px-2 py-0.5 rounded">
+                  <span className="text-[11px] font-bold text-[#0F4C5C] uppercase bg-[#0F4C5C]/10 px-2 py-0.5 rounded">
                     Stage Control
                   </span>
                 </div>
@@ -115,10 +115,10 @@ export const QualityPolicySection: React.FC = () => {
             <div className="bg-white rounded-xl border border-slate-200 p-6 flex flex-col justify-between shadow-xs">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="w-8 h-8 rounded-lg bg-brand-primary text-white text-sm font-bold font-mono flex items-center justify-center">
+                  <span className="w-8 h-8 rounded-lg bg-[#0F4C5C] text-white text-sm font-bold font-mono flex items-center justify-center">
                     03
                   </span>
-                  <span className="text-[11px] font-bold text-brand-primary uppercase bg-brand-primary/10 px-2 py-0.5 rounded">
+                  <span className="text-[11px] font-bold text-[#0F4C5C] uppercase bg-[#0F4C5C]/10 px-2 py-0.5 rounded">
                     Certification
                   </span>
                 </div>
@@ -129,7 +129,7 @@ export const QualityPolicySection: React.FC = () => {
                   "{qualityPolicyData.process.preDispatchCertification}"
                 </p>
               </div>
-              <div className="mt-4 pt-3 border-t border-slate-100 text-xs text-brand-primary font-bold">
+              <div className="mt-4 pt-3 border-t border-slate-100 text-xs text-[#0F4C5C] font-bold">
                 Test Certificate Issued With Every Lot
               </div>
             </div>

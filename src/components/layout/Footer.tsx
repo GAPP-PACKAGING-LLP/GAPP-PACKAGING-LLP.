@@ -26,7 +26,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
               Industrial B2B manufacturer of high-strength corrugated boxes in Mandideep, serving Madhya Pradesh.
             </p>
             <div className="flex items-start gap-2.5 text-xs text-slate-300 pt-2">
-              <MapPin className="w-4 h-4 text-brand-accent shrink-0 mt-0.5" />
+              <MapPin className="w-4 h-4 text-[#D97706] shrink-0 mt-0.5" />
               <p className="leading-relaxed">
                 {companyData.factoryAddress.full}
               </p>
@@ -36,7 +36,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
           {/* Quick Links */}
           <div className="space-y-4">
             <h3 className="text-base font-bold text-white uppercase tracking-wider text-xs border-b border-teal-500/30 pb-2 flex items-center gap-2">
-              <span className="w-2 h-2 bg-brand-accent rounded-full"></span>
+              <span className="w-2 h-2 bg-[#D97706] rounded-full"></span>
               <span>Quick Links</span>
             </h3>
             <ul className="space-y-3 text-sm text-slate-300">
@@ -50,24 +50,24 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
           {/* Contact Information */}
           <div className="space-y-4">
             <h3 className="text-base font-bold text-white uppercase tracking-wider text-xs border-b border-teal-500/30 pb-2 flex items-center gap-2">
-              <span className="w-2 h-2 bg-brand-accent rounded-full"></span>
+              <span className="w-2 h-2 bg-[#D97706] rounded-full"></span>
               <span>Contact Us</span>
             </h3>
             <div className="space-y-3 text-sm text-slate-300">
               <div className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-brand-accent shrink-0" />
+                <Phone className="w-4 h-4 text-[#D97706] shrink-0" />
                 <div className="flex flex-col gap-1">
                   <a href="tel:+919806419199" className="hover:text-white transition-colors">+91 9806419199</a>
                   <a href="tel:+919981280902" className="hover:text-white transition-colors">+91 9981280902</a>
                 </div>
               </div>
               <div className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-brand-accent shrink-0" />
+                <Mail className="w-4 h-4 text-[#D97706] shrink-0" />
                 <a href="mailto:industriesgapp@gmail.com" className="hover:text-white transition-colors">industriesgapp@gmail.com</a>
               </div>
               <button
                 onClick={onOpenQuoteModal}
-                className="mt-4 w-full bg-brand-accent hover:bg-brand-accent-hover text-white py-2.5 px-4 rounded-md font-bold text-xs shadow transition-colors cursor-pointer text-center uppercase tracking-wider"
+                className="mt-4 w-full bg-[#D97706] hover:bg-[#B45309] text-white py-2.5 px-4 rounded-md font-bold text-xs shadow transition-colors cursor-pointer text-center uppercase tracking-wider"
               >
                 Request a Quote
               </button>

@@ -49,7 +49,7 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
             className={`px-4 py-2 text-xs font-bold text-white rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer ${
               isDestructive
                 ? 'bg-red-600 hover:bg-red-700 shadow-sm shadow-red-600/20'
-                : 'bg-brand-primary hover:bg-[#0c3c49]'
+                : 'bg-[#0F4C5C] hover:bg-[#0c3c49]'
             } disabled:opacity-50`}
           >
             {isLoading && <Loader2 className="w-3.5 h-3.5 animate-spin" />}

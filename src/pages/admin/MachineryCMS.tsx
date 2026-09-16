@@ -185,7 +185,7 @@ export const MachineryCMS: React.FC = () => {
         <div className="space-y-0.5 max-w-xs">
           <p className="text-xs text-slate-700 line-clamp-2">{row.description}</p>
           {row.importance && (
-            <p className="text-[10px] text-brand-primary font-semibold">Role: {row.importance}</p>
+            <p className="text-[10px] text-[#0F4C5C] font-semibold">Role: {row.importance}</p>
           )}
         </div>
       )
@@ -218,7 +218,7 @@ export const MachineryCMS: React.FC = () => {
             <h2 className="text-base font-extrabold text-slate-900">
               Manufacturing Machinery & Photos
             </h2>
-            <span className="text-xs font-mono font-bold bg-brand-primary/10 text-brand-primary px-2 py-0.5 rounded-full">
+            <span className="text-xs font-mono font-bold bg-[#0F4C5C]/10 text-[#0F4C5C] px-2 py-0.5 rounded-full">
               {machinery.length} Units
             </span>
           </div>
@@ -235,7 +235,7 @@ export const MachineryCMS: React.FC = () => {
               onClick={() => setViewMode('cards')}
               className={`p-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1 ${
                 viewMode === 'cards'
-                  ? 'bg-white text-brand-primary shadow-xs'
+                  ? 'bg-white text-[#0F4C5C] shadow-xs'
                   : 'text-slate-500 hover:text-slate-900'
               }`}
               title="Card Grid View"
@@ -248,7 +248,7 @@ export const MachineryCMS: React.FC = () => {
               onClick={() => setViewMode('table')}
               className={`p-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1 ${
                 viewMode === 'table'
-                  ? 'bg-white text-brand-primary shadow-xs'
+                  ? 'bg-white text-[#0F4C5C] shadow-xs'
                   : 'text-slate-500 hover:text-slate-900'
               }`}
               title="Table View"
@@ -260,7 +260,7 @@ export const MachineryCMS: React.FC = () => {
 
           <button
             onClick={handleOpenAdd}
-            className="px-4 py-2.5 bg-brand-primary hover:bg-[#0c3c49] active:scale-95 text-white text-xs font-bold rounded-xl shadow-xs transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
+            className="px-4 py-2.5 bg-[#0F4C5C] hover:bg-[#0c3c49] active:scale-95 text-white text-xs font-bold rounded-xl shadow-xs transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
           >
             <Plus className="w-4 h-4" />
             <span>Add Machinery Item</span>
@@ -275,7 +275,7 @@ export const MachineryCMS: React.FC = () => {
           onClick={() => setCategoryFilter('all')}
           className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer shrink-0 ${
             categoryFilter === 'all'
-              ? 'bg-brand-primary text-white shadow-xs'
+              ? 'bg-[#0F4C5C] text-white shadow-xs'
               : 'bg-white hover:bg-slate-100 text-slate-600 border border-slate-200'
           }`}
         >
@@ -291,7 +291,7 @@ export const MachineryCMS: React.FC = () => {
               onClick={() => setCategoryFilter(cat)}
               className={`px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer shrink-0 flex items-center gap-1.5 ${
                 categoryFilter === cat
-                  ? 'bg-brand-primary text-white shadow-xs'
+                  ? 'bg-[#0F4C5C] text-white shadow-xs'
                   : 'bg-white hover:bg-slate-100 text-slate-600 border border-slate-200'
               }`}
             >
@@ -379,7 +379,7 @@ export const MachineryCMS: React.FC = () => {
               {/* Machine Details Body */}
               <div className="p-4 space-y-3 flex-1 flex flex-col justify-between">
                 <div className="space-y-1.5">
-                  <h3 className="text-sm font-bold text-slate-900 leading-snug group-hover:text-brand-primary transition-colors">
+                  <h3 className="text-sm font-bold text-slate-900 leading-snug group-hover:text-[#0F4C5C] transition-colors">
                     {item.name}
                   </h3>
                   <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
@@ -398,7 +398,7 @@ export const MachineryCMS: React.FC = () => {
                     </div>
                     <div className="bg-slate-50 p-2 rounded-lg border border-slate-100">
                       <span className="text-slate-400 block text-[9px] uppercase">Role</span>
-                      <span className="font-semibold text-brand-primary truncate block">
+                      <span className="font-semibold text-[#0F4C5C] truncate block">
                         {item.importance || 'Manufacturing'}
                       </span>
                     </div>
@@ -417,7 +417,7 @@ export const MachineryCMS: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => handleOpenEdit(item)}
-                    className="text-xs font-bold text-brand-primary hover:text-brand-primary-hover flex items-center gap-1.5 cursor-pointer py-1"
+                    className="text-xs font-bold text-[#0F4C5C] hover:text-[#0A3642] flex items-center gap-1.5 cursor-pointer py-1"
                   >
                     <Edit3 className="w-3.5 h-3.5" />
                     <span>Edit Specs & Photo</span>
@@ -449,7 +449,7 @@ export const MachineryCMS: React.FC = () => {
             <div className="flex items-center justify-end gap-1.5">
               <button
                 onClick={() => handleOpenEdit(row)}
-                className="p-1.5 text-slate-600 hover:text-brand-primary hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+                className="p-1.5 text-slate-600 hover:text-[#0F4C5C] hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
                 title="Edit Machinery & Photos"
               >
                 <Edit3 className="w-4 h-4" />
@@ -486,7 +486,7 @@ export const MachineryCMS: React.FC = () => {
               type="button"
               onClick={handleSave}
               disabled={isSaving}
-              className="px-4 py-2 bg-brand-primary hover:bg-[#0c3c49] text-white text-xs font-bold rounded-lg shadow transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+              className="px-4 py-2 bg-[#0F4C5C] hover:bg-[#0c3c49] text-white text-xs font-bold rounded-lg shadow transition-colors flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
             >
               <Save className="w-3.5 h-3.5" />
               <span>{isSaving ? 'Saving...' : 'Save Machine & Photos'}</span>

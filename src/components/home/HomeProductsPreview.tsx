@@ -81,8 +81,8 @@ export const HomeProductsPreview: React.FC<HomeProductsPreviewProps> = ({ onSele
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="max-w-2xl space-y-3">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-100 text-brand-primary text-xs font-bold uppercase tracking-wider">
-              <Layers className="w-3.5 h-3.5 text-brand-primary" />
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-100 text-[#0F4C5C] text-xs font-bold uppercase tracking-wider">
+              <Layers className="w-3.5 h-3.5 text-[#0F4C5C]" />
               <span>Engineered Packaging Solutions</span>
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight font-heading">
@@ -95,10 +95,10 @@ export const HomeProductsPreview: React.FC<HomeProductsPreviewProps> = ({ onSele
 
           <Link
             to="/products"
-            className="inline-flex items-center gap-2 text-sm font-bold text-brand-primary hover:text-brand-primary-hover group shrink-0"
+            className="inline-flex items-center gap-2 text-sm font-bold text-[#0F4C5C] hover:text-[#0A3642] group shrink-0"
           >
             <span>View Full Product Catalog & Specs</span>
-            <ArrowRight className="w-4 h-4 text-brand-accent group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-4 h-4 text-[#D97706] group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
@@ -112,7 +112,7 @@ export const HomeProductsPreview: React.FC<HomeProductsPreviewProps> = ({ onSele
                 className={`bg-white rounded-2xl border ${item.borderColor} p-6 flex flex-col justify-between shadow-xs hover:shadow-lg transition-all duration-300 relative group overflow-hidden`}
               >
                 {item.isPopular && (
-                  <div className="absolute top-0 right-0 bg-brand-accent text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-bl-xl shadow-xs">
+                  <div className="absolute top-0 right-0 bg-[#D97706] text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-bl-xl shadow-xs">
                     Most Demanded
                   </div>
                 )}
@@ -120,8 +120,8 @@ export const HomeProductsPreview: React.FC<HomeProductsPreviewProps> = ({ onSele
                 <div className="space-y-4">
                   {/* Icon & Badge */}
                   <div className="flex items-center justify-between">
-                    <div className="w-12 h-12 rounded-xl bg-slate-100 text-brand-primary flex items-center justify-center group-hover:bg-brand-primary group-hover:text-white transition-colors duration-300">
-                      <IconComp className="w-6 h-6 text-brand-accent group-hover:text-white transition-colors" />
+                    <div className="w-12 h-12 rounded-xl bg-slate-100 text-[#0F4C5C] flex items-center justify-center group-hover:bg-[#0F4C5C] group-hover:text-white transition-colors duration-300">
+                      <IconComp className="w-6 h-6 text-[#D97706] group-hover:text-white transition-colors" />
                     </div>
                   </div>
 
@@ -129,14 +129,14 @@ export const HomeProductsPreview: React.FC<HomeProductsPreviewProps> = ({ onSele
                     <span className={`inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-md border mb-2 ${item.badgeColor}`}>
                       {item.categoryBadge}
                     </span>
-                    <h3 className="text-lg font-extrabold text-slate-900 group-hover:text-brand-primary transition-colors leading-snug">
+                    <h3 className="text-lg font-extrabold text-slate-900 group-hover:text-[#0F4C5C] transition-colors leading-snug">
                       {item.name}
                     </h3>
                   </div>
 
                   <div className="bg-slate-50 p-2.5 rounded-lg border border-slate-100 text-xs text-slate-700 font-mono">
                     <span className="text-slate-500 font-sans block text-[10px] font-bold uppercase tracking-wider">Payload Rating</span>
-                    <span className="font-bold text-brand-primary">{item.targetLoad}</span>
+                    <span className="font-bold text-[#0F4C5C]">{item.targetLoad}</span>
                   </div>
 
                   <p className="text-xs text-slate-600 leading-relaxed">
@@ -158,9 +158,9 @@ export const HomeProductsPreview: React.FC<HomeProductsPreviewProps> = ({ onSele
                 <div className="pt-6 mt-4 border-t border-slate-100 flex items-center gap-2">
                   <button
                     onClick={() => onSelectProductForQuote(item.name)}
-                    className="w-full inline-flex items-center justify-center gap-2 bg-brand-primary hover:bg-brand-primary-hover text-white text-xs font-bold py-2.5 px-3 rounded-lg transition-colors shadow-xs cursor-pointer"
+                    className="w-full inline-flex items-center justify-center gap-2 bg-[#0F4C5C] hover:bg-[#0A3642] text-white text-xs font-bold py-2.5 px-3 rounded-lg transition-colors shadow-xs cursor-pointer"
                   >
-                    <Send className="w-3.5 h-3.5 text-brand-accent" />
+                    <Send className="w-3.5 h-3.5 text-[#D97706]" />
                     <span>Get Instant Quote</span>
                   </button>
                 </div>
@@ -183,10 +183,10 @@ export const HomeProductsPreview: React.FC<HomeProductsPreviewProps> = ({ onSele
           <div className="flex items-center gap-3 shrink-0">
             <Link
               to="/products"
-              className="inline-flex items-center gap-2 bg-brand-primary hover:bg-[#0c3c49] text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-lg shadow-sm transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 bg-[#0F4C5C] hover:bg-[#0c3c49] text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-lg shadow-sm transition-all cursor-pointer"
             >
               <span>Explore All Specifications</span>
-              <ArrowRight className="w-4 h-4 text-brand-accent" />
+              <ArrowRight className="w-4 h-4 text-[#D97706]" />
             </Link>
           </div>
         </div>

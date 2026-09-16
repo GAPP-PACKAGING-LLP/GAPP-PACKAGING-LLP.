@@ -60,7 +60,7 @@ export const ClientsSection: React.FC = () => {
               onClick={() => setSelectedSector(sec)}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                 selectedSector === sec
-                  ? 'bg-brand-primary text-white shadow-md'
+                  ? 'bg-[#0F4C5C] text-white shadow-md'
                   : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
               }`}
             >
@@ -80,13 +80,13 @@ export const ClientsSection: React.FC = () => {
             return (
               <div
                 key={client.id || index}
-                className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 flex flex-col justify-between gap-4 hover:border-brand-primary hover:shadow-lg transition-all duration-300 group"
+                className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 flex flex-col justify-between gap-4 hover:border-[#0F4C5C] hover:shadow-lg transition-all duration-300 group"
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-4">
                     {/* Logo Container */}
                     {client.logoUrl ? (
-                      <div className="w-16 h-14 sm:w-24 sm:h-16 rounded-xl bg-white border border-slate-200 p-1.5 flex items-center justify-center shrink-0 shadow-xs group-hover:border-brand-primary/40 transition-all">
+                      <div className="w-16 h-14 sm:w-24 sm:h-16 rounded-xl bg-white border border-slate-200 p-1.5 flex items-center justify-center shrink-0 shadow-xs group-hover:border-[#0F4C5C]/40 transition-all">
                         <img
                           src={client.logoUrl}
                           alt={`${client.name} - Packaging Client Partner`}
@@ -96,7 +96,7 @@ export const ClientsSection: React.FC = () => {
                         />
                       </div>
                     ) : (
-                      <div className="w-16 h-14 sm:w-20 sm:h-16 rounded-xl bg-gradient-to-br from-brand-primary to-brand-primary-hover text-white flex items-center justify-center font-extrabold text-base font-mono shrink-0 shadow-xs group-hover:scale-105 transition-transform">
+                      <div className="w-16 h-14 sm:w-20 sm:h-16 rounded-xl bg-gradient-to-br from-[#0F4C5C] to-[#0A3642] text-white flex items-center justify-center font-extrabold text-base font-mono shrink-0 shadow-xs group-hover:scale-105 transition-transform">
                         {initials}
                       </div>
                     )}
@@ -106,7 +106,7 @@ export const ClientsSection: React.FC = () => {
                         <span className="text-[10px] font-mono font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
                           REF #{clientNumber}
                         </span>
-                        <span className="text-[10px] font-mono font-bold text-brand-accent bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
+                        <span className="text-[10px] font-mono font-bold text-[#D97706] bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
                           {client.sector}
                         </span>
                         {client.location && (
@@ -116,13 +116,13 @@ export const ClientsSection: React.FC = () => {
                         )}
                       </div>
 
-                      <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug group-hover:text-brand-primary transition-colors">
+                      <h3 className="text-base sm:text-lg font-bold text-slate-900 leading-snug group-hover:text-[#0F4C5C] transition-colors">
                         {client.name}
                       </h3>
 
                       {client.details && (
-                        <p className="text-xs font-semibold text-brand-primary flex items-center gap-1.5">
-                          <Award className="w-3.5 h-3.5 text-brand-accent shrink-0" />
+                        <p className="text-xs font-semibold text-[#0F4C5C] flex items-center gap-1.5">
+                          <Award className="w-3.5 h-3.5 text-[#D97706] shrink-0" />
                           <span>{client.details}</span>
                         </p>
                       )}
@@ -158,7 +158,7 @@ export const ClientsSection: React.FC = () => {
         {/* 3 Core Trust Pillars Banner */}
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-teal-50 text-brand-primary flex items-center justify-center shrink-0">
+            <div className="w-12 h-12 rounded-xl bg-teal-50 text-[#0F4C5C] flex items-center justify-center shrink-0">
               <Clock className="w-6 h-6" />
             </div>
             <div>
@@ -169,7 +169,7 @@ export const ClientsSection: React.FC = () => {
           </div>
 
           <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-amber-50 text-brand-accent flex items-center justify-center shrink-0">
+            <div className="w-12 h-12 rounded-xl bg-amber-50 text-[#D97706] flex items-center justify-center shrink-0">
               <ShieldCheck className="w-6 h-6" />
             </div>
             <div>

@@ -209,13 +209,13 @@ export const VirtualPlantTour: React.FC = () => {
     <section id="plant-tour" className="py-16 md:py-24 bg-slate-900 text-white border-b border-slate-800 relative overflow-hidden" aria-label="Interactive Virtual Plant Tour">
       
       {/* Background Subtle Tech Pattern */}
-      <div className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#008CE8_1px,transparent_1px)] [background-size:16px_16px]"></div>
+      <div className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(#0F4C5C_1px,transparent_1px)] [background-size:16px_16px]"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-12">
         
         {/* Top Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-brand-accent bg-brand-accent/15 border border-brand-accent/30 px-3 py-1 rounded-full">
+          <div className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[#D97706] bg-[#D97706]/15 border border-[#D97706]/30 px-3 py-1 rounded-full">
             <Factory className="w-3.5 h-3.5" />
             <span>Interactive Manufacturing Tour</span>
           </div>
@@ -247,13 +247,13 @@ export const VirtualPlantTour: React.FC = () => {
                   onClick={() => setActiveStageIndex(idx)}
                   className={`flex flex-col items-center gap-2 shrink-0 p-2.5 rounded-xl transition-all cursor-pointer group min-w-[110px] sm:min-w-[130px] ${
                     isActive
-                      ? 'bg-brand-primary text-white shadow-lg ring-2 ring-brand-primary/50'
+                      ? 'bg-[#0F4C5C] text-white shadow-lg ring-2 ring-[#0F4C5C]/50'
                       : 'bg-slate-800/80 text-slate-400 hover:bg-slate-800 hover:text-white border border-slate-700'
                   }`}
                 >
                   <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-mono font-bold text-xs transition-colors ${
                     isActive
-                      ? 'bg-white text-brand-primary'
+                      ? 'bg-white text-[#0F4C5C]'
                       : isPast
                       ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
                       : 'bg-slate-700 text-slate-300'
@@ -291,11 +291,11 @@ export const VirtualPlantTour: React.FC = () => {
             {/* Floating Top Badges */}
             <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2">
               <span className="text-xs font-mono font-bold uppercase tracking-wider text-white bg-black/70 backdrop-blur-xs px-3 py-1 rounded-lg border border-white/20 flex items-center gap-1.5">
-                <MapPin className="w-3.5 h-3.5 text-brand-accent" />
+                <MapPin className="w-3.5 h-3.5 text-[#D97706]" />
                 <span>{currentStage.bayLocation}</span>
               </span>
 
-              <span className="text-xs font-mono font-bold text-white bg-brand-primary px-3 py-1 rounded-lg shadow">
+              <span className="text-xs font-mono font-bold text-white bg-[#0F4C5C] px-3 py-1 rounded-lg shadow">
                 Stage {currentStage.stageNumber} of 08
               </span>
             </div>
@@ -322,7 +322,7 @@ export const VirtualPlantTour: React.FC = () => {
               
               {/* Header Title */}
               <div className="space-y-1">
-                <span className="text-xs font-mono font-bold uppercase tracking-wider text-brand-accent">
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#D97706]">
                   {currentStage.tagline}
                 </span>
                 <h3 className="text-xl sm:text-2xl font-bold text-white">
@@ -388,7 +388,7 @@ export const VirtualPlantTour: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleNext}
-                  className="px-3.5 py-2 bg-brand-primary hover:bg-[#0c3c49] text-white text-xs font-bold rounded-xl transition-colors flex items-center gap-1 cursor-pointer shadow-md"
+                  className="px-3.5 py-2 bg-[#0F4C5C] hover:bg-[#0c3c49] text-white text-xs font-bold rounded-xl transition-colors flex items-center gap-1 cursor-pointer shadow-md"
                 >
                   <span>Next Stage</span>
                   <ChevronRight className="w-4 h-4" />
@@ -397,7 +397,7 @@ export const VirtualPlantTour: React.FC = () => {
 
               <a
                 href="#contact"
-                className="text-xs font-bold text-brand-accent hover:text-amber-400 flex items-center gap-1 transition-colors"
+                className="text-xs font-bold text-[#D97706] hover:text-amber-400 flex items-center gap-1 transition-colors"
               >
                 <span>Book Factory Visit</span>
                 <ArrowRight className="w-3.5 h-3.5" />

@@ -96,7 +96,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ onSelectIn
             onClick={() => setActiveFilter('all')}
             className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               activeFilter === 'all'
-                ? 'bg-brand-primary text-white shadow-md'
+                ? 'bg-[#0F4C5C] text-white shadow-md'
                 : 'bg-[#F8F9FA] text-slate-600 hover:bg-slate-200/70 border border-slate-200'
             }`}
           >
@@ -109,7 +109,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ onSelectIn
               onClick={() => setActiveFilter(ind.id)}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                 activeFilter === ind.id
-                  ? 'bg-brand-primary text-white shadow-md'
+                  ? 'bg-[#0F4C5C] text-white shadow-md'
                   : 'bg-[#F8F9FA] text-slate-600 hover:bg-slate-200/70 border border-slate-200'
               }`}
             >
@@ -131,22 +131,22 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ onSelectIn
             return (
               <div
                 key={industry.id}
-                className="bg-[#F8F9FA] rounded-2xl border border-slate-200 p-6 flex flex-col justify-between hover:border-brand-primary hover:bg-white hover:shadow-xl transition-all duration-300 group"
+                className="bg-[#F8F9FA] rounded-2xl border border-slate-200 p-6 flex flex-col justify-between hover:border-[#0F4C5C] hover:bg-white hover:shadow-xl transition-all duration-300 group"
               >
                 <div className="space-y-4">
                   
                   {/* Top Icon & Tag */}
                   <div className="flex items-center justify-between">
-                    <div className="w-12 h-12 bg-white text-brand-primary rounded-xl flex items-center justify-center border border-slate-200 group-hover:bg-brand-primary group-hover:text-white transition-all shadow-xs">
+                    <div className="w-12 h-12 bg-white text-[#0F4C5C] rounded-xl flex items-center justify-center border border-slate-200 group-hover:bg-[#0F4C5C] group-hover:text-white transition-all shadow-xs">
                       {getIcon(industry.iconName)}
                     </div>
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-accent bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200">
+                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#D97706] bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200">
                       {specs.loadRating}
                     </span>
                   </div>
 
                   {/* Title */}
-                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-brand-primary transition-colors leading-snug">
+                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-[#0F4C5C] transition-colors leading-snug">
                     {industry.title}
                   </h3>
 
@@ -190,7 +190,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ onSelectIn
                 {/* Key Benefit Highlight & CTA */}
                 <div className="mt-5 space-y-3 pt-3 border-t border-slate-200/70">
                   <div className="bg-teal-50/70 p-3 rounded-xl border border-teal-100/80 text-xs text-slate-700">
-                    <span className="font-bold text-brand-primary block mb-0.5 text-[11px]">Core Operational Advantage:</span>
+                    <span className="font-bold text-[#0F4C5C] block mb-0.5 text-[11px]">Core Operational Advantage:</span>
                     <span className="leading-snug text-[11px]">{industry.keyBenefit}</span>
                   </div>
 
@@ -204,7 +204,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ onSelectIn
                         if (elem) elem.scrollIntoView({ behavior: 'smooth' });
                       }
                     }}
-                    className="w-full py-2 bg-white hover:bg-brand-primary text-brand-primary hover:text-white border border-brand-primary/40 hover:border-transparent text-xs font-bold rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
+                    className="w-full py-2 bg-white hover:bg-[#0F4C5C] text-[#0F4C5C] hover:text-white border border-[#0F4C5C]/40 hover:border-transparent text-xs font-bold rounded-xl transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
                   >
                     <span>Request {industry.title.replace(' Sector', '')} Quotation</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -217,9 +217,9 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ onSelectIn
         </div>
 
         {/* Bottom Fast Delivery Banner */}
-        <div className="mt-12 bg-gradient-to-r from-brand-primary-hover to-brand-primary text-white p-6 sm:p-8 rounded-2xl border border-teal-800 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+        <div className="mt-12 bg-gradient-to-r from-[#0A3642] to-[#0F4C5C] text-white p-6 sm:p-8 rounded-2xl border border-teal-800 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
           <div className="space-y-1.5">
-            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-accent bg-brand-accent/20 px-2.5 py-0.5 rounded-md border border-brand-accent/40 font-mono">
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#D97706] bg-[#D97706]/20 px-2.5 py-0.5 rounded-md border border-[#D97706]/40 font-mono">
               <Zap className="w-3.5 h-3.5" />
               <span>Zero Production Disruption Guarantee</span>
             </div>
@@ -233,7 +233,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ onSelectIn
 
           <a
             href="#contact"
-            className="shrink-0 bg-brand-accent hover:bg-brand-accent-hover text-white px-6 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all shadow-lg cursor-pointer flex items-center gap-1.5"
+            className="shrink-0 bg-[#D97706] hover:bg-[#B45309] text-white px-6 py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all shadow-lg cursor-pointer flex items-center gap-1.5"
           >
             <span>Inquire for Plant Delivery</span>
             <ArrowRight className="w-4 h-4" />

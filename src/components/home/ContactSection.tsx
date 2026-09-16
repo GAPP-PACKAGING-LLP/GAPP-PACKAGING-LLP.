@@ -40,10 +40,10 @@ export const ContactSection: React.FC = () => {
           <div className="lg:col-span-5 space-y-6">
             
             {/* Factory Address Card */}
-            <div className="bg-[#F8F9FA] rounded-xl border border-slate-200 p-6 space-y-4 hover:border-brand-primary/50 transition-colors">
+            <div className="bg-[#F8F9FA] rounded-xl border border-slate-200 p-6 space-y-4 hover:border-[#0F4C5C]/50 transition-colors">
               <div className="flex items-center justify-between border-b border-slate-200 pb-3">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-brand-primary/10 text-brand-primary flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-lg bg-[#0F4C5C]/10 text-[#0F4C5C] flex items-center justify-center">
                     <Factory className="w-5 h-5" />
                   </div>
                   <div>
@@ -56,7 +56,7 @@ export const ContactSection: React.FC = () => {
                   href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(companyData.factoryAddress.googleMapsQuery)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs font-semibold text-brand-primary hover:text-brand-primary-hover flex items-center gap-1"
+                  className="text-xs font-semibold text-[#0F4C5C] hover:text-[#0A3642] flex items-center gap-1"
                 >
                   <span>Map</span>
                   <ExternalLink className="w-3 h-3" />
@@ -74,10 +74,10 @@ export const ContactSection: React.FC = () => {
             </div>
 
             {/* Office Address Card */}
-            <div className="bg-[#F8F9FA] rounded-xl border border-slate-200 p-6 space-y-4 hover:border-brand-primary/50 transition-colors">
+            <div className="bg-[#F8F9FA] rounded-xl border border-slate-200 p-6 space-y-4 hover:border-[#0F4C5C]/50 transition-colors">
               <div className="flex items-center justify-between border-b border-slate-200 pb-3">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-brand-primary/10 text-brand-primary flex items-center justify-center">
+                  <div className="w-8 h-8 rounded-lg bg-[#0F4C5C]/10 text-[#0F4C5C] flex items-center justify-center">
                     <Building2 className="w-5 h-5" />
                   </div>
                   <div>
@@ -90,7 +90,7 @@ export const ContactSection: React.FC = () => {
                   href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(companyData.officeAddress.googleMapsQuery)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs font-semibold text-brand-primary hover:text-brand-primary-hover flex items-center gap-1"
+                  className="text-xs font-semibold text-[#0F4C5C] hover:text-[#0A3642] flex items-center gap-1"
                 >
                   <span>Map</span>
                   <ExternalLink className="w-3 h-3" />
@@ -103,8 +103,8 @@ export const ContactSection: React.FC = () => {
             </div>
 
             {/* Designated Partners Card */}
-            <div className="bg-brand-primary-hover text-white p-6 rounded-xl border border-teal-800 space-y-4">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-brand-accent border-b border-teal-700 pb-2 flex items-center justify-between">
+            <div className="bg-[#0A3642] text-white p-6 rounded-xl border border-teal-800 space-y-4">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[#D97706] border-b border-teal-700 pb-2 flex items-center justify-between">
                 <span>Designated Partners (Page 9)</span>
                 <UserCheck className="w-4 h-4" />
               </h4>
@@ -116,7 +116,7 @@ export const ContactSection: React.FC = () => {
                     <div className="text-xs text-slate-300">Designated Partner</div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <a href="tel:+919806419199" className="text-brand-accent font-mono font-bold hover:underline">
+                    <a href="tel:+919806419199" className="text-[#D97706] font-mono font-bold hover:underline">
                       +91 9806419199
                     </a>
                     <button
@@ -135,7 +135,7 @@ export const ContactSection: React.FC = () => {
                     <div className="text-xs text-slate-300">Designated Partner</div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <a href="tel:+919981280902" className="text-brand-accent font-mono font-bold hover:underline">
+                    <a href="tel:+919981280902" className="text-[#D97706] font-mono font-bold hover:underline">
                       +91 9981280902
                     </a>
                     <button
@@ -150,8 +150,8 @@ export const ContactSection: React.FC = () => {
 
                 <div className="pt-2 border-t border-teal-700/60 flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Mail className="w-4 h-4 text-brand-accent" />
-                    <a href={`mailto:${companyData.email}`} className="hover:text-brand-accent font-mono break-all text-xs">
+                    <Mail className="w-4 h-4 text-[#D97706]" />
+                    <a href={`mailto:${companyData.email}`} className="hover:text-[#D97706] font-mono break-all text-xs">
                       {companyData.email}
                     </a>
                   </div>
@@ -173,7 +173,7 @@ export const ContactSection: React.FC = () => {
             
             <div className="mb-6 border-b border-slate-200 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
-                <h3 className="text-xl font-bold text-brand-primary">
+                <h3 className="text-xl font-bold text-[#0F4C5C]">
                   Send an Inquiry / Request for Quotation
                 </h3>
                 <p className="text-xs text-slate-600 mt-1">

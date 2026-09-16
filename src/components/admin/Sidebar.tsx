@@ -96,7 +96,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
               onClick={onCloseMobile}
               className={`flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-semibold transition-colors ${
                 active
-                  ? 'bg-brand-primary text-white font-bold shadow-xs'
+                  ? 'bg-[#0F4C5C] text-white font-bold shadow-xs'
                   : 'text-slate-300 hover:bg-slate-800/80 hover:text-white'
               }`}
             >
@@ -137,7 +137,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onCloseMobile })
                 className="w-8 h-8 rounded-full object-cover border border-slate-600 shrink-0"
               />
             ) : (
-              <div className="w-8 h-8 rounded-full bg-brand-primary text-white flex items-center justify-center font-bold text-xs shrink-0 border border-teal-500/40">
+              <div className="w-8 h-8 rounded-full bg-[#0F4C5C] text-white flex items-center justify-center font-bold text-xs shrink-0 border border-teal-500/40">
                 <span>{adminUser?.name?.charAt(0) || 'A'}</span>
               </div>
             )}

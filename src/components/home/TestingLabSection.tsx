@@ -30,16 +30,16 @@ export const TestingLabSection: React.FC = () => {
           {testingEquipmentData.map((equipment, idx) => (
             <div
               key={equipment.id}
-              className="bg-[#F8F9FA] rounded-xl border border-slate-200 p-6 flex flex-col justify-between hover:border-brand-primary hover:bg-white hover:shadow-md transition-all duration-200"
+              className="bg-[#F8F9FA] rounded-xl border border-slate-200 p-6 flex flex-col justify-between hover:border-[#0F4C5C] hover:bg-white hover:shadow-md transition-all duration-200"
             >
               <div className="space-y-4">
                 
                 {/* Standard Badge */}
                 <div className="flex items-center justify-between">
-                  <span className="w-7 h-7 rounded-full bg-brand-primary text-white text-xs font-bold font-mono flex items-center justify-center">
+                  <span className="w-7 h-7 rounded-full bg-[#0F4C5C] text-white text-xs font-bold font-mono flex items-center justify-center">
                     {idx + 1}
                   </span>
-                  <span className="text-[11px] font-mono font-bold text-brand-primary bg-brand-primary/10 px-2.5 py-1 rounded">
+                  <span className="text-[11px] font-mono font-bold text-[#0F4C5C] bg-[#0F4C5C]/10 px-2.5 py-1 rounded">
                     Testing Equipment
                   </span>
                 </div>
@@ -52,7 +52,7 @@ export const TestingLabSection: React.FC = () => {
                 {/* Parameter Tag */}
                 <div className="bg-white p-2.5 rounded border border-slate-200 text-xs font-mono">
                   <span className="text-slate-500 block text-[10px] uppercase font-sans font-semibold">Parameter Measured:</span>
-                  <span className="font-bold text-brand-primary">{equipment.parameterMeasured}</span>
+                  <span className="font-bold text-[#0F4C5C]">{equipment.parameterMeasured}</span>
                 </div>
 
                 {/* Description */}
@@ -73,11 +73,11 @@ export const TestingLabSection: React.FC = () => {
         </div>
 
         {/* Certificate of Analysis Guarantee Banner */}
-        <div className="mt-12 bg-brand-primary text-white p-6 sm:p-8 rounded-xl border border-teal-700 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="mt-12 bg-[#0F4C5C] text-white p-6 sm:p-8 rounded-xl border border-teal-700 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-1.5">
             <div className="flex items-center gap-2">
-              <Award className="w-5 h-5 text-brand-accent" />
-              <span className="text-xs font-bold uppercase tracking-widest text-brand-accent">
+              <Award className="w-5 h-5 text-[#D97706]" />
+              <span className="text-xs font-bold uppercase tracking-widest text-[#D97706]">
                 Quality Assurance Mandate
               </span>
             </div>
@@ -91,7 +91,7 @@ export const TestingLabSection: React.FC = () => {
 
           <a
             href="#contact"
-            className="shrink-0 bg-white hover:bg-slate-100 text-brand-primary px-6 py-3 rounded-md font-bold text-xs uppercase tracking-wider transition-colors shadow-sm"
+            className="shrink-0 bg-white hover:bg-slate-100 text-[#0F4C5C] px-6 py-3 rounded-md font-bold text-xs uppercase tracking-wider transition-colors shadow-sm"
           >
             Request Batch Test Specs
           </a>

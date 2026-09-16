@@ -59,8 +59,8 @@ export const HomeIndustriesStrip: React.FC = () => {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div className="max-w-2xl space-y-3">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-100 text-brand-primary text-xs font-bold uppercase tracking-wider">
-              <Building2 className="w-3.5 h-3.5 text-brand-primary" />
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-100 text-[#0F4C5C] text-xs font-bold uppercase tracking-wider">
+              <Building2 className="w-3.5 h-3.5 text-[#0F4C5C]" />
               <span>Sectors & Applications</span>
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight font-heading">
@@ -73,10 +73,10 @@ export const HomeIndustriesStrip: React.FC = () => {
 
           <Link
             to="/products"
-            className="inline-flex items-center gap-2 text-sm font-bold text-brand-primary hover:text-brand-primary-hover group shrink-0"
+            className="inline-flex items-center gap-2 text-sm font-bold text-[#0F4C5C] hover:text-[#0A3642] group shrink-0"
           >
             <span>Explore Industry Specifications & Catalog</span>
-            <ArrowRight className="w-4 h-4 text-brand-accent group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-4 h-4 text-[#D97706] group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
 
@@ -89,8 +89,8 @@ export const HomeIndustriesStrip: React.FC = () => {
                 key={idx}
                 className={`bg-white rounded-xl p-6 border border-slate-200 shadow-xs hover:shadow-md transition-all duration-200 flex items-start gap-4 ${ind.bg}`}
               >
-                <div className="w-12 h-12 rounded-xl bg-slate-100 text-brand-primary flex items-center justify-center shrink-0">
-                  <IconComp className="w-6 h-6 text-brand-accent" />
+                <div className="w-12 h-12 rounded-xl bg-slate-100 text-[#0F4C5C] flex items-center justify-center shrink-0">
+                  <IconComp className="w-6 h-6 text-[#D97706]" />
                 </div>
                 <div className="space-y-1.5 flex-1">
                   <h3 className="text-base font-extrabold text-slate-900">
