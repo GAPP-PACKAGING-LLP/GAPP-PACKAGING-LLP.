@@ -54,13 +54,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal, onOpenBrochure
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'About Us', path: '/about' },
+    { name: 'About', path: '/about' },
     { name: 'Products', path: '/products' },
-    { name: 'Machinery', path: '/infrastructure' },
-    { name: 'Testing Lab', path: '/quality' },
-    { name: 'Calculator', path: '/calculator' },
-    { name: 'Clients', path: '/clients' },
-    { name: 'FAQ', path: '/faq' },
+    { name: 'Industries', path: '/industries' },
+    { name: 'Quality', path: '/quality' },
+    { name: 'Gallery', path: '/plant-tour' },
     { name: 'Contact', path: '/contact' },
   ];
 

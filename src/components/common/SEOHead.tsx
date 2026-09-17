@@ -23,8 +23,8 @@ export const PAGE_SEO_CONFIG: Record<string, {
   breadcrumbs: Array<{ name: string; path: string }>;
 }> = {
   '/': {
-    title: 'GAPP Packaging LLP | Packaging Solutions in Madhya Pradesh',
-    description: 'GAPP Packaging LLP provides high-quality industrial packaging, customized corrugated boxes, and reliable supply chain materials for businesses across Central India.',
+    title: 'GAPP Packaging LLP | Corrugated Boxes and Packaging Solutions',
+    description: 'Manufacturer of high-quality corrugated boxes, printed cartons, and custom packaging solutions in Mandideep, Bhopal. Reliable B2B supply for Central India.',
     keywords: 'corrugated box manufacturer in Mandideep, corrugated box manufacturer in Bhopal, corrugated box supplier in Indore, packaging boxes supplier Madhya Pradesh, 3 ply 5 ply 7 ply carton boxes, heavy duty shipping boxes Bhopal, custom corrugated boxes factory Indore Mandideep, industrial packaging solutions Central India, printed cartons factory MP',
     breadcrumbs: [{ name: 'Home', path: '/' }],
   },
