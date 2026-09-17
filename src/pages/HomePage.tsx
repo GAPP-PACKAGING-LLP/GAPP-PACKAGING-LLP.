@@ -15,14 +15,40 @@ interface HomePageProps {
 export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
   const [activeImage, setActiveImage] = useState<string | null>(null);
   const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [fileError, setFileError] = useState('');
+
+  React.useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setActiveImage(null);
+    };
+    if (activeImage) {
+      document.body.style.overflow = 'hidden';
+      document.addEventListener('keydown', handleEscape);
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [activeImage]);
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (fileError) return;
     setFormStatus('loading');
-    // TODO: Connect to Firebase/Formspree/EmailJS
     setTimeout(() => {
       setFormStatus('success');
     }, 1500);
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFileError('');
+    const file = e.target.files?.[0];
+    if (file && file.size > 5 * 1024 * 1024) {
+      setFileError('File size must be less than 5MB');
+      e.target.value = '';
+    }
   };
 
   const galleryImages = [
@@ -336,7 +362,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
             
             <div className="space-y-8">
               <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 leading-tight">
-                Let’s discuss your packaging requirement
+                Letï¿½s discuss your packaging requirement
               </h2>
               <p className="text-slate-600 text-lg">
                 Share your product and packaging details. Our team will review your requirement and get back to you with an accurate quotation.
@@ -439,13 +465,15 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-slate-700 uppercase">Upload Reference File</label>
                   <div className="flex items-center justify-center w-full h-32 border-2 border-slate-300 border-dashed rounded-lg cursor-pointer hover:bg-slate-100 bg-white transition-colors relative">
-                    <input type="file" accept=".pdf,.jpg,.jpeg,.png,.docx" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
+                    <input type="file" accept=".pdf,.jpg,.jpeg,.png,.docx" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={handleFileChange} />
                     <div className="flex flex-col items-center justify-center pt-5 pb-6 text-slate-500">
                       <Upload className="w-6 h-6 mb-2 text-slate-400" />
                       <p className="text-sm font-semibold">Click to upload or drag and drop</p>
                       <p className="text-xs mt-1 text-slate-400">PDF, JPG, PNG or DOCX (Max 5MB)</p>
                     </div>
                   </div>
+                  {fileError && <p className="text-xs text-red-500 font-bold mt-2">{fileError}</p>}
+                  {fileError && <p className="text-xs text-red-500 font-bold mt-2">{fileError}</p>}
                 </div>
 
                 <button 
