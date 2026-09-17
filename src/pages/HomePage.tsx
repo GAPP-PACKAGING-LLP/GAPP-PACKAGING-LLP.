@@ -7,6 +7,7 @@ import {
   Upload, Loader2
 } from 'lucide-react';
 import { companyData } from '../data/companyData';
+import { useCMS } from '../context/CMSContext';
 
 interface HomePageProps {
   onOpenQuoteModal: (boxType?: string, dimensions?: any) => void;
@@ -16,6 +17,9 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
   const [activeImage, setActiveImage] = useState<string | null>(null);
   const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [fileError, setFileError] = useState('');
+  const { pages } = useCMS();
+  const pageData = pages['home'] || { content: { images: {} } };
+  const images = pageData.content?.images || {};
 
   React.useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -104,7 +108,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
             {/* Right Image Composition */}
             <div className="relative relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl group">
               <img 
-                src="https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&q=80"
+                src={images.heroImg || "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&q=80"}
                 alt="Corrugated Box Production"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
@@ -156,7 +160,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="relative">
               <img 
-                src="https://images.unsplash.com/photo-1605600659908-0ef719419d41?auto=format&fit=crop&q=80" 
+                src={images.aboutImg || "https://images.unsplash.com/photo-1605600659908-0ef719419d41?auto=format&fit=crop&q=80"} 
                 alt="Cardboard packaging material" 
                 className="w-full rounded-2xl shadow-lg object-cover aspect-square sm:aspect-[4/3] lg:aspect-square"
               />
@@ -503,7 +507,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onOpenQuoteModal }) => {
 
       {/* 12. FINAL CTA BANNER */}
       <section className="bg-[#0E525B] relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 bg-[url('https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&q=80')] bg-cover bg-center"></div>
+        <div className="absolute inset-0 opacity-10 bg-cover bg-center" style={{ backgroundImage: `url(${images.ctaBg || "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&q=80"})` }}></div>
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center relative z-10 space-y-8">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white">Need the right carton box for your product?</h2>
           <p className="text-lg text-slate-300 max-w-2xl mx-auto font-medium">

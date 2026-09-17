@@ -510,13 +510,27 @@ export const DEFAULT_PAGES: Record<string, CMSPageContent> = {
     id: 'page-home',
     slug: 'home',
     title: 'Home Page Content',
-    tagline: 'Reliable Corrugated Packaging Solutions',
-    heroTitle: 'High-Precision Corrugated Boxes & Packaging Solutions',
-    heroSubtitle: 'Semi-automatic manufacturing unit in Mandideep, Bhopal delivering zero-discharge, 100% recyclable, test-certified corrugated boxes for industrial leaders.',
+    tagline: 'PACKAGING SOLUTIONS FOR BUSINESS',
+    heroTitle: 'Reliable Corrugated Packaging for Growing Businesses',
+    heroSubtitle: 'Customized carton boxes and packaging solutions designed for protection, presentation and dependable supply.',
     content: {
       bullet1: 'One of the few semi-automatic units in Bhopal/Mandideep',
       bullet2: 'Complete in-house testing laboratory with lot certification',
-      bullet3: 'Committed to strict delivery schedules & urgent orders flexibility'
+      bullet3: 'Committed to strict delivery schedules & urgent orders flexibility',
+      images: {
+        heroImg: 'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&q=80',
+        aboutImg: 'https://images.unsplash.com/photo-1605600659908-0ef719419d41?auto=format&fit=crop&q=80',
+        ctaBg: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&q=80',
+        prod1: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&q=80',
+        prod2: 'https://images.unsplash.com/photo-1530124566582-a618bc2615dc?auto=format&fit=crop&q=80',
+        prod3: 'https://images.unsplash.com/photo-1605600659908-0ef719419d41?auto=format&fit=crop&q=80',
+        prod4: 'https://images.unsplash.com/photo-1580674684081-776d507bcea0?auto=format&fit=crop&q=80',
+        gallery1: 'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&q=80',
+        gallery2: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&q=80',
+        gallery3: 'https://images.unsplash.com/photo-1605600659908-0ef719419d41?auto=format&fit=crop&q=80',
+        gallery4: 'https://images.unsplash.com/photo-1580674684081-776d507bcea0?auto=format&fit=crop&q=80',
+        gallery5: 'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&q=80'
+      }
     }
   },
   about: {
@@ -527,30 +541,36 @@ export const DEFAULT_PAGES: Record<string, CMSPageContent> = {
     heroTitle: 'Manufacturing Excellence in Corrugated Packaging Since 2020',
     heroSubtitle: 'Established in Mandideep, Madhya Pradesh, providing one-stop professionalized packaging solutions for manufacturing and trade.',
     content: {
-      mission: 'Our Mission is to achieve the reputation of a quality, high standard, customer satisfaction & reliable manufacturing Company in the Corrugation industry.',
-      vision: 'Our Vision is to achieve 100% customer satisfaction by delivering quality products at an affordable cost.',
-      zeroDischargeText: 'GAPP is zero-discharge manufacturing unit, and all our materials are 100% recyclable. We do not use any sorts of plastic.'
+      mission: 'To manufacture and supply highest quality corrugated packaging that ensures product safety and enhances customer brand value.',
+      vision: 'To be the most preferred packaging partner in Central India through sustainable practices and technological advancement.',
+      zeroDischargeText: 'We are committed to eco-friendly production with a zero-discharge facility.',
+      images: {
+        heroBg: 'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&q=80',
+        storyImg: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&q=80',
+        factoryImg: 'https://images.unsplash.com/photo-1605600659908-0ef719419d41?auto=format&fit=crop&q=80'
+      }
     }
   },
   contact: {
     id: 'page-contact',
     slug: 'contact',
-    title: 'Contact Desk & RFQ Information',
-    tagline: 'Direct Plant & Office Connect',
-    heroTitle: 'Get in Touch with GAPP Packaging LLP',
-    heroSubtitle: 'Visit our Mandideep manufacturing plant or submit an RFQ for rapid quotation and dimensional consultation.',
+    title: 'Contact Page Content',
+    tagline: 'Get in Touch',
+    heroTitle: 'Contact Our Packaging Experts',
+    heroSubtitle: 'Ready to discuss your requirements? Our team is here to help you find the perfect packaging solution.',
     content: {
-      rfqPrompt: 'Need custom corrugated boxes for your industrial, pharma, or retail application?',
-      turnaroundTime: 'Prompt quotation response within 2-4 business hours.'
+      rfqPrompt: 'Send us your product dimensions and weight capacity, and we will prepare a custom quotation.',
+      turnaroundTime: 'We typically respond to all technical queries within 24 hours.',
+      images: {
+        heroBg: 'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&q=80'
+      }
     }
   }
 };
 
-export function subscribeToPages(
-  onData: (items: Record<string, CMSPageContent>) => void,
-  onError?: (err: Error) => void
-) {
+export function subscribeToPages(onData: (data: Record<string, CMSPageContent>) => void, onError?: (error: Error) => void) {
   const colRef = collection(db, 'pages');
+  
   return onSnapshot(
     colRef,
     async (snapshot) => {
@@ -569,9 +589,9 @@ export function subscribeToPages(
         return;
       }
 
-      const pagesMap: Record<string, CMSPageContent> = {};
+      const pagesMap = {};
       snapshot.docs.forEach((d) => {
-        pagesMap[d.id] = { id: d.id, ...(d.data() as any) };
+        pagesMap[d.id] = { id: d.id, ...d.data() };
       });
       onData(pagesMap);
     },
@@ -582,6 +602,8 @@ export function subscribeToPages(
     }
   );
 }
+
+
 
 export async function savePageContent(slug: string, data: Partial<CMSPageContent>): Promise<void> {
   const docRef = doc(db, 'pages', slug);

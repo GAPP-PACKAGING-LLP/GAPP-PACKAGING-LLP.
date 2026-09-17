@@ -3,6 +3,7 @@ import { FileText, Save, RotateCcw, Check, Sparkles } from 'lucide-react';
 import { subscribeToPages, savePageContent, DEFAULT_PAGES } from '../../firebase/cms';
 import { CMSPageContent } from '../../types';
 import { FormField } from '../../components/admin/common/FormField';
+import { FileUpload } from '../../components/admin/common/FileUpload';
 import { useToast } from '../../components/admin/common/Toast';
 
 export const PagesCMS: React.FC = () => {
@@ -30,6 +31,26 @@ export const PagesCMS: React.FC = () => {
         [key]: value
       }
     }));
+  };
+
+  const handleImageChange = (imageKey: string, url: string) => {
+    setPages((prev) => {
+      const pageData = prev[activeTab];
+      const images = pageData.content?.images || {};
+      return {
+        ...prev,
+        [activeTab]: {
+          ...pageData,
+          content: {
+            ...pageData.content,
+            images: {
+              ...images,
+              [imageKey]: url
+            }
+          }
+        }
+      };
+    });
   };
 
   const handleContentFieldChange = (subKey: string, value: any) => {
@@ -177,6 +198,66 @@ export const PagesCMS: React.FC = () => {
                 onChange={(val) => handleContentFieldChange('bullet3', val)}
                 placeholder="Feature bullet 3"
               />
+
+            </div>
+            
+            <div className="pt-6 border-t border-slate-100 space-y-4">
+              <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                Homepage Images
+              </h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <FileUpload
+                  label="Hero Background"
+                  currentUrl={currentPage.content?.images?.heroImg}
+                  onUploadSuccess={(url) => handleImageChange('heroImg', url)}
+                  storagePath="pages/home/heroBg"
+                  accept="image/*"
+                />
+                <FileUpload
+                  label="About Section Image"
+                  currentUrl={currentPage.content?.images?.aboutImg}
+                  onUploadSuccess={(url) => handleImageChange('aboutImg', url)}
+                  storagePath="pages/home/aboutImg"
+                  accept="image/*"
+                />
+                <FileUpload
+                  label="CTA Banner Background"
+                  currentUrl={currentPage.content?.images?.ctaBg}
+                  onUploadSuccess={(url) => handleImageChange('ctaBg', url)}
+                  storagePath="pages/home/ctaBg"
+                  accept="image/*"
+                />
+              </div>
+              <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider mt-4">
+                Product Category Images
+              </h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {[1, 2, 3, 4].map((num) => (
+                  <FileUpload
+                    key={`prod${num}`}
+                    label={`Product Image ${num}`}
+                    currentUrl={currentPage.content?.images?.[`prod${num}`]}
+                    onUploadSuccess={(url) => handleImageChange(`prod${num}`, url)}
+                    storagePath={`pages/home/prod${num}`}
+                    accept="image/*"
+                  />
+                ))}
+              </div>
+              <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider mt-4">
+                Gallery Strip Images
+              </h4>
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                {[1, 2, 3, 4, 5].map((num) => (
+                  <FileUpload
+                    key={num}
+                    label={`Gallery Image ${num}`}
+                    currentUrl={currentPage.content?.images?.[`gallery${num}`]}
+                    onUploadSuccess={(url) => handleImageChange(`gallery${num}`, url)}
+                    storagePath={`pages/home/gallery${num}`}
+                    accept="image/*"
+                  />
+                ))}
+              </div>
             </div>
           </div>
         )}
@@ -206,7 +287,37 @@ export const PagesCMS: React.FC = () => {
               rows={2}
               value={currentPage.content?.zeroDischargeText || ''}
               onChange={(val) => handleContentFieldChange('zeroDischargeText', val)}
+
             />
+            
+            <div className="pt-6 border-t border-slate-100 space-y-4">
+              <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                About Page Images
+              </h4>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <FileUpload
+                  label="Hero Background"
+                  currentUrl={currentPage.content?.images?.heroBg}
+                  onUploadSuccess={(url) => handleImageChange('heroBg', url)}
+                  storagePath="pages/about/heroBg"
+                  accept="image/*"
+                />
+                <FileUpload
+                  label="Story Image"
+                  currentUrl={currentPage.content?.images?.storyImg}
+                  onUploadSuccess={(url) => handleImageChange('storyImg', url)}
+                  storagePath="pages/about/storyImg"
+                  accept="image/*"
+                />
+                <FileUpload
+                  label="Factory Image"
+                  currentUrl={currentPage.content?.images?.factoryImg}
+                  onUploadSuccess={(url) => handleImageChange('factoryImg', url)}
+                  storagePath="pages/about/factoryImg"
+                  accept="image/*"
+                />
+              </div>
+            </div>
           </div>
         )}
 
