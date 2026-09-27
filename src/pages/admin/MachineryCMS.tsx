@@ -88,8 +88,10 @@ export const MachineryCMS: React.FC = () => {
     setIsDrawerOpen(true);
   };
 
-  const handleSave = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSave = async (e?: React.SyntheticEvent) => {
+    if (e && e.preventDefault) {
+      e.preventDefault();
+    }
     if (!editingItem.name || !editingItem.category) {
       error('Validation Error', 'Machinery Name and Category are required.');
       return;
@@ -97,11 +99,42 @@ export const MachineryCMS: React.FC = () => {
 
     setIsSaving(true);
     try {
-      await saveMachinery(editingItem);
+      const savedId = await saveMachinery(editingItem);
+      
+      // Optimistically update local state immediately so user sees changes with 0 delay
+      const updatedMachinery: MachineryItem = {
+        id: editingItem.id || savedId,
+        name: editingItem.name,
+        category: editingItem.category,
+        description: editingItem.description || '',
+        importance: editingItem.importance || '',
+        capacity: editingItem.capacity || '',
+        speed: editingItem.speed || '',
+        model: editingItem.model || '',
+        imageUrl: editingItem.imageUrl || '',
+        galleryImages: editingItem.galleryImages || [],
+        imageCaption: editingItem.imageCaption || '',
+        storagePath: editingItem.storagePath || '',
+        fileSize: editingItem.fileSize || '',
+        isActive: editingItem.isActive !== false,
+        order: editingItem.order || 1
+      };
+
+      setMachinery((prev) => {
+        const idx = prev.findIndex((m) => m.id === updatedMachinery.id);
+        if (idx >= 0) {
+          const next = [...prev];
+          next[idx] = updatedMachinery;
+          return next;
+        }
+        return [...prev, updatedMachinery];
+      });
+
       success('Machinery Saved', `Updated "${editingItem.name}" and attached photos in plant records.`);
       setIsDrawerOpen(false);
     } catch (err: any) {
-      error('Failed to save machinery', err?.message);
+      console.error('Failed to save machinery:', err);
+      error('Failed to save machinery', err?.message || 'Check Firestore database connection.');
     } finally {
       setIsSaving(false);
     }
@@ -109,13 +142,18 @@ export const MachineryCMS: React.FC = () => {
 
   const handleDelete = async () => {
     if (!deleteTarget) return;
+    const targetId = deleteTarget.id;
+    const targetName = deleteTarget.name;
     setIsDeleting(true);
     try {
-      await deleteMachinery(deleteTarget.id);
-      success('Machinery Deleted', `Removed "${deleteTarget.name}".`);
+      await deleteMachinery(targetId);
+      // Optimistically update local state immediately
+      setMachinery((prev) => prev.filter((m) => m.id !== targetId));
+      success('Machinery Deleted', `Removed "${targetName}".`);
       setDeleteTarget(null);
     } catch (err: any) {
-      error('Failed to delete machinery', err?.message);
+      console.error('Failed to delete machinery:', err);
+      error('Failed to delete machinery', err?.message || 'Check Firestore database connection.');
     } finally {
       setIsDeleting(false);
     }

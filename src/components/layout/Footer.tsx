@@ -21,8 +21,8 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
           <div className="space-y-4">
             <Link to="/" className="flex flex-col gap-3" title="GAPP Packaging LLP - Homepage">
               <BrandLogo variant="icon" theme="dark" className="h-12 w-auto self-start" alt="GAPP Packaging LLP logo" />
-              <span className="text-white font-bold text-xl tracking-tight leading-none" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-                GAPP PACKAGING <span className="text-slate-400">LLP</span>
+              <span className="font-extrabold text-xl tracking-tight leading-none" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+                <span className="text-[#008CE8]">GAPP</span> <span className="text-white">PACKAGING</span> <span className="text-[#008CE8]">LLP</span>
               </span>
             </Link>
             <p className="text-sm text-slate-300 leading-relaxed">
@@ -37,7 +37,9 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
               <li><Link to="/" className="hover:text-white transition-colors">Home</Link></li>
               <li><Link to="/about" className="hover:text-white transition-colors">About</Link></li>
               <li><Link to="/products" className="hover:text-white transition-colors">Products</Link></li>
+              <li><Link to="/infrastructure" className="hover:text-white transition-colors">Machinery</Link></li>
               <li><Link to="/industries" className="hover:text-white transition-colors">Industries</Link></li>
+              <li><Link to="/quality" className="hover:text-white transition-colors">Quality</Link></li>
               <li><Link to="/plant-tour" className="hover:text-white transition-colors">Gallery</Link></li>
               <li><Link to="/contact" className="hover:text-white transition-colors">Contact</Link></li>
             </ul>
@@ -81,16 +83,24 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
         </div>
 
         {/* Copyright & Legal */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-          <div>
-            &copy; {currentYear} GAPP Packaging LLP. All Rights Reserved.
+        <div className="pt-8 flex flex-col items-center justify-center gap-5 text-xs text-slate-400">
+          <div className="flex flex-col sm:flex-row items-center justify-between w-full gap-4 text-center sm:text-left">
+            <div>
+              &copy; {currentYear} GAPP Packaging LLP. All Rights Reserved.
+            </div>
+            <div className="flex items-center gap-4">
+              <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
+              <span className="text-slate-700">•</span>
+              <Link to="/terms" className="hover:text-white transition-colors">Terms and Conditions</Link>
+            </div>
           </div>
-          <div className="flex gap-4">
-            <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link to="/terms" className="hover:text-white transition-colors">Terms and Conditions</Link>
-          </div>
-          <div className="text-slate-500 font-semibold tracking-wide">
-            Developed by Rajesh Barange Pawar
+          <div className="w-full pt-4 border-t border-slate-800/80 flex items-center justify-center text-center">
+            <span className="inline-flex flex-wrap items-center justify-center gap-1.5 text-xs sm:text-sm text-slate-300 font-medium bg-slate-900/80 border border-slate-700/70 px-5 py-2 rounded-full shadow-sm hover:border-[#008CE8]/50 transition-colors">
+              <span>Designed and Developed by</span>
+              <strong className="text-[#008CE8] font-semibold tracking-wide">
+                Rajesh Barange Pawar
+              </strong>
+            </span>
           </div>
         </div>
 

@@ -17,9 +17,11 @@ export const firebaseConfig = {
 };
 
 export const firestoreDatabaseId = 
-  env.VITE_FIREBASE_FIRESTORE_DATABASE_ID || 
-  configJson.firestoreDatabaseId || 
-  'ai-studio-gapppackagingllp-8aae7773-3162-42e9-838a-a5b0639ea025';
+  (configJson && configJson.firestoreDatabaseId && configJson.firestoreDatabaseId !== 'default')
+    ? configJson.firestoreDatabaseId
+    : (env.VITE_FIREBASE_FIRESTORE_DATABASE_ID && env.VITE_FIREBASE_FIRESTORE_DATABASE_ID !== 'default')
+      ? env.VITE_FIREBASE_FIRESTORE_DATABASE_ID
+      : 'ai-studio-gapppackagingllp-8aae7773-3162-42e9-838a-a5b0639ea025';
 
 // Initialize Firebase App
 export const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();

@@ -14,6 +14,14 @@ import {
 } from '../types';
 import { CLIENT_LOGOS } from './clientLogos';
 
+// Authentic Machinery Images from Mandideep Plant
+import singleFacerImg from '../assets/images/single_facer_corrugator_1790482499533.jpg';
+import flexoPrinterImg from '../assets/images/flexo_printer_slotter_1790482511798.jpg';
+import sheetPressingImg from '../assets/images/sheet_pressing_machine_1790482525173.jpg';
+import thinBladeRotaryImg from '../assets/images/thin_blade_slitter_1790482537318.jpg';
+import eccentricSlotterImg from '../assets/images/eccentric_slotter_1790482547744.jpg';
+import rotarySlotterImg from '../assets/images/rotary_slotter_creaser_1790482559325.jpg';
+
 export const designatedPartnersData: DesignatedPartner[] = [
   {
     name: "Ashish Barkhade",
@@ -150,11 +158,10 @@ export const machineryData: MachineryItem[] = [
     capacity: "80 - 100 meters/min",
     speed: "Semi-automatic continuous line",
     model: "Fingerless High-Speed Corrugator 52\"",
-    imageUrl: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80",
-    imageCaption: "Installed at Mandideep Plant - Bay 1 Corrugation Line",
+    imageUrl: singleFacerImg,
+    imageCaption: "Installed at Mandideep Plant - Bay 1 High-Speed Corrugation Line",
     galleryImages: [
-      "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1000&q=80"
+      singleFacerImg
     ]
   },
   {
@@ -166,11 +173,10 @@ export const machineryData: MachineryItem[] = [
     capacity: "4,000 sheets/hour",
     speed: "Ceramic anilox inking roll",
     model: "Double-Color Flexo Graphic Printer",
-    imageUrl: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80",
-    imageCaption: "Two-Colour Precision Flexo Unit - Mandideep",
+    imageUrl: flexoPrinterImg,
+    imageCaption: "GAPP Packaging Two-Colour Precision Flexo Unit - Mandideep",
     galleryImages: [
-      "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=1000&q=80",
-      "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?auto=format&fit=crop&w=1000&q=80"
+      flexoPrinterImg
     ]
   },
   {
@@ -197,10 +203,10 @@ export const machineryData: MachineryItem[] = [
     capacity: "Hydraulic platen compression",
     speed: "Uniform cure pressure",
     model: "Heavy Hydraulic Sheet Press",
-    imageUrl: "https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80",
-    imageCaption: "Hydraulic Platen Compression & Flattening Station",
+    imageUrl: sheetPressingImg,
+    imageCaption: "Heavy Duty Sheet Pressing & Platen Compression Machine",
     galleryImages: [
-      "https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1000&q=80"
+      sheetPressingImg
     ]
   },
   {
@@ -212,10 +218,10 @@ export const machineryData: MachineryItem[] = [
     capacity: "Tungsten alloy thin blades",
     speed: "High-speed rotary scoring",
     model: "Thin Blade Slitter Scorer",
-    imageUrl: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80",
-    imageCaption: "Burr-Free Thin Blade Rotary Slitter & Scorer Line",
+    imageUrl: thinBladeRotaryImg,
+    imageCaption: "Super Megha Burr-Free Thin Blade Rotary Slitter & Scorer Line",
     galleryImages: [
-      "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?auto=format&fit=crop&w=1000&q=80"
+      thinBladeRotaryImg
     ]
   },
   {
@@ -227,10 +233,10 @@ export const machineryData: MachineryItem[] = [
     capacity: "Deep carton slotting",
     speed: "Adjustable stroke speed",
     model: "Industrial Eccentric Slotter",
-    imageUrl: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?auto=format&fit=crop&w=1200&q=80",
-    imageCaption: "Carton Blank Corner & Flap Slotting Unit",
+    imageUrl: eccentricSlotterImg,
+    imageCaption: "Industrial Heavy Eccentric Slotter Machine for Carton Slots",
     galleryImages: [
-      "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?auto=format&fit=crop&w=1000&q=80"
+      eccentricSlotterImg
     ]
   },
   {
@@ -242,10 +248,10 @@ export const machineryData: MachineryItem[] = [
     capacity: "Multi-operation rotary tooling",
     speed: "Synchronized feed line",
     model: "4-Bar Combined Rotary Slotter & Creaser",
-    imageUrl: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?auto=format&fit=crop&w=1200&q=80",
-    imageCaption: "4-Bar Rotary Creasing & Slotting Equipment",
+    imageUrl: rotarySlotterImg,
+    imageCaption: "4-Bar Rotary Creasing & Slotting Equipment (R-S 4)",
     galleryImages: [
-      "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1000&q=80"
+      rotarySlotterImg
     ]
   },
   {

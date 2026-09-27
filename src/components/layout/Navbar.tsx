@@ -56,6 +56,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal, onOpenBrochure
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
     { name: 'Products', path: '/products' },
+    { name: 'Machinery', path: '/infrastructure' },
     { name: 'Industries', path: '/industries' },
     { name: 'Quality', path: '/quality' },
     { name: 'Gallery', path: '/plant-tour' },
@@ -129,11 +130,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal, onOpenBrochure
           <Link to="/" className="flex items-center gap-3 group py-1 shrink-0" id="nav-brand-logo" title="GAPP Packaging LLP - Homepage">
             <BrandLogo variant="icon" className="h-10 sm:h-12 w-auto" alt="GAPP Packaging LLP logo" />
             <div className="flex flex-col">
-              <span className="text-[#008CE8] font-bold text-lg sm:text-xl tracking-tight leading-none" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-                GAPP PACKAGING <span className="text-[#262D38]">LLP</span>
+              <span className="font-extrabold text-lg sm:text-xl tracking-tight leading-none" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+                <span className="text-[#008CE8]">GAPP</span> <span className="text-[#262D38]">PACKAGING</span> <span className="text-[#0E525B]">LLP</span>
               </span>
-              <span className="text-xs font-semibold text-[#0E525B] tracking-wider mt-0.5 hidden sm:block">
-                - Focus On Quality -
+              <span className="text-[11px] font-bold text-[#0E525B] tracking-widest uppercase mt-0.5 hidden sm:block">
+                Focus On Quality
               </span>
             </div>
           </Link>

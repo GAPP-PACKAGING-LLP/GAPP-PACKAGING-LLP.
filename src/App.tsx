@@ -146,6 +146,14 @@ function AppLayout() {
             } 
           />
           <Route 
+            path="/machinery" 
+            element={
+              <InfrastructurePage 
+                onOpenQuoteModal={() => handleOpenQuoteModal()} 
+              />
+            } 
+          />
+          <Route 
             path="/plant-tour" 
             element={
               <PlantTourPage 

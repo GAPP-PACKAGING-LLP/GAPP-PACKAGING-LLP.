@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, Wrench, ShieldCheck } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
 
 export const AboutPage: React.FC = () => {
@@ -32,24 +34,52 @@ export const AboutPage: React.FC = () => {
         <section>
           <h2 className="text-2xl font-bold text-slate-900 mb-6">Manufacturing Capabilities</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-slate-50 p-6 rounded-lg border border-slate-200">
-              <h3 className="font-bold text-lg text-[#008CE8] mb-3">Machinery & Equipment</h3>
-              <ul className="list-disc pl-5 space-y-2 text-sm text-slate-700">
-                <li>Semi-automatic corrugation machines (A, B, C flute profiles)</li>
-                <li>Two-color flexographic printing machinery</li>
-                <li>Thin-blade rotary slitter scorers for clean cuts</li>
-                <li>Eccentric slotters for precise folding</li>
-                <li>Heavy-duty wire stitching and flap pasting machines</li>
-              </ul>
+            <div className="bg-slate-50 p-6 rounded-lg border border-slate-200 flex flex-col justify-between">
+              <div>
+                <h3 className="font-bold text-lg text-[#008CE8] mb-3 flex items-center gap-2">
+                  <Wrench className="w-5 h-5" />
+                  <span>Machinery & Equipment</span>
+                </h3>
+                <ul className="list-disc pl-5 space-y-2 text-sm text-slate-700">
+                  <li>Semi-automatic corrugation machines (A, B, C flute profiles)</li>
+                  <li>Two-color flexographic printing machinery</li>
+                  <li>Thin-blade rotary slitter scorers for clean cuts</li>
+                  <li>Eccentric slotters for precise folding</li>
+                  <li>Heavy-duty wire stitching and flap pasting machines</li>
+                </ul>
+              </div>
+              <div className="pt-4 mt-4 border-t border-slate-200">
+                <Link
+                  to="/infrastructure"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#008CE8] hover:text-[#0E525B] transition-colors"
+                >
+                  <span>Explore Installed Machinery (12 Lines)</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
             </div>
-            <div className="bg-slate-50 p-6 rounded-lg border border-slate-200">
-              <h3 className="font-bold text-lg text-[#0E525B] mb-3">Quality Assurance</h3>
-              <ul className="list-disc pl-5 space-y-2 text-sm text-slate-700">
-                <li>In-house Bursting Strength Tester (BST)</li>
-                <li>Grammage (GSM) measurement scale</li>
-                <li>Moisture content analyzer</li>
-                <li>Cobb tester for water absorption resistance</li>
-              </ul>
+            <div className="bg-slate-50 p-6 rounded-lg border border-slate-200 flex flex-col justify-between">
+              <div>
+                <h3 className="font-bold text-lg text-[#0E525B] mb-3 flex items-center gap-2">
+                  <ShieldCheck className="w-5 h-5" />
+                  <span>Quality Assurance</span>
+                </h3>
+                <ul className="list-disc pl-5 space-y-2 text-sm text-slate-700">
+                  <li>In-house Bursting Strength Tester (BST)</li>
+                  <li>Grammage (GSM) measurement scale</li>
+                  <li>Moisture content analyzer</li>
+                  <li>Cobb tester for water absorption resistance</li>
+                </ul>
+              </div>
+              <div className="pt-4 mt-4 border-t border-slate-200">
+                <Link
+                  to="/quality"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0E525B] hover:text-[#008CE8] transition-colors"
+                >
+                  <span>Explore Quality Testing Lab & Standards</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
             </div>
           </div>
         </section>

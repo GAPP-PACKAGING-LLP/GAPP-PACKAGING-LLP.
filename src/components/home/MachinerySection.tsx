@@ -21,6 +21,42 @@ import { SectionHeader } from '../common/SectionHeader';
 import { useCMS } from '../../context/CMSContext';
 import { MachineryItem } from '../../types';
 
+// Authentic Machinery Images from Mandideep Plant
+import singleFacerImg from '../../assets/images/single_facer_corrugator_1790482499533.jpg';
+import flexoPrinterImg from '../../assets/images/flexo_printer_slotter_1790482511798.jpg';
+import sheetPressingImg from '../../assets/images/sheet_pressing_machine_1790482525173.jpg';
+import thinBladeRotaryImg from '../../assets/images/thin_blade_slitter_1790482537318.jpg';
+import eccentricSlotterImg from '../../assets/images/eccentric_slotter_1790482547744.jpg';
+import rotarySlotterImg from '../../assets/images/rotary_slotter_creaser_1790482559325.jpg';
+
+const AUTHENTIC_MACHINE_IMAGES: Record<string, string> = {
+  'machine-1': singleFacerImg,
+  'machine-2': flexoPrinterImg,
+  'machine-4': sheetPressingImg,
+  'machine-5': thinBladeRotaryImg,
+  'machine-6': eccentricSlotterImg,
+  'machine-7': rotarySlotterImg,
+};
+
+export const getMachinePhoto = (machine: MachineryItem | null): string => {
+  if (!machine) return '';
+  // If user attached or edited their own image (upload data URL or custom URL), prioritize it!
+  if (machine.imageUrl && !machine.imageUrl.includes('unsplash.com')) {
+    return machine.imageUrl;
+  }
+  if (machine.id && AUTHENTIC_MACHINE_IMAGES[machine.id]) {
+    return AUTHENTIC_MACHINE_IMAGES[machine.id];
+  }
+  const lowerName = (machine.name || '').toLowerCase();
+  if (lowerName.includes('single facer') || lowerName.includes('corrugation')) return singleFacerImg;
+  if (lowerName.includes('flexo') || lowerName.includes('printing')) return flexoPrinterImg;
+  if (lowerName.includes('pressing') || lowerName.includes('sheet pressing')) return sheetPressingImg;
+  if (lowerName.includes('thin blade')) return thinBladeRotaryImg;
+  if (lowerName.includes('eccentric')) return eccentricSlotterImg;
+  if (lowerName.includes('r-s 4') || lowerName.includes('rotary slotter') || lowerName.includes('rotary creas')) return rotarySlotterImg;
+  return machine.imageUrl || '';
+};
+
 export const MachinerySection: React.FC = () => {
   const { machinery } = useCMS();
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
@@ -72,11 +108,8 @@ export const MachinerySection: React.FC = () => {
         {/* Dynamic Machinery Grid with Attached Images */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredMachinery.map((machine, index) => {
-            const hasImage = Boolean(machine.imageUrl);
-            const allPhotos = [
-              ...(machine.imageUrl ? [machine.imageUrl] : []),
-              ...(machine.galleryImages || [])
-            ];
+            const machinePhoto = getMachinePhoto(machine);
+            const hasImage = Boolean(machinePhoto);
 
             return (
               <div
@@ -91,7 +124,7 @@ export const MachinerySection: React.FC = () => {
                   >
                     {hasImage ? (
                       <img
-                        src={machine.imageUrl}
+                        src={machinePhoto}
                         alt={`${machine.name} - Corrugated Box Machinery at Mandideep Plant`}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"
@@ -208,52 +241,53 @@ export const MachinerySection: React.FC = () => {
               <div className="p-6 overflow-y-auto space-y-6">
                 
                 {/* Photo Viewer */}
-                {activeModalItem.imageUrl ? (
-                  <div className="space-y-3">
-                    <div className="aspect-video w-full rounded-xl overflow-hidden bg-slate-950 border border-slate-200 flex items-center justify-center">
-                      <img
-                        src={
-                          activeModalPhotoIndex === 0
-                            ? activeModalItem.imageUrl
-                            : activeModalItem.galleryImages?.[activeModalPhotoIndex - 1] || activeModalItem.imageUrl
-                        }
-                        alt={`${activeModalItem.name} - Manufacturing Machine Specification & Operational View`}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                        decoding="async"
-                        referrerPolicy="no-referrer"
-                      />
-                    </div>
+                {(() => {
+                  const modalPhoto = getMachinePhoto(activeModalItem);
+                  const modalGallery = [
+                    ...(modalPhoto ? [modalPhoto] : []),
+                    ...(activeModalItem.galleryImages?.filter(g => g !== modalPhoto) || [])
+                  ];
+                  const currentPhoto = modalGallery[activeModalPhotoIndex] || modalPhoto;
 
-                    {/* Gallery Thumbnails if multiple angles exist */}
-                    {activeModalItem.galleryImages && activeModalItem.galleryImages.length > 0 && (
-                      <div className="flex items-center gap-2 overflow-x-auto pb-1">
-                        <button
-                          type="button"
-                          onClick={() => setActiveModalPhotoIndex(0)}
-                          className={`relative aspect-video w-20 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${
-                            activeModalPhotoIndex === 0 ? 'border-[#0F4C5C] ring-2 ring-[#0F4C5C]/20' : 'border-slate-200 opacity-70'
-                          }`}
-                        >
-                          <img src={activeModalItem.imageUrl} alt={`${activeModalItem.name} Main View`} className="w-full h-full object-cover" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
-                        </button>
-
-                        {activeModalItem.galleryImages.map((gUrl, gIdx) => (
-                          <button
-                            key={gIdx}
-                            type="button"
-                            onClick={() => setActiveModalPhotoIndex(gIdx + 1)}
-                            className={`relative aspect-video w-20 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${
-                              activeModalPhotoIndex === gIdx + 1 ? 'border-[#0F4C5C] ring-2 ring-[#0F4C5C]/20' : 'border-slate-200 opacity-70'
-                            }`}
-                          >
-                            <img src={gUrl} alt={`${activeModalItem.name} - Angle ${gIdx + 1}`} className="w-full h-full object-cover" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
-                          </button>
-                        ))}
+                  return modalPhoto ? (
+                    <div className="space-y-3">
+                      <div className="aspect-video w-full rounded-xl overflow-hidden bg-slate-950 border border-slate-200 flex items-center justify-center">
+                        <img
+                          src={currentPhoto}
+                          alt={`${activeModalItem.name} - Manufacturing Machine Specification & Operational View`}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                          decoding="async"
+                          referrerPolicy="no-referrer"
+                        />
                       </div>
-                    )}
-                  </div>
-                ) : null}
+
+                      {/* Gallery Thumbnails if multiple angles exist */}
+                      {modalGallery.length > 1 && (
+                        <div className="flex items-center gap-2 overflow-x-auto pb-1">
+                          {modalGallery.map((gUrl, gIdx) => (
+                            <button
+                              key={gIdx}
+                              type="button"
+                              onClick={() => setActiveModalPhotoIndex(gIdx)}
+                              className={`relative aspect-video w-20 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${
+                                activeModalPhotoIndex === gIdx ? 'border-[#0F4C5C] ring-2 ring-[#0F4C5C]/20' : 'border-slate-200 opacity-70'
+                              }`}
+                            >
+                              <img src={gUrl} alt={`${activeModalItem.name} - View ${gIdx + 1}`} className="w-full h-full object-cover" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="aspect-video w-full rounded-xl bg-slate-900 border border-slate-200 flex flex-col items-center justify-center text-slate-400 p-6 text-center">
+                      <Cpu className="w-12 h-12 text-[#0F4C5C]/80 mb-2" />
+                      <span className="text-sm font-bold text-white">{activeModalItem.name}</span>
+                      <span className="text-xs text-slate-400">Semi-Automatic Conversion Line</span>
+                    </div>
+                  );
+                })()}
 
                 {/* Technical Overview */}
                 <div className="space-y-3">

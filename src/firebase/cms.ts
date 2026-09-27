@@ -180,23 +180,66 @@ export function subscribeToMachinery(
   );
 }
 
+function cleanFirestoreData<T extends Record<string, any>>(data: T): Record<string, any> {
+  const result: Record<string, any> = {};
+  for (const [key, value] of Object.entries(data)) {
+    if (value !== undefined) {
+      if (Array.isArray(value)) {
+        result[key] = value.filter((v) => v !== undefined && v !== null);
+      } else if (value !== null && typeof value === 'object' && !(value instanceof Date) && !('_methodName' in value)) {
+        result[key] = cleanFirestoreData(value);
+      } else {
+        result[key] = value;
+      }
+    }
+  }
+  return result;
+}
+
 export async function saveMachinery(machinery: Partial<MachineryItem>): Promise<string> {
-  const colRef = collection(db, 'machinery');
-  const id = machinery.id || `machine-${Date.now()}`;
-  const docRef = doc(colRef, id);
-  const data = {
-    ...machinery,
-    id,
-    isActive: machinery.isActive !== undefined ? machinery.isActive : true,
-    updatedAt: serverTimestamp()
-  };
-  await setDoc(docRef, data, { merge: true });
-  return id;
+  try {
+    const colRef = collection(db, 'machinery');
+    const id = machinery.id || `machine-${Date.now()}`;
+    const docRef = doc(colRef, id);
+    const rawData = {
+      ...machinery,
+      id,
+      name: machinery.name || '',
+      category: machinery.category || 'General',
+      description: machinery.description || '',
+      importance: machinery.importance || '',
+      capacity: machinery.capacity || '',
+      speed: machinery.speed || '',
+      model: machinery.model || '',
+      imageUrl: machinery.imageUrl || '',
+      galleryImages: Array.isArray(machinery.galleryImages) ? machinery.galleryImages : [],
+      imageCaption: machinery.imageCaption || '',
+      storagePath: machinery.storagePath || '',
+      fileSize: machinery.fileSize || '',
+      isActive: machinery.isActive !== undefined ? machinery.isActive : true,
+      order: typeof machinery.order === 'number' ? machinery.order : 99,
+      updatedAt: serverTimestamp()
+    };
+    const data = cleanFirestoreData(rawData);
+    await setDoc(docRef, data, { merge: true });
+    return id;
+  } catch (err: any) {
+    console.error('Error saving machinery to Firestore:', err);
+    throw new Error(err?.message || 'Failed to save machinery in Firestore.');
+  }
 }
 
 export async function deleteMachinery(id: string): Promise<void> {
-  const docRef = doc(db, 'machinery', id);
-  await deleteDoc(docRef);
+  if (!id) {
+    throw new Error('Machine ID is required for deletion');
+  }
+  try {
+    const docRef = doc(db, 'machinery', id);
+    await deleteDoc(docRef);
+  } catch (err: any) {
+    console.error('Error deleting machinery from Firestore:', err);
+    throw new Error(err?.message || 'Failed to delete machinery from Firestore.');
+  }
 }
 
 // --- TESTING EQUIPMENT CMS ---
@@ -518,18 +561,18 @@ export const DEFAULT_PAGES: Record<string, CMSPageContent> = {
       bullet2: 'Complete in-house testing laboratory with lot certification',
       bullet3: 'Committed to strict delivery schedules & urgent orders flexibility',
       images: {
-        heroImg: 'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&q=80',
-        aboutImg: 'https://images.unsplash.com/photo-1605600659908-0ef719419d41?auto=format&fit=crop&q=80',
-        ctaBg: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&q=80',
-        prod1: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&q=80',
-        prod2: 'https://images.unsplash.com/photo-1530124566582-a618bc2615dc?auto=format&fit=crop&q=80',
-        prod3: 'https://images.unsplash.com/photo-1605600659908-0ef719419d41?auto=format&fit=crop&q=80',
-        prod4: 'https://images.unsplash.com/photo-1580674684081-776d507bcea0?auto=format&fit=crop&q=80',
-        gallery1: 'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&q=80',
-        gallery2: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&q=80',
-        gallery3: 'https://images.unsplash.com/photo-1605600659908-0ef719419d41?auto=format&fit=crop&q=80',
-        gallery4: 'https://images.unsplash.com/photo-1580674684081-776d507bcea0?auto=format&fit=crop&q=80',
-        gallery5: 'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&q=80'
+        heroImg: '/src/assets/images/hero_corrugated_box_1790478658140.jpg',
+        aboutImg: '/src/assets/images/about_corrugated_boxes_1790478673653.jpg',
+        ctaBg: '/src/assets/images/hero_corrugated_box_1790478658140.jpg',
+        prod1: '/src/assets/images/carton_box_standard_1790478686540.jpg',
+        prod2: '/src/assets/images/carton_box_printed_1790478698272.jpg',
+        prod3: '/src/assets/images/carton_sheets_flute_1790478709330.jpg',
+        prod4: '/src/assets/images/industrial_heavy_carton_1790478721215.jpg',
+        gallery1: '/src/assets/images/hero_corrugated_box_1790478658140.jpg',
+        gallery2: '/src/assets/images/carton_box_standard_1790478686540.jpg',
+        gallery3: '/src/assets/images/carton_sheets_flute_1790478709330.jpg',
+        gallery4: '/src/assets/images/industrial_heavy_carton_1790478721215.jpg',
+        gallery5: '/src/assets/images/carton_box_printed_1790478698272.jpg'
       }
     }
   },
